@@ -8,8 +8,9 @@ import CJunCmsPageLayout from "./layouts/CJunCmsPageLayout.vue";
 
 function routePages(): RouteRecordRaw[] {
   const result: RouteRecordRaw[] = [];
-  const metas = import.meta.glob("./pages/**/*Page.ts", { eager: true });
-  const pages = import.meta.glob("./pages/**/*Page.vue");
+  const metas = import.meta.glob("./pages/*/*Page.ts", { eager: true });
+  const pages = import.meta.glob("./pages/*/*Page.vue");
+  // console.log('pages', pages, metas);
   for (const p of Object.keys(pages)) {
     const m = p.match(/.\/pages\/(.*)Page\.vue/);
     if (m) {

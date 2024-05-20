@@ -19,7 +19,7 @@
           class="captcha"
           alt="captcha"
           :src="captchaSrc"
-          @click="onClickCaptcha"
+          @click="flushCaptcha"
         />
       </div>
       <div class="login-row">
@@ -30,35 +30,41 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { onBeforeMount, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { type LoginParam, login } from "../apis/login";
 import { getCaptchaMath } from "../apis/captcha";
-// import { useAuthStore } from "../stores/AuthStore";
+import { useAuthStore } from "../stores/AuthStore";
 
 const param = reactive<LoginParam>({
   username: "admin",
-  password: "123456",
+  password: "admin",
   captchaId: "",
   captchaAnswer: "",
 });
 const captchaSrc = ref("");
 
-// const auth = useAuthStore();
+const auth = useAuthStore();
 const router = useRouter();
 
-const onClickCaptcha = async () => {
+const flushCaptcha = async () => {
   const captchaResult = await getCaptchaMath();
-  captchaSrc.value = captchaResult.data.image;
-  param.captchaId = captchaResult.data.id;
+  captchaSrc.value = captchaResult.data.data.image;
+  param.captchaId = captchaResult.data.data.id;
 };
 
 const onSubmit = async () => {
   const loginResult = await login(param);
-  console.log("login result", loginResult);
-  //TODO  auth
-  router.push("/");
+  if (loginResult.status == 200 && loginResult.data.code == 0) {
+    console.log("login result", loginResult);
+    auth.token = loginResult.data.data.token;
+    router.push("/");
+  }
 };
+
+onBeforeMount(async () => {
+  await flushCaptcha();
+});
 </script>
 
 <style scoped lang="scss">
@@ -153,6 +159,7 @@ const onSubmit = async () => {
   & > img.captcha {
     flex-grow: 1;
     margin-left: 1em;
+    height: 2em;
     cursor: pointer;
     user-select: none;
   }

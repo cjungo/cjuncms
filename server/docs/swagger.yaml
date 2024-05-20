@@ -1,0 +1,96 @@
+definitions:
+  controller.SignInParam:
+    properties:
+      captchaAnswer:
+        type: string
+      captchaId:
+        type: string
+      password:
+        example: admin
+        type: string
+      username:
+        example: admin
+        type: string
+    type: object
+  controller.SignInResult:
+    properties:
+      permissions:
+        items:
+          type: string
+        type: array
+      token:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /employee/add:
+    put:
+      consumes:
+      - application/json
+      description: 添加员工
+      parameters:
+      - description: 工号
+        in: body
+        name: jobnumber
+        required: true
+        schema:
+          type: string
+      - description: 账号
+        in: body
+        name: username
+        required: true
+        schema:
+          type: string
+      - description: 密码
+        in: body
+        name: password
+        required: true
+        schema:
+          items:
+            type: integer
+          type: array
+      - description: 昵称
+        in: body
+        name: nickname
+        schema:
+          type: string
+      - description: 全称
+        in: body
+        name: fullname
+        schema:
+          type: string
+      - description: 生日
+        in: body
+        name: birthday
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: 添加员工
+      tags:
+      - sign
+  /sign/in:
+    post:
+      consumes:
+      - application/json
+      description: 登录接口
+      parameters:
+      - description: 请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controller.SignInParam'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.SignInResult'
+      summary: 登录接口
+      tags:
+      - sign
+swagger: "2.0"

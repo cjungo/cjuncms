@@ -15,6 +15,8 @@ import (
 	"github.com/cjungo/cjungo/mid"
 	"github.com/rs/zerolog"
 	"gorm.io/gorm"
+
+	_ "github.com/cjungo/cjuncms/docs"
 )
 
 func route(

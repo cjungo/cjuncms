@@ -1,12 +1,15 @@
 package controller
 
 import (
+	"fmt"
 	"time"
 
+	"github.com/cjungo/cjuncms/misc"
 	"github.com/cjungo/cjuncms/model"
 	"github.com/cjungo/cjungo"
 	"github.com/cjungo/cjungo/db"
 	"github.com/cjungo/cjungo/ext"
+	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/gorm"
 )
 
@@ -26,10 +29,15 @@ func NewLoginController(
 }
 
 type SignInParam struct {
-	Username      string `json:"username" form:"username"`
-	Password      string `json:"password" form:"password"`
+	Username      string `json:"username" form:"username" validate:"optional" example:"admin"`
+	Password      string `json:"password" form:"password" validate:"optional" example:"admin"`
 	CaptchaID     string `json:"captchaId" form:"captchaId" query:"captchaId"`
 	CaptchaAnswer string `json:"captchaAnswer" form:"captchaAnswer" query:"captchaAnswer"`
+}
+
+type SignInResult struct {
+	Token       string `json:"token" example:"xxx"`
+	Permissions []string
 }
 
 // SignIn godoc
@@ -39,10 +47,8 @@ type SignInParam struct {
 // @Accept       json
 // @Produce      json
 // @Router       /sign/in [post]
-// @Param        username   body      string  true  "账号"
-// @Param        password   body      string  true  "密码"
-// @Param        captchaId   body      string  true  "验证码ID"
-// @Param        captchaAnswer   body      string  true  "验证码答案"
+// @Param        request   body      SignInParam  true  "请求参数"
+// @Success      200  {object}   SignInResult
 func (controller *SignController) SignIn(ctx cjungo.HttpContext) error {
 	param := &SignInParam{}
 	if err := ctx.Bind(param); err != nil {
@@ -53,19 +59,32 @@ func (controller *SignController) SignIn(ctx cjungo.HttpContext) error {
 		return ctx.RespBad(err)
 	}
 
+	result := &SignInResult{}
 	if err := controller.mysql.Transaction(func(tx *gorm.DB) error {
 		employee := &model.CjEmployee{}
+		password := ext.Sha256(param.Password)
 		if err := tx.Select("*").
-			Where("username=? AND password=UNHEX(?)", param.Username, param.Password).
+			Where("username=? AND password=UNHEX(?)", param.Username, password).
 			Find(&employee).Error; err != nil {
 			return err
 		}
 
 		if employee.ID == 0 {
-			return ctx.RespBad("账号或密码有误")
+			return fmt.Errorf("账号或密码有误")
 		}
 
-		if err := tx.Save(&model.CjOperation{
+		var permissions []string
+		if err := tx.Select("P.tag").
+			Table("cj_employee_permission AS EP").
+			Joins(
+				"JOIN cj_permission AS P ON P.id=EP.permission_id",
+			).
+			Where("EP.employee_id=?", employee.ID).
+			Find(&permissions).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Create(&model.CjOperation{
 			OperatorID:     employee.ID,
 			OperatorType:   0,
 			OperateAt:      time.Now(),
@@ -75,12 +94,36 @@ func (controller *SignController) SignIn(ctx cjungo.HttpContext) error {
 			return err
 		}
 
+		claims := &misc.JwtClaims{
+			EmployeeToken: misc.EmployeeToken{
+				EmployeeId:          employee.ID,
+				EmployeeNickname:    cjungo.GetOrDefault(employee.Nickname, ""),
+				EmployeePermissions: permissions,
+			},
+			RegisteredClaims: jwt.RegisteredClaims{
+				ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
+				IssuedAt:  jwt.NewNumericDate(time.Now()),
+				NotBefore: jwt.NewNumericDate(time.Now()),
+				Issuer:    "test",
+				Subject:   "somebody",
+				ID:        "1",
+				Audience:  []string{"somebody_else"},
+			},
+		}
+
+		token, err := ext.MakeJwtToken(claims)
+		if err != nil {
+			return err
+		}
+
+		result.Permissions = permissions
+		result.Token = token
 		return nil
 	}); err != nil {
 		return ctx.RespBad(err)
 	}
 
-	return ctx.RespOk()
+	return ctx.Resp(result)
 }
 
 func (controller *SignController) SignOut(ctx cjungo.HttpContext) error {

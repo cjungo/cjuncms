@@ -1,4 +1,5 @@
-import { api } from "../utils/api";
+import { type AxiosResponse } from "axios";
+import { ApiResult, api } from "../utils/api";
 
 export type LoginParam = {
   username: string;
@@ -7,12 +8,12 @@ export type LoginParam = {
   captchaAnswer: string;
 };
 
-export type LoginResult = {
-  code: number;
-  data: string;
-};
+export type LoginResult = ApiResult<{
+  token: string;
+}>;
 
-export const login = async (param: LoginParam): Promise<LoginResult> => {
-  const response = await api.post("/login", param);
-  return response.data
+export const login = async (
+  param: LoginParam
+): Promise<AxiosResponse<LoginResult>> => {
+  return await api.post("/login", param);
 };
