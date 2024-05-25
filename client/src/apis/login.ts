@@ -15,5 +15,5 @@ export type LoginResult = ApiResult<{
 export const login = async (
   param: LoginParam
 ): Promise<AxiosResponse<LoginResult>> => {
-  return await api.post("/login", param);
+  return await api.post("/sign/in", param);
 };

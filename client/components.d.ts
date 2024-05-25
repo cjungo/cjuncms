@@ -9,8 +9,20 @@ declare module 'vue' {
   export interface GlobalComponents {
     CJunCmsLogoutDialog: typeof import('./src/dialogs/CJunCmsLogoutDialog.vue')['default']
     CJunCmsPageLayout: typeof import('./src/layouts/CJunCmsPageLayout.vue')['default']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElMenu: typeof import('element-plus/es')['ElMenu']
+    ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    IEpMenu: typeof import('~icons/ep/menu')['default']
+    IEpPlus: typeof import('~icons/ep/plus')['default']
+    LeftBar: typeof import('./src/components/LeftBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TabBar: typeof import('./src/components/TabBar.vue')['default']
+    Topbar: typeof import('./src/components/Topbar.vue')['default']
+    TopBar: typeof import('./src/components/TopBar.vue')['default']
   }
 }

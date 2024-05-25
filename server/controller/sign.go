@@ -62,7 +62,7 @@ func (controller *SignController) SignIn(ctx cjungo.HttpContext) error {
 	result := &SignInResult{}
 	if err := controller.mysql.Transaction(func(tx *gorm.DB) error {
 		employee := &model.CjEmployee{}
-		password := ext.Sha256(param.Password)
+		password := ext.Sha256(param.Password).Hex()
 		if err := tx.Select("*").
 			Where("username=? AND password=UNHEX(?)", param.Username, password).
 			Find(&employee).Error; err != nil {
