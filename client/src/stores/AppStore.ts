@@ -7,7 +7,8 @@ export type DialogState = {
 
 export type TabBarItem = {
   title: string;
-  url: string;
+  fullPath: string;
+  closable: boolean;
 };
 
 export type TabBarState = {

@@ -1,5 +1,5 @@
 <template>
-    <div class="employee-detail-page">
+    <div class="setting-profile-page">
 
     </div>
 </template>
@@ -8,7 +8,7 @@
 </script>
 
 <style lang="scss" scoped>
-.employee-detail-page {
+.setting-profile-page {
     
 }
 </style>

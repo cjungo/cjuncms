@@ -1,15 +1,14 @@
 <template>
-    <div class="employee-index-page">
+    <div class="project-index-page">
 
     </div>
 </template>
 
 <script lang="ts" setup>
-
 </script>
 
 <style lang="scss" scoped>
-.employee-index-page {
+.project-index-page {
     
 }
 </style>

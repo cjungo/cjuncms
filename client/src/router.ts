@@ -81,14 +81,14 @@ router.beforeEach(async (to) => {
 
   // 标签
   if (to.meta?.tabMode == "single") {
-    const tab = app.tabbar.items.find((tab) => tab.fullPath == to.fullPath);
-    console.log("tab", to.meta, tab, app.tabbar);
+    const tab = app.tabBar.items.find((tab) => tab.fullPath == to.fullPath);
+    console.log("tab", to.meta, tab, app.tabBar);
     if (tab) {
     } else {
-      app.tabbar.items.push({
+      app.tabBar.items.push({
         fullPath: to.fullPath,
-        title: to.meta?.title,
-        closable: to.meta?.tabClosable ?? false,
+        title: to.meta?.title as string,
+        closable: (to.meta?.tabClosable as boolean) ?? false,
       });
     }
   }

@@ -4,12 +4,13 @@
 
         </div>
         <ElMenu mode="horizontal" :default-active="appStore.topBar.defaultActive">
-
+            <ElMenuItem></ElMenuItem>
         </ElMenu>
     </div>
 </template>
 
 <script lang="ts" setup>
+import { reactive } from "vue";
 import { useAppStore } from "../stores/AppStore";
 
 export type TopBarItem = {
@@ -18,6 +19,12 @@ export type TopBarItem = {
 };
 
 const appStore = useAppStore();
+
+const items = reactive<[TopBarItem]>([
+    {
+        title: "首页"
+    }
+]);
 
 </script>
 

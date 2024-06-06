@@ -1,22 +1,36 @@
 <template>
   <div class="tab-bar">
-    <ElTabs v-model="appStore.tabBar.activeName" @tab-click="onTabClick">
+    <ElTabs
+      v-model="appStore.tabBar.activeName"
+      @tab-change="onTabChange"
+      @tab-click="onTabClick"
+      @tab-remove="onTabRemove"
+    >
       <ElTabPane
         v-for="(item, i) in appStore.tabBar.items"
-        :label="item"
+        :label="item.title"
         :name="i"
+        :closable="item.closable"
       ></ElTabPane>
     </ElTabs>
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { TabsPaneContext } from "element-plus";
+import type { TabsPaneContext, TabPaneName } from "element-plus";
 import { useAppStore } from "../stores/AppStore";
 
 const appStore = useAppStore();
 
+const onTabChange = (name: TabPaneName) => {
+  console.log("onTabChange", name);
+};
+
 const onTabClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event);
+  console.log("onTabClick", tab, event);
+};
+
+const onTabRemove = (name: TabPaneName) => {
+  console.log("onTabRemove", name);
 };
 </script>

@@ -7,7 +7,7 @@
       @close="onMenuClose"
     >
       <template v-for="item in items">
-        <ElMenuItem v-if="isEmpty(item.children)">
+        <ElMenuItem v-if="isEmpty(item.children)" @click="onItemClick(item)">
           <ElIcon><IEpMenu /></ElIcon>
           <span>{{ item.title }}</span>
         </ElMenuItem>
@@ -16,7 +16,10 @@
             <ElIcon><IEpMenu /></ElIcon>
             <spen>{{ item.title }}</spen>
           </template>
-          <ElMenuItem v-for="subItem in item.children">
+          <ElMenuItem
+            v-for="subItem in item.children"
+            @click="onItemClick(subItem)"
+          >
             <ElIcon><IEpMenu /></ElIcon>
             <span>{{ subItem.title }}</span>
           </ElMenuItem>
@@ -33,6 +36,7 @@ import { useAppStore } from "../stores/AppStore";
 
 export type LeftBarItem = {
   title: string;
+  path?: string;
   permissions?: [string];
   children?: Array<LeftBarItem>;
 };
@@ -45,11 +49,31 @@ const items = reactive<Array<LeftBarItem>>([
     children: [
       {
         title: "员工列表",
+        path: "/employee/index",
       },
     ],
   },
   {
-    title: "查看",
+    title: "项目管理",
+    children: [
+      {
+        title: "项目列表",
+        path: "/project/index",
+      },
+      {
+        title: "命令行",
+        path: "/setting/shell",
+      },
+    ],
+  },
+  {
+    title: "设置",
+    children: [
+      {
+        title: "我的",
+        path: "/setting/profile",
+      },
+    ],
   },
 ]);
 
@@ -59,6 +83,10 @@ const onMenuOpen = (e: any) => {
 
 const onMenuClose = (e: any) => {
   console.log("onMenuClose", e);
+};
+
+const onItemClick = (item: LeftBarItem) => {
+  console.log("onItemClick", item);
 };
 </script>
 

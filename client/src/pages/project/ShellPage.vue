@@ -1,5 +1,5 @@
 <template>
-    <div class="employee-index-page">
+    <div class="project-shell-page">
 
     </div>
 </template>
@@ -9,7 +9,7 @@
 </script>
 
 <style lang="scss" scoped>
-.employee-index-page {
+.project-shell-page {
     
 }
 </style>
