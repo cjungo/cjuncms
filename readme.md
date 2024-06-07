@@ -9,7 +9,7 @@ npm run dev
 
 ```bash
 # 启动服务（开发）
-go run main.go
+go run .
 
 # 编译
 go build

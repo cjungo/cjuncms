@@ -18,7 +18,7 @@ type SignController struct {
 	captchaController *ext.CaptchaController
 }
 
-func NewLoginController(
+func NewSignController(
 	mysql *db.MySql,
 	captchaController *ext.CaptchaController,
 ) *SignController {

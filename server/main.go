@@ -2,57 +2,17 @@ package main
 
 import (
 	"log"
-	"net/http"
-	"os"
-	"path/filepath"
 
-	"github.com/cjungo/cjuncms/controller"
 	"github.com/cjungo/cjuncms/entity"
 	"github.com/cjungo/cjuncms/misc"
 	"github.com/cjungo/cjungo"
 	"github.com/cjungo/cjungo/db"
 	"github.com/cjungo/cjungo/ext"
 	"github.com/cjungo/cjungo/mid"
-	"github.com/rs/zerolog"
 	"gorm.io/gorm"
 
 	_ "github.com/cjungo/cjuncms/docs"
 )
-
-func route(
-	logger *zerolog.Logger,
-	router cjungo.HttpRouter,
-	permitManager *mid.PermitManager[string, misc.EmployeeToken],
-	captchaController *ext.CaptchaController,
-	signController *controller.SignController,
-	employeeController *controller.EmployeeController,
-) (http.Handler, error) {
-	here, err := os.Getwd()
-	if err != nil {
-		return nil, err
-	}
-	publicDir := filepath.Join(here, "public")
-	logger.Info().Str("dir", publicDir).Msg("静态目录")
-
-	router.Static("/", publicDir)
-
-	// 验证码
-	captchaGroup := router.Group("/captcha")
-	captchaGroup.GET("/math", captchaController.GenerateMath)
-
-	// 登录
-	signGroup := router.Group("/sign")
-	signGroup.POST("/in", signController.SignIn)
-	signGroup.GET("/out", signController.SignOut)
-
-	// 接口 ==================================================
-	apiGroup := router.Group("/api")
-
-	employeeGroup := apiGroup.Group("/employee")
-	employeeGroup.PUT("/add", employeeController.Add)
-
-	return router.GetHandler(), nil
-}
 
 func init() {
 	if err := cjungo.LoadEnv(); err != nil {
@@ -105,11 +65,7 @@ func main() {
 		}
 
 		// 提供控制器
-		if err := container.ProvideController([]any{
-			ext.NewCaptchaController,
-			controller.NewLoginController,
-			controller.NewEmployeeController,
-		}); err != nil {
+		if err := container.ProvideController(controllerProviders); err != nil {
 			return err
 		}
 		// 提供路由
