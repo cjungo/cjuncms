@@ -1,6 +1,10 @@
 <template>
   <div class="index-page">
-    <v-chart class="chart" :option="option" />
+    <ElAutoResizer>
+      <template #default>
+        <v-chart class="chart" :option="option" />
+      </template>
+    </ElAutoResizer>
   </div>
 </template>
 
@@ -64,3 +68,9 @@ const option = ref({
   ],
 });
 </script>
+
+<style lang="scss" scoped>
+.index-page {
+  flex-grow: 1;
+}
+</style>

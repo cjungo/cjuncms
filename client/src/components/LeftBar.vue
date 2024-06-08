@@ -1,23 +1,29 @@
 <template>
   <div class="left-bar">
     <ElMenu
+      class="left-bar-menu"
       :default-active="appStore.leftBar.defaultActive"
       :collapse="appStore.leftBar.isCollapse"
       @open="onMenuOpen"
       @close="onMenuClose"
     >
-      <template v-for="item in items">
-        <ElMenuItem v-if="isEmpty(item.children)" @click="onItemClick(item)">
+      <template v-for="(item, i) in items">
+        <ElMenuItem
+          v-if="isEmpty(item.children)"
+          :index="`${i}`"
+          @click="onItemClick(item)"
+        >
           <ElIcon><IEpMenu /></ElIcon>
           <span>{{ item.title }}</span>
         </ElMenuItem>
-        <ElSubMenu v-else>
+        <ElSubMenu :index="`${i}`" v-else>
           <template #title>
             <ElIcon><IEpMenu /></ElIcon>
-            <spen>{{ item.title }}</spen>
+            <span>{{ item.title }}</span>
           </template>
           <ElMenuItem
-            v-for="subItem in item.children"
+            v-for="(subItem, j) in item.children"
+            :index="`${i}-${j}`"
             @click="onItemClick(subItem)"
           >
             <ElIcon><IEpMenu /></ElIcon>
@@ -96,5 +102,9 @@ const onItemClick = (item: LeftBarItem) => {
   // border-right: 1px solid #4444;
 
   --bg-color: #4444;
+}
+
+.left-bar-menu {
+  height: 100%;
 }
 </style>
