@@ -34,6 +34,7 @@ func newCjEmployee(db *gorm.DB, opts ...gen.DOOption) cjEmployee {
 	_cjEmployee.Nickname = field.NewString(tableName, "nickname")
 	_cjEmployee.Fullname = field.NewString(tableName, "fullname")
 	_cjEmployee.Birthday = field.NewTime(tableName, "birthday")
+	_cjEmployee.AvatarPath = field.NewString(tableName, "avatar_path")
 	_cjEmployee.IsRemoved = field.NewUint32(tableName, "is_removed")
 
 	_cjEmployee.fillFieldMap()
@@ -45,15 +46,16 @@ func newCjEmployee(db *gorm.DB, opts ...gen.DOOption) cjEmployee {
 type cjEmployee struct {
 	cjEmployeeDo cjEmployeeDo
 
-	ALL       field.Asterisk
-	ID        field.Uint32
-	Jobnumber field.String
-	Username  field.String
-	Password  field.Bytes
-	Nickname  field.String
-	Fullname  field.String
-	Birthday  field.Time
-	IsRemoved field.Uint32
+	ALL        field.Asterisk
+	ID         field.Uint32 // ID
+	Jobnumber  field.String // 工号
+	Username   field.String // 用户名
+	Password   field.Bytes  // 密码
+	Nickname   field.String // 昵称
+	Fullname   field.String // 全称
+	Birthday   field.Time   // 生日
+	AvatarPath field.String // 头像路径
+	IsRemoved  field.Uint32 // 是否删除
 
 	fieldMap map[string]field.Expr
 }
@@ -77,6 +79,7 @@ func (c *cjEmployee) updateTableName(table string) *cjEmployee {
 	c.Nickname = field.NewString(table, "nickname")
 	c.Fullname = field.NewString(table, "fullname")
 	c.Birthday = field.NewTime(table, "birthday")
+	c.AvatarPath = field.NewString(table, "avatar_path")
 	c.IsRemoved = field.NewUint32(table, "is_removed")
 
 	c.fillFieldMap()
@@ -104,7 +107,7 @@ func (c *cjEmployee) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (c *cjEmployee) fillFieldMap() {
-	c.fieldMap = make(map[string]field.Expr, 8)
+	c.fieldMap = make(map[string]field.Expr, 9)
 	c.fieldMap["id"] = c.ID
 	c.fieldMap["jobnumber"] = c.Jobnumber
 	c.fieldMap["username"] = c.Username
@@ -112,6 +115,7 @@ func (c *cjEmployee) fillFieldMap() {
 	c.fieldMap["nickname"] = c.Nickname
 	c.fieldMap["fullname"] = c.Fullname
 	c.fieldMap["birthday"] = c.Birthday
+	c.fieldMap["avatar_path"] = c.AvatarPath
 	c.fieldMap["is_removed"] = c.IsRemoved
 }
 

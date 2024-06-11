@@ -66,7 +66,7 @@ router.beforeEach(async (to) => {
   // 登录状态
   if (to.path.startsWith("/login")) {
     if (!isEmpty(auth.token)) {
-      return { path: "/" };
+      return { path: "/index" };
     }
   } else {
     if (isEmpty(auth.token)) {

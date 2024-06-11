@@ -1,14 +1,23 @@
 <template>
   <div class="top-bar">
-    <ElMenu class="top-bar-menu" mode="horizontal" :default-active="appStore.topBar.defaultActive">
+    <ElMenu
+      class="top-bar-menu"
+      mode="horizontal"
+      :ellipsis="false"
+      :default-active="appStore.topBar.defaultActive"
+    >
       <ElMenuItem index="0">
-        <img alt="logo" src="/vite.svg" style="height: 90%" />
+        <div class="top-bar-head">
+          <img alt="logo" src="/vite.svg" style="height: 50%" />
+        </div>
       </ElMenuItem>
       <div style="flex-grow: 1"></div>
-      <ElMenuItem index="1">
-        <img alt="logo" src="/vite.svg" style="height: 90%" />
+      <ElMenuItem v-for="(item, i) in items" :index="`${i + 1}`">
+        {{ item.title }}
       </ElMenuItem>
-      
+      <ElMenuItem :index="`${items.length + 1}`">
+        <UserBar/>
+      </ElMenuItem>
     </ElMenu>
   </div>
 </template>
@@ -17,7 +26,7 @@
 import { reactive } from "vue";
 import { useAppStore } from "../stores/AppStore";
 
-export type TopBarItem = {
+type TopBarItem = {
   title: string;
   permissions?: [string];
 };
@@ -37,7 +46,13 @@ const items = reactive<[TopBarItem]>([
   flex-direction: row;
   width: 100%;
 }
-.top-bar-menu{
+.top-bar-menu {
   width: 100%;
+}
+
+.top-bar-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

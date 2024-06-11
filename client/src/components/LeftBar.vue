@@ -13,12 +13,18 @@
           :index="`${i}`"
           @click="onItemClick(item)"
         >
-          <ElIcon><IEpMenu /></ElIcon>
+          <ElIcon>
+            <component v-if="item.icon" :is="item.icon" />
+            <IEpMenu v-else />
+          </ElIcon>
           <span>{{ item.title }}</span>
         </ElMenuItem>
         <ElSubMenu :index="`${i}`" v-else>
           <template #title>
-            <ElIcon><IEpMenu /></ElIcon>
+            <ElIcon>
+              <component v-if="item.icon" :is="item.icon" />
+              <IEpMenu v-else />
+            </ElIcon>
             <span>{{ item.title }}</span>
           </template>
           <ElMenuItem
@@ -26,7 +32,10 @@
             :index="`${i}-${j}`"
             @click="onItemClick(subItem)"
           >
-            <ElIcon><IEpMenu /></ElIcon>
+            <ElIcon>
+              <component v-if="subItem.icon" :is="subItem.icon" />
+              <IEpMenu v-else />
+            </ElIcon>
             <span>{{ subItem.title }}</span>
           </ElMenuItem>
         </ElSubMenu>
@@ -36,13 +45,22 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive, shallowRef } from "vue";
 import { isEmpty } from "lodash";
 import { useAppStore } from "../stores/AppStore";
+import { Cpu, Box, Setting, Star, Files, User } from "@element-plus/icons-vue";
+
+const iconSetting = shallowRef(Setting);
+const iconCpu = shallowRef(Cpu);
+const iconBox = shallowRef(Box);
+const iconStar = shallowRef(Star);
+const iconFiles = shallowRef(Files);
+const iconUser = shallowRef(User);
 
 export type LeftBarItem = {
   title: string;
   path?: string;
+  icon?: Component;
   permissions?: [string];
   children?: Array<LeftBarItem>;
 };
@@ -52,31 +70,38 @@ const appStore = useAppStore();
 const items = reactive<Array<LeftBarItem>>([
   {
     title: "员工管理",
+    icon: iconUser,
     children: [
       {
         title: "员工列表",
+        icon: iconUser,
         path: "/employee/index",
       },
     ],
   },
   {
     title: "项目管理",
+    icon: iconBox,
     children: [
       {
         title: "项目列表",
+        icon: iconFiles,
         path: "/project/index",
       },
       {
         title: "命令行",
+        icon: iconCpu,
         path: "/setting/shell",
       },
     ],
   },
   {
     title: "设置",
+    icon: iconSetting,
     children: [
       {
         title: "我的",
+        icon: iconStar,
         path: "/setting/profile",
       },
     ],

@@ -17,32 +17,23 @@ import (
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:                   db,
-		CjEmployee:           newCjEmployee(db, opts...),
-		CjEmployeePermission: newCjEmployeePermission(db, opts...),
-		CjOperation:          newCjOperation(db, opts...),
-		CjPermission:         newCjPermission(db, opts...),
+		db:         db,
+		CjEmployee: newCjEmployee(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	CjEmployee           cjEmployee
-	CjEmployeePermission cjEmployeePermission
-	CjOperation          cjOperation
-	CjPermission         cjPermission
+	CjEmployee cjEmployee
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:                   db,
-		CjEmployee:           q.CjEmployee.clone(db),
-		CjEmployeePermission: q.CjEmployeePermission.clone(db),
-		CjOperation:          q.CjOperation.clone(db),
-		CjPermission:         q.CjPermission.clone(db),
+		db:         db,
+		CjEmployee: q.CjEmployee.clone(db),
 	}
 }
 
@@ -56,27 +47,18 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:                   db,
-		CjEmployee:           q.CjEmployee.replaceDB(db),
-		CjEmployeePermission: q.CjEmployeePermission.replaceDB(db),
-		CjOperation:          q.CjOperation.replaceDB(db),
-		CjPermission:         q.CjPermission.replaceDB(db),
+		db:         db,
+		CjEmployee: q.CjEmployee.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	CjEmployee           *cjEmployeeDo
-	CjEmployeePermission *cjEmployeePermissionDo
-	CjOperation          *cjOperationDo
-	CjPermission         *cjPermissionDo
+	CjEmployee *cjEmployeeDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		CjEmployee:           q.CjEmployee.WithContext(ctx),
-		CjEmployeePermission: q.CjEmployeePermission.WithContext(ctx),
-		CjOperation:          q.CjOperation.WithContext(ctx),
-		CjPermission:         q.CjPermission.WithContext(ctx),
+		CjEmployee: q.CjEmployee.WithContext(ctx),
 	}
 }
 

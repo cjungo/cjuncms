@@ -58,6 +58,8 @@ const onSubmit = async () => {
   if (loginResult.status == 200 && loginResult.data.code == 0) {
     console.log("login result", loginResult);
     auth.token = loginResult.data.data.token;
+    auth.permissions = loginResult.data.data.permissions;
+    auth.user = loginResult.data.data.user;
     router.push("/");
   }
 };

@@ -36,8 +36,9 @@ type SignInParam struct {
 }
 
 type SignInResult struct {
-	Token       string `json:"token" example:"xxx"`
-	Permissions []string
+	Token       string            `json:"token" example:"xxx"`
+	Permissions []string          `json:"permissions" example:""`
+	User        *model.CjEmployee `json:"user" example:""`
 }
 
 // SignIn godoc
@@ -64,13 +65,16 @@ func (controller *SignController) SignIn(ctx cjungo.HttpContext) error {
 		employee := &model.CjEmployee{}
 		password := ext.Sha256(param.Password).Hex()
 		if err := tx.Select("*").
-			Where("username=? AND password=UNHEX(?)", param.Username, password).
+			Where("username=? AND password=UNHEX(?) AND is_removed=0", param.Username, password).
 			Find(&employee).Error; err != nil {
 			return err
 		}
 
 		if employee.ID == 0 {
 			return fmt.Errorf("账号或密码有误")
+		} else {
+			employee.Password = []byte{}
+			result.User = employee
 		}
 
 		var permissions []string
