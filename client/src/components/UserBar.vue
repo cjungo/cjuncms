@@ -1,11 +1,17 @@
 <template>
   <div ref="rootElement" class="user-bar" v-click-outside="onClickOutside">
-    <div v-if="auth.user?.nickname" class="name">{{ auth.user.nickname }}</div>
-    <ElAvatar :size="50" src="/avatar-circle.png" />
-    <ElPopover ref="popoverRef" trigger="click" virtual-triggering persistent :virtual-ref="rootElement">
+    <div v-if="auth.user?.nickname" class="user-bar-name">{{ auth.user.nickname }}</div>
+    <ElAvatar :size="50" :src="avatarUrl" />
+    <ElPopover
+      ref="popoverRef"
+      trigger="click"
+      virtual-triggering
+      persistent
+      :virtual-ref="rootElement"
+    >
       <div class="user-bar-popover-menu-item" @click="onClickSignOut">
         <ElIcon>
-          <IEpSwitchButton/>
+          <IEpSwitchButton />
         </ElIcon>
         <span>登出</span>
       </div>
@@ -14,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, unref } from "vue";
+import { ref, unref, computed } from "vue";
 import { ClickOutside as vClickOutside } from "element-plus";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/AuthStore";
@@ -24,6 +30,10 @@ const popoverRef = ref();
 
 const router = useRouter();
 const auth = useAuthStore();
+
+const avatarUrl = computed(() => {
+  return auth.user?.avatar_path ?? "/avatar-circle.png";
+});
 
 const onClickOutside = () => {
   unref(popoverRef).popperRef?.delayHide?.();
@@ -43,6 +53,10 @@ const onClickSignOut = () => {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.user-bar-name {
+  padding: 0 1em;
 }
 
 .user-bar-popover-menu-item {

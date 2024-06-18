@@ -12,6 +12,7 @@ var Permissions []model.CjPermission
 
 func init() {
 	Permissions = []model.CjPermission{
+		{ID: 10000, ParentID: 0, Tag: "able", Title: "可用"},
 		{ID: 11000, ParentID: 0, Tag: "employee", Title: "员工管理", Level: 0},
 		{ID: 11001, ParentID: 11000, Tag: "employee_find", Title: "员工查看", Level: 1},
 		{ID: 11002, ParentID: 11000, Tag: "employee_edit", Title: "员工修改", Level: 1},

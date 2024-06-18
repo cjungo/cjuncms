@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, shallowRef } from "vue";
+import { Component, reactive, shallowRef } from "vue";
 import { isEmpty } from "lodash";
 import { useAppStore } from "../stores/AppStore";
 import { Cpu, Box, Setting, Star, Files, User } from "@element-plus/icons-vue";

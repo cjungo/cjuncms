@@ -53,9 +53,9 @@ func route(
 	apiGroup := router.Group("/api")
 
 	employeeGroup := apiGroup.Group("/employee")
-	employeeGroup.PUT("/add", employeeController.Add)
+	employeeGroup.PUT("/add", employeeController.Add, permitManager.Permit("employee_edit"))
 
-	machineGroup := apiGroup.Group("/machine")
+	machineGroup := apiGroup.Group("/machine", permitManager.Permit("able"))
 	machineGroup.GET("/cpu/info", machineController.PeekCpuInfo)
 	machineGroup.GET("/cpu/times", machineController.PeekCpuTimes)
 	machineGroup.GET("/virtual-memory", machineController.PeekVirtualMemory)
