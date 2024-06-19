@@ -1,7 +1,7 @@
 import { ApiResult, api } from "../utils/api";
 
 export type User = {
-	id: number;
+  id: number;
   username: string;
   fullname?: string;
   nickname?: string;
@@ -17,12 +17,10 @@ export type LoginParam = {
 
 export type LoginResult = ApiResult<{
   token: string;
-  permissions?: [string];
-  user?: User;
+  permissions: [string];
+  user: User;
 }>;
 
-export const login = async (
-  param: LoginParam
-): Promise<LoginResult> => {
+export const login = async (param: LoginParam): Promise<LoginResult> => {
   return await api.post("/sign/in", param);
 };
