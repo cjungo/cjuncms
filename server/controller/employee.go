@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/cjungo/cjuncms/misc"
@@ -8,22 +9,21 @@ import (
 	"github.com/cjungo/cjungo"
 	"github.com/cjungo/cjungo/db"
 	"github.com/cjungo/cjungo/ext"
-	"github.com/cjungo/cjungo/mid"
 	"gorm.io/gorm"
 )
 
 type EmployeeController struct {
-	mysql         *db.MySql
-	permitManager *mid.PermitManager[string, misc.EmployeeToken]
+	mysql   *db.MySql
+	manager *misc.JwtClaimsManager
 }
 
 func NewEmployeeController(
 	mysql *db.MySql,
-	permitManager *mid.PermitManager[string, misc.EmployeeToken],
+	manager *misc.JwtClaimsManager,
 ) *EmployeeController {
 	return &EmployeeController{
-		mysql:         mysql,
-		permitManager: permitManager,
+		mysql:   mysql,
+		manager: manager,
 	}
 }
 
@@ -50,11 +50,6 @@ func (controller *EmployeeController) Add(ctx cjungo.HttpContext) error {
 		return ctx.RespBad(err)
 	}
 
-	token, ok := controller.permitManager.GetToken(ctx.GetReqID())
-	if !ok {
-		return ctx.RespBadF("not token")
-	}
-
 	employee := &model.CjEmployee{}
 	ext.MoveField(param, employee)
 
@@ -63,13 +58,7 @@ func (controller *EmployeeController) Add(ctx cjungo.HttpContext) error {
 			return err
 		}
 
-		if err := tx.Create(&model.CjOperation{
-			OperatorID:     token.GetToken().EmployeeId,
-			OperatorType:   0,
-			OperateAt:      ctx.GetReqAt(),
-			OperateType:    1,
-			OperateSummary: "",
-		}).Error; err != nil {
+		if err := tx.Create(controller.manager.NewOperation(ctx, 1, "添加员工")).Error; err != nil {
 			return err
 		}
 
@@ -104,11 +93,6 @@ func (controller *EmployeeController) Edit(ctx cjungo.HttpContext) error {
 		return ctx.RespBad(err)
 	}
 
-	token, ok := controller.permitManager.GetToken(ctx.GetReqID())
-	if !ok {
-		return ctx.RespBadF("not token")
-	}
-
 	employee := &model.CjEmployee{}
 	ext.MoveField(param, employee)
 
@@ -117,13 +101,7 @@ func (controller *EmployeeController) Edit(ctx cjungo.HttpContext) error {
 			return err
 		}
 
-		if err := tx.Create(&model.CjOperation{
-			OperatorID:     token.GetToken().EmployeeId,
-			OperatorType:   0,
-			OperateAt:      ctx.GetReqAt(),
-			OperateType:    3,
-			OperateSummary: "",
-		}).Error; err != nil {
+		if err := tx.Create(controller.manager.NewOperation(ctx, 3, "修改员工")).Error; err != nil {
 			return err
 		}
 
@@ -184,11 +162,6 @@ func (controller *EmployeeController) Drop(ctx cjungo.HttpContext) error {
 	}
 	ids := make([]uint32, 0)
 
-	token, ok := controller.permitManager.GetToken(ctx.GetReqID())
-	if !ok {
-		return ctx.RespBadF("not token")
-	}
-
 	if param.ID != nil {
 		ids = append(ids, *param.ID)
 	}
@@ -210,13 +183,7 @@ func (controller *EmployeeController) Drop(ctx cjungo.HttpContext) error {
 		employeeCount := len(employees)
 		operations := make([]model.CjOperation, employeeCount)
 		for i := 0; i < employeeCount; i++ {
-			operations[i] = model.CjOperation{
-				OperatorID:     token.GetToken().EmployeeId,
-				OperatorType:   0,
-				OperateAt:      ctx.GetReqAt(),
-				OperateType:    2,
-				OperateSummary: "",
-			}
+			operations[i] = *controller.manager.NewOperation(ctx, 2, fmt.Sprintf("删除员工 %s", employees[i].Username))
 		}
 
 		if err := tx.CreateInBatches(operations, 100).Error; err != nil {

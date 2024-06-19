@@ -20,3 +20,9 @@ go build
 - client 前端
 - server 后端
 
+##
+
+```bash
+# 更新 cjungo
+go get github.com/cjungo/cjungo
+```

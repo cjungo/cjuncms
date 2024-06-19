@@ -45,6 +45,9 @@ func main() {
 		})); err != nil {
 			return err
 		}
+		if err := container.Provide(misc.NewJwtClaimsManager); err != nil {
+			return err
+		}
 
 		// 提供数据库
 		if err := container.Provide(db.NewMySqlHandle(func(mysql *db.MySql) error {

@@ -36,7 +36,7 @@ func route(
 		return nil, err
 	}
 	publicDir := filepath.Join(here, "public")
-	logger.Info().Str("dir", publicDir).Msg("静态目录")
+	logger.Info().Str("dir", publicDir).Str("action", "静态目录").Msg("[HTTP]")
 
 	router.Static("/", publicDir)
 
