@@ -6,12 +6,12 @@
       @tab-click="onTabClick"
       @tab-remove="onTabRemove"
     >
-      <ElTabPane label="首页"></ElTabPane>
+      <ElTabPane label="首页" name="/index" :closable="false"></ElTabPane>
       <ElTabPane
-        v-for="(item, i) in appStore.tabBar.items"
+        v-for="item in appStore.tabBar.items"
         :label="item.title"
-        :index="item.fullPath"
-        :name="i"
+        :key="item.fullPath"
+        :name="item.fullPath"
         :closable="item.closable"
       ></ElTabPane>
     </ElTabs>
@@ -21,6 +21,7 @@
 <script lang="ts" setup>
 import type { TabsPaneContext, TabPaneName } from "element-plus";
 import { useAppStore } from "../stores/AppStore";
+import router from "../router";
 
 const appStore = useAppStore();
 
@@ -28,17 +29,22 @@ const onTabChange = (name: TabPaneName) => {
   console.log("onTabChange", name);
 };
 
-const onTabClick = (tab: TabsPaneContext, event: Event) => {
-  console.log("onTabClick", tab, event);
+const onTabClick = (ctx: TabsPaneContext, event: Event) => {
+  console.log("onTabClick", ctx, event);
+  router.push(ctx.paneName as string);
 };
 
 const onTabRemove = (name: TabPaneName) => {
   console.log("onTabRemove", name);
+  const index = appStore.tabBar.items.findIndex(
+    (tab) => tab.fullPath == (name as string)
+  );
+  appStore.tabBar.items.splice(index, 1);
 };
 </script>
 
 <style lang="scss" scoped>
 .tab-bar {
-  margin: .5em 1em;
+  margin: 0.5em 1em;
 }
 </style>

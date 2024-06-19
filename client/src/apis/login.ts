@@ -1,9 +1,11 @@
-import { type AxiosResponse } from "axios";
 import { ApiResult, api } from "../utils/api";
 
 export type User = {
+	id: number;
   username: string;
+  fullname?: string;
   nickname?: string;
+  avatar_path?: string;
 };
 
 export type LoginParam = {
@@ -21,6 +23,6 @@ export type LoginResult = ApiResult<{
 
 export const login = async (
   param: LoginParam
-): Promise<AxiosResponse<LoginResult>> => {
+): Promise<LoginResult> => {
   return await api.post("/sign/in", param);
 };

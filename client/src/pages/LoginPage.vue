@@ -49,19 +49,17 @@ const router = useRouter();
 
 const flushCaptcha = async () => {
   const captchaResult = await getCaptchaMath();
-  captchaSrc.value = captchaResult.data.data.image;
-  param.captchaId = captchaResult.data.data.id;
+  captchaSrc.value = captchaResult.data.image;
+  param.captchaId = captchaResult.data.id;
 };
 
 const onSubmit = async () => {
   const loginResult = await login(param);
-  if (loginResult.status == 200 && loginResult.data.code == 0) {
-    console.log("login result", loginResult);
-    auth.token = loginResult.data.data.token;
-    auth.permissions = loginResult.data.data.permissions;
-    auth.user = loginResult.data.data.user;
-    router.push("/");
-  }
+  console.log("login result", loginResult);
+  auth.token = loginResult.data.token;
+  auth.permissions = loginResult.data.permissions!;
+  auth.user = loginResult.data.user!;
+  router.push("/index");
 };
 
 onBeforeMount(async () => {

@@ -45,10 +45,11 @@
 </template>
 
 <script lang="ts" setup>
-import { Component, reactive, shallowRef } from "vue";
+import { type Component, reactive, shallowRef } from "vue";
 import { isEmpty } from "lodash";
 import { useAppStore } from "../stores/AppStore";
 import { Cpu, Box, Setting, Star, Files, User } from "@element-plus/icons-vue";
+import router from "../router";
 
 const iconSetting = shallowRef(Setting);
 const iconCpu = shallowRef(Cpu);
@@ -91,7 +92,7 @@ const items = reactive<Array<LeftBarItem>>([
       {
         title: "命令行",
         icon: iconCpu,
-        path: "/setting/shell",
+        path: "/project/shell",
       },
     ],
   },
@@ -118,6 +119,9 @@ const onMenuClose = (e: any) => {
 
 const onItemClick = (item: LeftBarItem) => {
   console.log("onItemClick", item);
+  if (item.path) {
+    router.push(item.path);
+  }
 };
 </script>
 
