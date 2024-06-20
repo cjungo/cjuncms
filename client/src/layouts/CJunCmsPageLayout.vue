@@ -38,6 +38,7 @@
 
 .cjuncms-page-main {
   display: flex;
+  overflow-x: hidden;
   flex-direction: column;
   flex-grow: 1;
 }

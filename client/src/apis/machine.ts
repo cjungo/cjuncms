@@ -1,4 +1,4 @@
-import { type ApiResult, api } from "../utils/api";
+import { apiGet } from "../utils/api";
 
 export type MachineCpuInfo = {
   cpu: number;
@@ -71,20 +71,14 @@ export type MachineVirtualMemory = {
   anonHugePages: number;
 };
 
-export type GetMachineCpuInfoResult = ApiResult<MachineCpuInfo>;
-export type GetMachineCpuTimesResult = ApiResult<[MachineCpuTime]>;
-export type GetMachineVirtualMemoryResult = ApiResult<MachineVirtualMemory>;
+export const getMachineCpuInfo = apiGet<any, MachineCpuInfo>(
+  "/api/machine/cpu/info"
+);
 
-export const getMachineCpuInfo = async (): Promise<GetMachineCpuInfoResult> => {
-  return await api.get("/api/machine/cpu/info");
-};
+export const getMachineCpuTimes = apiGet<any, [MachineCpuTime]>(
+  "/api/machine/cpu/times"
+);
 
-export const getMachineCpuTimes =
-  async (): Promise<GetMachineCpuTimesResult> => {
-    return await api.get("/api/machine/cpu/times");
-  };
-
-export const getMachineVirtualMemory =
-  async (): Promise<GetMachineVirtualMemoryResult> => {
-    return await api.get("/api/machine/virtual-memory");
-  };
+export const getMachineVirtualMemory = apiGet<any, MachineVirtualMemory>(
+  "/api/machine/virtual-memory"
+);

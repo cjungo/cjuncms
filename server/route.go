@@ -53,7 +53,10 @@ func route(
 	apiGroup := router.Group("/api")
 
 	employeeGroup := apiGroup.Group("/employee")
+	employeeGroup.GET("/query", employeeController.Query, permitManager.Permit("employee_find"))
 	employeeGroup.PUT("/add", employeeController.Add, permitManager.Permit("employee_edit"))
+	employeeGroup.POST("/edit", employeeController.Edit, permitManager.Permit("employee_edit"))
+	employeeGroup.DELETE("/drop", employeeController.Drop, permitManager.Permit("employee_edit"))
 
 	machineGroup := apiGroup.Group("/machine", permitManager.Permit("able"))
 	machineGroup.GET("/cpu/info", machineController.PeekCpuInfo)

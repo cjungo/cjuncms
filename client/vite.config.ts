@@ -20,10 +20,10 @@ export default ({ mode }) => {
     },
     server: {
       proxy: {
-        "/api/": {
+        "/proxy/": {
           target: target,
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ""),
+          rewrite: (path) => path.replace(/^\/proxy/, ""),
         },
       },
     },

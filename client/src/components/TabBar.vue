@@ -2,6 +2,7 @@
   <div class="tab-bar">
     <ElTabs
       v-model="appStore.tabBar.activeName"
+      type="card"
       @tab-change="onTabChange"
       @tab-click="onTabClick"
       @tab-remove="onTabRemove"

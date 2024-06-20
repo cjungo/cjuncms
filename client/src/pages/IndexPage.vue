@@ -1,10 +1,6 @@
 <template>
   <div class="index-page">
-    <ElAutoResizer>
-      <template #default>
-        <v-chart class="chart" :option="option" />
-      </template>
-    </ElAutoResizer>
+    <v-chart class="chart" :option="option" :autoresize="true" />
   </div>
 </template>
 
@@ -114,7 +110,7 @@ const option = computed(() => {
     },
     legend: {
       orient: "vertical",
-      left: "left",
+      left: "4%",
       data: [
         "CPU 系统占用",
         "CPU 用户占用",
@@ -127,8 +123,8 @@ const option = computed(() => {
       {
         name: "CPU",
         type: "pie",
-        radius: ["20%", "40%"],
-        center: ["30%", "50%"],
+        radius: ["10%", "24%"],
+        center: ["30%", "40%"],
         data: [
           { value: cpu.system, name: "CPU 系统占用" },
           { value: cpu.user, name: "CPU 用户占用" },
@@ -145,8 +141,8 @@ const option = computed(() => {
       {
         name: "内存",
         type: "pie",
-        radius: ["20%", "40%"],
-        center: ["70%", "50%"],
+        radius: ["10%", "24%"],
+        center: ["70%", "40%"],
         data: [
           { value: machineVirtualMemory.value.used, name: "内存占用" },
           { value: machineVirtualMemory.value.free, name: "内存空闲" },
@@ -199,14 +195,14 @@ onBeforeRouteLeave(async () => {
 <script lang="ts">
 export default {
   name: "",
-  beforeRouteEnter() {
-    
-  }
-}
+  beforeRouteEnter() {},
+};
 </script>
 
 <style lang="scss" scoped>
 .index-page {
+  width: 100%;
   flex-grow: 1;
+  overflow: hidden;
 }
 </style>

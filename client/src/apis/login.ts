@@ -1,4 +1,4 @@
-import { ApiResult, api } from "../utils/api";
+import { apiPost } from "../utils/api";
 
 export type User = {
   id: number;
@@ -15,12 +15,10 @@ export type LoginParam = {
   captchaAnswer: string;
 };
 
-export type LoginResult = ApiResult<{
+export type Sign = {
   token: string;
   permissions: [string];
   user: User;
-}>;
-
-export const login = async (param: LoginParam): Promise<LoginResult> => {
-  return await api.post("/sign/in", param);
 };
+
+export const login = apiPost<LoginParam, Sign>("/sign/in");
