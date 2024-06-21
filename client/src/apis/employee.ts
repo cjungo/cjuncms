@@ -7,7 +7,7 @@ export type Employee = {
   nickname: string;
   fullname: string;
   birthday: string;
-  avatar_path: string;
+  avatar_path?: string;
   is_removed: number;
 };
 

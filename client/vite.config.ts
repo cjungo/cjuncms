@@ -6,6 +6,7 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import { resolve } from "path";
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -29,6 +30,7 @@ export default ({ mode }) => {
     },
     plugins: [
       vue(),
+      vueJsx(),
       AutoImport({
         resolvers: [
           ElementPlusResolver(),
@@ -40,6 +42,7 @@ export default ({ mode }) => {
       }),
       Components({
         dirs: ["src/dialogs", "src/components", "src/layouts"],
+        include: [/\.vue$/, /\.vue\?vue/, /\.vue\?v=/, /\.[jt]sx$/],
         resolvers: [
           // 自动注册图标组件
           IconsResolver({
