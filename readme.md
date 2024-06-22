@@ -20,9 +20,14 @@ go build
 - client 前端
 - server 后端
 
-##
+## 命令
 
 ```bash
 # 更新 cjungo
 go get github.com/cjungo/cjungo
+```
+
+```bash
+# 多个表
+gentool -db mysql -dsn "root:123456@tcp(localhost:3306)/demo?charset=utf8mb4&parseTime=True&loc=Local" -tables "cj_permission, cj_employee_permission, cj_employee, cj_operation, cj_project, cj_project_employee, cj_pass, cj_script" -modelPkgName="model" -outPath="./entity" -fieldNullable -fieldWithIndexTag -fieldWithTypeTag  -fieldSignable 
 ```

@@ -10,6 +10,7 @@
 
 <style lang="scss" scoped>
 .project-shell-page {
-    
+    display: flex;
+    flex-direction: column;
 }
 </style>

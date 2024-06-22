@@ -17,23 +17,38 @@ import (
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:         db,
-		CjEmployee: newCjEmployee(db, opts...),
+		db:                   db,
+		CjEmployee:           newCjEmployee(db, opts...),
+		CjEmployeePermission: newCjEmployeePermission(db, opts...),
+		CjOperation:          newCjOperation(db, opts...),
+		CjPass:               newCjPass(db, opts...),
+		CjPermission:         newCjPermission(db, opts...),
+		CjProject:            newCjProject(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	CjEmployee cjEmployee
+	CjEmployee           cjEmployee
+	CjEmployeePermission cjEmployeePermission
+	CjOperation          cjOperation
+	CjPass               cjPass
+	CjPermission         cjPermission
+	CjProject            cjProject
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:         db,
-		CjEmployee: q.CjEmployee.clone(db),
+		db:                   db,
+		CjEmployee:           q.CjEmployee.clone(db),
+		CjEmployeePermission: q.CjEmployeePermission.clone(db),
+		CjOperation:          q.CjOperation.clone(db),
+		CjPass:               q.CjPass.clone(db),
+		CjPermission:         q.CjPermission.clone(db),
+		CjProject:            q.CjProject.clone(db),
 	}
 }
 
@@ -47,18 +62,33 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:         db,
-		CjEmployee: q.CjEmployee.replaceDB(db),
+		db:                   db,
+		CjEmployee:           q.CjEmployee.replaceDB(db),
+		CjEmployeePermission: q.CjEmployeePermission.replaceDB(db),
+		CjOperation:          q.CjOperation.replaceDB(db),
+		CjPass:               q.CjPass.replaceDB(db),
+		CjPermission:         q.CjPermission.replaceDB(db),
+		CjProject:            q.CjProject.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	CjEmployee *cjEmployeeDo
+	CjEmployee           *cjEmployeeDo
+	CjEmployeePermission *cjEmployeePermissionDo
+	CjOperation          *cjOperationDo
+	CjPass               *cjPassDo
+	CjPermission         *cjPermissionDo
+	CjProject            *cjProjectDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		CjEmployee: q.CjEmployee.WithContext(ctx),
+		CjEmployee:           q.CjEmployee.WithContext(ctx),
+		CjEmployeePermission: q.CjEmployeePermission.WithContext(ctx),
+		CjOperation:          q.CjOperation.WithContext(ctx),
+		CjPass:               q.CjPass.WithContext(ctx),
+		CjPermission:         q.CjPermission.WithContext(ctx),
+		CjProject:            q.CjProject.WithContext(ctx),
 	}
 }
 

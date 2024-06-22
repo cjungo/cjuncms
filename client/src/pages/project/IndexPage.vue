@@ -9,6 +9,7 @@
 
 <style lang="scss" scoped>
 .project-index-page {
-    
+    display: flex;
+    flex-direction: column;
 }
 </style>

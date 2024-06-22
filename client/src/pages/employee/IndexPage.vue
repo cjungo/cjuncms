@@ -1,25 +1,25 @@
 <template>
   <div class="employee-index-page">
     <div class="employee-info-box">
-      <ElForm :model="current" label-width="auto">
+      <ElForm :model="current" label-width="6em">
         <ElRow>
-          <ElCol :span="4">
+          <ElCol :span="6">
             <ElFormItem label="ID">
               <ElInput :value="current.id" readonly />
             </ElFormItem>
           </ElCol>
-          <ElCol :span="4">
+          <ElCol :span="6">
             <ElFormItem label="用户名">
               <ElInput v-model="current.username" :readonly="isReadonly" />
             </ElFormItem>
           </ElCol>
-          <ElCol :span="4">
-            <ElFormItem lable="工号">
+          <ElCol :span="6">
+            <ElFormItem label="工号">
               <ElInput v-model="current.jobnumber" :readonly="isReadonly" />
             </ElFormItem>
           </ElCol>
-          <ElCol :span="4">
-            <ElFormItem lable="昵称">
+          <ElCol :span="6">
+            <ElFormItem label="昵称">
               <ElInput v-model="current.nickname" :readonly="isReadonly" />
             </ElFormItem>
           </ElCol>
@@ -29,24 +29,39 @@
     <div class="employee-list-box">
       <ElAutoResizer>
         <template #default="{ width, height }">
-          <ElTableV2
-            :columns="columns"
-            :data="rows"
-            :width="width"
-            :height="height"
-            :border="true"
-          >
-          </ElTableV2>
+          <VxeTable :width="width" :height="height" :data="rows">
+            <VxeColumn type="seq" title="#" width="60" />
+            <VxeColumn field="id" title="ID" />
+            <VxeColumn field="jobnumber" title="工号" />
+            <VxeColumn field="username" title="用户名" />
+            <VxeColumn field="fullname" title="全称" />
+            <VxeColumn field="nickname" title="昵称" />
+            <VxeColumn>
+              <ElButtonGroup>
+                <ElButton
+                  @click="onClickEdit"
+                  type="primary"
+                  :icon="Edit"
+                ></ElButton>
+                <ElButton
+                  @click="onClickDelete"
+                  type="danger"
+                  :icon="Delete"
+                ></ElButton>
+              </ElButtonGroup>
+            </VxeColumn>
+          </VxeTable>
         </template>
       </ElAutoResizer>
     </div>
   </div>
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { onBeforeMount, ref } from "vue";
 import { queryEmployee, type Employee } from "../../apis/employee";
-import { TableV2FixedDir, ElButton, type Column } from "element-plus";
+import { ElAutoResizer } from "element-plus";
+import { Delete, Edit } from "@element-plus/icons-vue";
 
 const isReadonly = ref(true);
 const current = ref<Employee>({
@@ -61,47 +76,9 @@ const current = ref<Employee>({
 });
 const rows = ref<Employee[]>([]);
 
-const columns = ref<Column[]>([
-  // {
-  //   key: "id",
-  //   dataKey: "id",
-  //   title: "id",
-  //   width: 100,
-  //   fixed: TableV2FixedDir.LEFT,
-  // },
-  {
-    key: "jobnumber",
-    dataKey: "jobnumber",
-    title: "jobnumber",
-    width: 100,
-  },
-  {
-    key: "username",
-    dataKey: "username",
-    title: "username",
-    width: 100,
-  },
-  {
-    key: "nickname",
-    dataKey: "nickname",
-    title: "nickname",
-    width: 100,
-  },
-  {
-    title: "操作",
-    width: 200,
-    fixed: TableV2FixedDir.RIGHT,
-    cellRenderer: (params) => {
-      return (
-        <>
-          <ElButton type="danger" onClick={() => onClickDelete(params)}>
-            <span>删除</span>
-          </ElButton>
-        </>
-      );
-    },
-  },
-]);
+const onClickEdit = (params: any) => {
+  console.log("onClickEdit", params);
+};
 
 const onClickDelete = (params: any) => {
   console.log("onClickDelete", params);
