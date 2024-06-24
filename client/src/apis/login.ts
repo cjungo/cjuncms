@@ -1,4 +1,4 @@
-import { apiPost } from "../utils/api";
+import { apiGet, apiPost } from "../utils/api";
 
 export type User = {
   id: number;
@@ -22,3 +22,4 @@ export type Sign = {
 };
 
 export const login = apiPost<LoginParam, Sign>("/sign/in");
+export const renewal = apiGet<any, string>("/sign/renewal");

@@ -48,6 +48,7 @@ func route(
 	signGroup := router.Group("/sign")
 	signGroup.POST("/in", signController.SignIn)
 	signGroup.GET("/out", signController.SignOut)
+	signGroup.GET("/renewal", signController.SignRenewal, permitManager.Permit("default"))
 
 	// 接口 ==================================================
 	apiGroup := router.Group("/api")
@@ -58,7 +59,7 @@ func route(
 	employeeGroup.POST("/edit", employeeController.Edit, permitManager.Permit("employee_edit"))
 	employeeGroup.DELETE("/drop", employeeController.Drop, permitManager.Permit("employee_edit"))
 
-	machineGroup := apiGroup.Group("/machine", permitManager.Permit("able"))
+	machineGroup := apiGroup.Group("/machine", permitManager.Permit("default"))
 	machineGroup.GET("/cpu/info", machineController.PeekCpuInfo)
 	machineGroup.GET("/cpu/times", machineController.PeekCpuTimes)
 	machineGroup.GET("/virtual-memory", machineController.PeekVirtualMemory)

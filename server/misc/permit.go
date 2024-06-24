@@ -64,7 +64,10 @@ func EnsureAdmin(tx *gorm.DB) error {
 
 func EnsureEmployeePermissions(tx *gorm.DB, employee *model.CjEmployee) error {
 	epids := []int32{}
-	if err := tx.Table("cj_employee_permission").Select("permission_id").Where("employee_id=?", employee.ID).Find(&epids).Error; err != nil {
+	if err := tx.Table("cj_employee_permission").
+		Select("permission_id").
+		Where("employee_id=?", employee.ID).
+		Find(&epids).Error; err != nil {
 		return err
 	}
 	epidset := mapset.NewSet(epids...)

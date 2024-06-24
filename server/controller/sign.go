@@ -15,15 +15,18 @@ import (
 
 type SignController struct {
 	mysql             *db.MySql
+	manager           *misc.JwtClaimsManager
 	captchaController *ext.CaptchaController
 }
 
 func NewSignController(
 	mysql *db.MySql,
+	manager *misc.JwtClaimsManager,
 	captchaController *ext.CaptchaController,
 ) *SignController {
 	return &SignController{
 		mysql:             mysql,
+		manager:           manager,
 		captchaController: captchaController,
 	}
 }
@@ -128,6 +131,14 @@ func (controller *SignController) SignIn(ctx cjungo.HttpContext) error {
 	}
 
 	return ctx.Resp(result)
+}
+
+func (controller *SignController) SignRenewal(ctx cjungo.HttpContext) error {
+	token, err := controller.manager.Renewal(ctx)
+	if err != nil {
+		return ctx.RespBad(err)
+	}
+	return ctx.Resp(token)
 }
 
 func (controller *SignController) SignOut(ctx cjungo.HttpContext) error {

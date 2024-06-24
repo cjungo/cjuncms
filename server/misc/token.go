@@ -1,8 +1,12 @@
 package misc
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/cjungo/cjuncms/model"
 	"github.com/cjungo/cjungo"
+	"github.com/cjungo/cjungo/ext"
 	"github.com/cjungo/cjungo/mid"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -36,6 +40,23 @@ func NewJwtClaimsManager(
 	return &JwtClaimsManager{
 		permitManager: permitManager,
 	}
+}
+
+func (manager *JwtClaimsManager) Renewal(ctx cjungo.HttpContext) (string, error) {
+	proof, ok := manager.permitManager.GetProof(ctx)
+	if !ok {
+		return "", fmt.Errorf("proof 无效")
+	}
+	claims, ok := proof.(*JwtClaims)
+	if !ok {
+		return "", fmt.Errorf("proof 不是 JwtClaims 类型")
+	}
+	claims.RegisteredClaims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(24 * time.Hour))
+	token, err := ext.MakeJwtToken(claims)
+	if err != nil {
+		return "", err
+	}
+	return token, nil
 }
 
 func (manager *JwtClaimsManager) NewOperation(

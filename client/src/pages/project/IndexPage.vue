@@ -1,6 +1,12 @@
 <template>
     <div class="project-index-page">
+        <div class="project-info-box">
 
+        </div>
+        <div class="project-list-box">
+            <VxeTable>
+            </VxeTable>
+        </div>
     </div>
 </template>
 

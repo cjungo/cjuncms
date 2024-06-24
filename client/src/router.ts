@@ -63,6 +63,11 @@ router.beforeEach(async (to) => {
   const app = useAppStore();
   const auth = useAuthStore();
 
+  // 标题
+  if (to.meta?.title) {
+    document.title = to.meta.title as string;
+  }
+
   // 登录状态
   if (to.path.startsWith("/login")) {
     if (!isEmpty(auth.token)) {
@@ -72,11 +77,6 @@ router.beforeEach(async (to) => {
     if (isEmpty(auth.token)) {
       return { path: "/login" };
     }
-  }
-
-  // 标题
-  if (to.meta?.title) {
-    document.title = to.meta.title as string;
   }
 
   // 标签

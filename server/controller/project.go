@@ -22,5 +22,9 @@ type ProjectQueryParam struct {
 }
 
 func (controller *ProjectController) Query(ctx cjungo.HttpContext) error {
+	param := ProjectQueryParam{}
+	if err := ctx.Bind(&param); err != nil {
+		return ctx.RespBad(err)
+	}
 	return ctx.RespOk()
 }
