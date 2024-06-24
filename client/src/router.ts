@@ -79,11 +79,15 @@ router.beforeEach(async (to) => {
     }
   }
 
+  // 左边栏
+
+
   // 标签
   if (to.meta?.tabMode == "single") {
     const tab = app.tabBar.items.find((tab) => tab.fullPath == to.fullPath);
-    console.log("tab", to.meta, tab, app.tabBar);
+    console.log("tab", to.meta, tab);
     if (tab) {
+      app.tabBar.activeName = tab.fullPath;
     } else {
       app.tabBar.items.push({
         fullPath: to.fullPath,
