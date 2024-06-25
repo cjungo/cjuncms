@@ -59,9 +59,19 @@ func (manager *JwtClaimsManager) Renewal(ctx cjungo.HttpContext) (string, error)
 	return token, nil
 }
 
+type OperateType uint32
+
+const (
+	OPT_LOGIN OperateType = 0
+	OPT_ADD   OperateType = 1
+	OPT_DROP  OperateType = 2
+	OPT_EDIT  OperateType = 3
+	OPT_QUERY OperateType = 4
+)
+
 func (manager *JwtClaimsManager) NewOperation(
 	ctx cjungo.HttpContext,
-	operateType uint32,
+	operateType OperateType,
 	operateSummary string,
 ) *model.CjOperation {
 	proof, ok := manager.permitManager.GetProof(ctx)
@@ -72,7 +82,7 @@ func (manager *JwtClaimsManager) NewOperation(
 		OperatorID:     proof.GetStore().EmployeeId,
 		OperatorType:   0,
 		OperateAt:      ctx.GetReqAt(),
-		OperateType:    operateType,
+		OperateType:    uint32(operateType),
 		OperateSummary: operateSummary,
 	}
 }

@@ -24,6 +24,8 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		CjPass:               newCjPass(db, opts...),
 		CjPermission:         newCjPermission(db, opts...),
 		CjProject:            newCjProject(db, opts...),
+		CjProjectEmployee:    newCjProjectEmployee(db, opts...),
+		CjScript:             newCjScript(db, opts...),
 	}
 }
 
@@ -36,6 +38,8 @@ type Query struct {
 	CjPass               cjPass
 	CjPermission         cjPermission
 	CjProject            cjProject
+	CjProjectEmployee    cjProjectEmployee
+	CjScript             cjScript
 }
 
 func (q *Query) Available() bool { return q.db != nil }
@@ -49,6 +53,8 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		CjPass:               q.CjPass.clone(db),
 		CjPermission:         q.CjPermission.clone(db),
 		CjProject:            q.CjProject.clone(db),
+		CjProjectEmployee:    q.CjProjectEmployee.clone(db),
+		CjScript:             q.CjScript.clone(db),
 	}
 }
 
@@ -69,6 +75,8 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		CjPass:               q.CjPass.replaceDB(db),
 		CjPermission:         q.CjPermission.replaceDB(db),
 		CjProject:            q.CjProject.replaceDB(db),
+		CjProjectEmployee:    q.CjProjectEmployee.replaceDB(db),
+		CjScript:             q.CjScript.replaceDB(db),
 	}
 }
 
@@ -79,6 +87,8 @@ type queryCtx struct {
 	CjPass               *cjPassDo
 	CjPermission         *cjPermissionDo
 	CjProject            *cjProjectDo
+	CjProjectEmployee    *cjProjectEmployeeDo
+	CjScript             *cjScriptDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
@@ -89,6 +99,8 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		CjPass:               q.CjPass.WithContext(ctx),
 		CjPermission:         q.CjPermission.WithContext(ctx),
 		CjProject:            q.CjProject.WithContext(ctx),
+		CjProjectEmployee:    q.CjProjectEmployee.WithContext(ctx),
+		CjScript:             q.CjScript.WithContext(ctx),
 	}
 }
 

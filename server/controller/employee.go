@@ -58,7 +58,7 @@ func (controller *EmployeeController) Add(ctx cjungo.HttpContext) error {
 			return err
 		}
 
-		if err := tx.Create(controller.manager.NewOperation(ctx, 1, "添加员工")).Error; err != nil {
+		if err := tx.Create(controller.manager.NewOperation(ctx, misc.OPT_ADD, "添加员工")).Error; err != nil {
 			return err
 		}
 
@@ -101,7 +101,7 @@ func (controller *EmployeeController) Edit(ctx cjungo.HttpContext) error {
 			return err
 		}
 
-		if err := tx.Create(controller.manager.NewOperation(ctx, 3, "修改员工")).Error; err != nil {
+		if err := tx.Create(controller.manager.NewOperation(ctx, misc.OPT_EDIT, "修改员工")).Error; err != nil {
 			return err
 		}
 
@@ -114,6 +114,8 @@ func (controller *EmployeeController) Edit(ctx cjungo.HttpContext) error {
 }
 
 type EmployeeQueryParam struct {
+	Skip  int     `json:"skip" validate:"optional" example:"0"`
+	Take  int     `json:"take" validate:"optional" example:"100"`
 	Plain *string `json:"plain" validate:"optional" example:"管理员"`
 }
 
@@ -143,8 +145,16 @@ func (controller *EmployeeController) Query(ctx cjungo.HttpContext) error {
 	}
 
 	var rows []model.CjEmployee
-	if err := tx.Find(&rows).Error; err != nil {
+	if err := tx.
+		Offset(param.Skip).
+		Limit(param.Take).
+		Find(&rows).
+		Error; err != nil {
 		return ctx.RespBad(err)
+	}
+
+	if err := tx.Create(controller.manager.NewOperation(ctx, misc.OPT_QUERY, "查找员工")).Error; err != nil {
+		return err
 	}
 
 	return ctx.Resp(rows)
@@ -183,7 +193,7 @@ func (controller *EmployeeController) Drop(ctx cjungo.HttpContext) error {
 		employeeCount := len(employees)
 		operations := make([]model.CjOperation, employeeCount)
 		for i := 0; i < employeeCount; i++ {
-			operations[i] = *controller.manager.NewOperation(ctx, 2, fmt.Sprintf("删除员工 %s", employees[i].Username))
+			operations[i] = *controller.manager.NewOperation(ctx, misc.OPT_DROP, fmt.Sprintf("删除员工 %s", employees[i].Username))
 		}
 
 		if err := tx.CreateInBatches(operations, 100).Error; err != nil {

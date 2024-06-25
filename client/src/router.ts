@@ -80,7 +80,7 @@ router.beforeEach(async (to) => {
   }
 
   // 左边栏
-
+  app.leftBar.defaultActive = to.fullPath;
 
   // 标签
   if (to.meta?.tabMode == "single") {

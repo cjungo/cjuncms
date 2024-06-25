@@ -12,6 +12,8 @@ export type Employee = {
 };
 
 export type QueryEmployeeParam = {
+  skip: number;
+  take: number;
   plain: string;
 };
 

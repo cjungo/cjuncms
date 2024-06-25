@@ -29,7 +29,7 @@
           </template>
           <ElMenuItem
             v-for="(subItem, j) in item.children"
-            :index="`${i}-${j}`"
+            :index="item.path || `${i}-${j}`"
             @click="onItemClick(subItem)"
           >
             <ElIcon>
