@@ -132,10 +132,13 @@ func (controller *EmployeeController) Query(ctx cjungo.HttpContext) error {
 	if err := ctx.Bind(param); err != nil {
 		return ctx.RespBad(err)
 	}
+	if param.Take == 0 {
+		param.Take = 100
+	}
 
-	tx := controller.mysql.Where("is_removed=?", 0)
+	query := controller.mysql.Where("is_removed=?", 0)
 	if param.Plain != nil {
-		tx = tx.Where(
+		query = query.Where(
 			"username=? OR nickname=? OR fullname=? OR jobnumber=?",
 			param.Plain,
 			param.Plain,
@@ -145,7 +148,7 @@ func (controller *EmployeeController) Query(ctx cjungo.HttpContext) error {
 	}
 
 	var rows []model.CjEmployee
-	if err := tx.
+	if err := query.
 		Offset(param.Skip).
 		Limit(param.Take).
 		Find(&rows).
@@ -153,8 +156,10 @@ func (controller *EmployeeController) Query(ctx cjungo.HttpContext) error {
 		return ctx.RespBad(err)
 	}
 
-	if err := tx.Create(controller.manager.NewOperation(ctx, misc.OPT_QUERY, "查找员工")).Error; err != nil {
-		return err
+	if err := controller.mysql.Create(
+		controller.manager.NewOperation(ctx, misc.OPT_QUERY, "查找员工"),
+	).Error; err != nil {
+		return ctx.RespBad(err)
 	}
 
 	return ctx.Resp(rows)

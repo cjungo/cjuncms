@@ -59,6 +59,12 @@ func route(
 	employeeGroup.POST("/edit", employeeController.Edit, permitManager.Permit("employee_edit"))
 	employeeGroup.DELETE("/drop", employeeController.Drop, permitManager.Permit("employee_edit"))
 
+	projectGroup := apiGroup.Group("/project")
+	projectGroup.GET("/query", projectController.Query, permitManager.Permit("project_find"))
+	projectGroup.PUT("/add", projectController.Add, permitManager.Permit("project_edit"))
+	projectGroup.POST("/edit", projectController.Edit, permitManager.Permit("project_edit"))
+	projectGroup.DELETE("/drop", projectController.Drop, permitManager.Permit("project_edit"))
+
 	machineGroup := apiGroup.Group("/machine", permitManager.Permit("default"))
 	machineGroup.GET("/cpu/info", machineController.PeekCpuInfo)
 	machineGroup.GET("/cpu/times", machineController.PeekCpuTimes)
