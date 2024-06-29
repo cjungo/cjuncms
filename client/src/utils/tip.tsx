@@ -22,11 +22,14 @@ export const tipSubscribe = (appContext: AppContext) => {
   });
 
   tipError.subscribe({
-    next: (error) => {
-      console.log("next", error, appContext);
+    next: (error: any) => {
+      let message = error.response?.data?.message;
+      if (!message) {
+        message = error.message;
+      }
       ElMessage(
         {
-          message: <p>{error.message}</p>,
+          message: <p>{message}</p>,
           grouping: true,
           type: "error",
         },

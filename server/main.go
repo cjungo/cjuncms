@@ -37,7 +37,12 @@ func main() {
 		if err := container.Provide(mid.NewPermitManager(func(ctx cjungo.HttpContext) (mid.PermitProof[string, misc.EmployeeToken], error) {
 			claims := &misc.JwtClaims{}
 			if _, err := ext.ParseJwtToken(ctx, claims); err != nil {
-				return nil, err
+				return nil, &cjungo.ApiError{
+					Code:     misc.API_ERR_TOKEN_INVALID,
+					Message:  "TOKEN 无效",
+					HttpCode: 400,
+					Reason:   err,
+				}
 			}
 			return claims, nil
 		})); err != nil {

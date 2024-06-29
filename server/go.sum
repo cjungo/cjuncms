@@ -23,6 +23,8 @@ github.com/cjungo/cjungo v0.0.0-20240626073523-075d70bb5628 h1:P9zDx5NVsCdTKBbpD
 github.com/cjungo/cjungo v0.0.0-20240626073523-075d70bb5628/go.mod h1:FTQT3Rr+FIT3HUmupkwOXOqrTD4JP209HdFomVBoaow=
 github.com/cjungo/cjungo v0.0.0-20240629024114-e93fffb5c188 h1:zNULvrt5m+anllaDYoE82o1zTWAUkFh/BSIaCB/EdlU=
 github.com/cjungo/cjungo v0.0.0-20240629024114-e93fffb5c188/go.mod h1:FTQT3Rr+FIT3HUmupkwOXOqrTD4JP209HdFomVBoaow=
+github.com/cjungo/cjungo v0.0.0-20240629072041-00fc0c72e99d h1:SVAgWIANEawjGhkgcy6vrS7PIj6a0N2hzT+ctNDdKEw=
+github.com/cjungo/cjungo v0.0.0-20240629072041-00fc0c72e99d/go.mod h1:FTQT3Rr+FIT3HUmupkwOXOqrTD4JP209HdFomVBoaow=
 github.com/coreos/etcd v3.3.27+incompatible h1:QIudLb9KeBsE5zyYxd1mjzRSkzLg9Wf9QlRwFgd6oTA=
 github.com/coreos/etcd v3.3.27+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/go-semver v0.3.1 h1:yi21YpKnrx1gt5R+la8n5WgS0kCrsPp33dmEyHReZr4=

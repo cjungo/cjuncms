@@ -6,6 +6,7 @@ import axios, {
 import { useAuthStore } from "../stores/AuthStore";
 import { isEmpty } from "lodash";
 import { tipError } from "./tip";
+import router from "../router";
 
 export const API_BASE_URL =
   process.env.NODE_ENV == "production" ? "" : "/proxy";
@@ -39,6 +40,13 @@ export class ApiClient {
         return response;
       },
       async (error: any): Promise<any> => {
+        const result = error.response.data;
+        console.log('result', result);
+        if (result.code == -4) {
+          const auth = useAuthStore();
+          auth.token = "";
+          await router.replace("/login");
+        }
         tipError.next(error);
         return Promise.reject(error);
       }
