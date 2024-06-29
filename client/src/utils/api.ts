@@ -5,7 +5,7 @@ import axios, {
 } from "axios";
 import { useAuthStore } from "../stores/AuthStore";
 import { isEmpty } from "lodash";
-import { ElMessage } from "element-plus";
+import { tipError } from "./tip";
 
 export const API_BASE_URL =
   process.env.NODE_ENV == "production" ? "" : "/proxy";
@@ -39,11 +39,7 @@ export class ApiClient {
         return response;
       },
       async (error: any): Promise<any> => {
-        ElMessage({
-          message: error,
-          grouping: true,
-          type: "error",
-        });
+        tipError.next(error);
         return Promise.reject(error);
       }
     );

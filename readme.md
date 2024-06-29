@@ -15,6 +15,12 @@ go run .
 go build
 ```
 
+```bash
+# 执行 fake 命令
+go run ./cmds/fake_employee
+go run ./cmds/fake_project
+```
+
 ## 目录
 
 - client 前端

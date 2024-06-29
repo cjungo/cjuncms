@@ -4,18 +4,22 @@
   </ElConfigProvider>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
-import { onBeforeMount } from "vue";
+import { getCurrentInstance, onBeforeMount } from "vue";
 import { delay } from "./utils/time";
 import { useAuthStore } from "./stores/AuthStore";
 import { isEmpty } from "lodash";
 import { renewal } from "./apis/login";
+import { tipSubscribe } from "./utils/tip";
 
 const EL_LOCALE = zhCn;
 const EL_SIZE = "small";
 const EL_ZINDEX = 4000;
+
+const { appContext } = getCurrentInstance()!;
+tipSubscribe(appContext);
 
 onBeforeMount(async () => {
   const auth = useAuthStore();

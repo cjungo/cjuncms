@@ -3,13 +3,11 @@ package main
 import (
 	"log"
 
-	"github.com/cjungo/cjuncms/entity"
 	"github.com/cjungo/cjuncms/misc"
 	"github.com/cjungo/cjungo"
 	"github.com/cjungo/cjungo/db"
 	"github.com/cjungo/cjungo/ext"
 	"github.com/cjungo/cjungo/mid"
-	"gorm.io/gorm"
 
 	_ "github.com/cjungo/cjuncms/docs"
 )
@@ -50,25 +48,12 @@ func main() {
 		}
 
 		// 提供数据库
-		if err := container.Provide(db.NewMySqlHandle(func(mysql *db.MySql) error {
-			entity.Use(mysql.DB)
-			return mysql.Transaction(func(tx *gorm.DB) error {
-				if err := misc.EnsurePermissions(tx); err != nil {
-					return err
-				}
-
-				if err := misc.EnsureAdmin(tx); err != nil {
-					return err
-				}
-
-				return nil
-			})
-		})); err != nil {
+		if err := container.Provide(misc.ProvideMysql()); err != nil {
 			return err
 		}
 
 		// 提供控制器
-		if err := container.ProvideController(controllerProviders); err != nil {
+		if err := container.Provides(controllerProviders...); err != nil {
 			return err
 		}
 		// 提供路由

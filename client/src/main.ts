@@ -5,6 +5,7 @@ import VxeUITable from 'vxe-table'
 import 'vxe-table/lib/style.css'
 import "normalize.css";
 import "./style.css";
+import "element-plus/theme-chalk/src/message.scss";
 import App from "./App.vue";
 import router from "./router";
 
