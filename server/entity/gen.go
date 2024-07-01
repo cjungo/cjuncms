@@ -17,44 +17,50 @@ import (
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:                   db,
-		CjEmployee:           newCjEmployee(db, opts...),
-		CjEmployeePermission: newCjEmployeePermission(db, opts...),
-		CjOperation:          newCjOperation(db, opts...),
-		CjPass:               newCjPass(db, opts...),
-		CjPermission:         newCjPermission(db, opts...),
-		CjProject:            newCjProject(db, opts...),
-		CjProjectEmployee:    newCjProjectEmployee(db, opts...),
-		CjScript:             newCjScript(db, opts...),
+		db:                     db,
+		CjEmployee:             newCjEmployee(db, opts...),
+		CjEmployeePermission:   newCjEmployeePermission(db, opts...),
+		CjMachineCPUTime:       newCjMachineCPUTime(db, opts...),
+		CjMachineVirtualMemory: newCjMachineVirtualMemory(db, opts...),
+		CjOperation:            newCjOperation(db, opts...),
+		CjPass:                 newCjPass(db, opts...),
+		CjPermission:           newCjPermission(db, opts...),
+		CjProject:              newCjProject(db, opts...),
+		CjProjectEmployee:      newCjProjectEmployee(db, opts...),
+		CjScript:               newCjScript(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	CjEmployee           cjEmployee
-	CjEmployeePermission cjEmployeePermission
-	CjOperation          cjOperation
-	CjPass               cjPass
-	CjPermission         cjPermission
-	CjProject            cjProject
-	CjProjectEmployee    cjProjectEmployee
-	CjScript             cjScript
+	CjEmployee             cjEmployee
+	CjEmployeePermission   cjEmployeePermission
+	CjMachineCPUTime       cjMachineCPUTime
+	CjMachineVirtualMemory cjMachineVirtualMemory
+	CjOperation            cjOperation
+	CjPass                 cjPass
+	CjPermission           cjPermission
+	CjProject              cjProject
+	CjProjectEmployee      cjProjectEmployee
+	CjScript               cjScript
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:                   db,
-		CjEmployee:           q.CjEmployee.clone(db),
-		CjEmployeePermission: q.CjEmployeePermission.clone(db),
-		CjOperation:          q.CjOperation.clone(db),
-		CjPass:               q.CjPass.clone(db),
-		CjPermission:         q.CjPermission.clone(db),
-		CjProject:            q.CjProject.clone(db),
-		CjProjectEmployee:    q.CjProjectEmployee.clone(db),
-		CjScript:             q.CjScript.clone(db),
+		db:                     db,
+		CjEmployee:             q.CjEmployee.clone(db),
+		CjEmployeePermission:   q.CjEmployeePermission.clone(db),
+		CjMachineCPUTime:       q.CjMachineCPUTime.clone(db),
+		CjMachineVirtualMemory: q.CjMachineVirtualMemory.clone(db),
+		CjOperation:            q.CjOperation.clone(db),
+		CjPass:                 q.CjPass.clone(db),
+		CjPermission:           q.CjPermission.clone(db),
+		CjProject:              q.CjProject.clone(db),
+		CjProjectEmployee:      q.CjProjectEmployee.clone(db),
+		CjScript:               q.CjScript.clone(db),
 	}
 }
 
@@ -68,39 +74,45 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:                   db,
-		CjEmployee:           q.CjEmployee.replaceDB(db),
-		CjEmployeePermission: q.CjEmployeePermission.replaceDB(db),
-		CjOperation:          q.CjOperation.replaceDB(db),
-		CjPass:               q.CjPass.replaceDB(db),
-		CjPermission:         q.CjPermission.replaceDB(db),
-		CjProject:            q.CjProject.replaceDB(db),
-		CjProjectEmployee:    q.CjProjectEmployee.replaceDB(db),
-		CjScript:             q.CjScript.replaceDB(db),
+		db:                     db,
+		CjEmployee:             q.CjEmployee.replaceDB(db),
+		CjEmployeePermission:   q.CjEmployeePermission.replaceDB(db),
+		CjMachineCPUTime:       q.CjMachineCPUTime.replaceDB(db),
+		CjMachineVirtualMemory: q.CjMachineVirtualMemory.replaceDB(db),
+		CjOperation:            q.CjOperation.replaceDB(db),
+		CjPass:                 q.CjPass.replaceDB(db),
+		CjPermission:           q.CjPermission.replaceDB(db),
+		CjProject:              q.CjProject.replaceDB(db),
+		CjProjectEmployee:      q.CjProjectEmployee.replaceDB(db),
+		CjScript:               q.CjScript.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	CjEmployee           *cjEmployeeDo
-	CjEmployeePermission *cjEmployeePermissionDo
-	CjOperation          *cjOperationDo
-	CjPass               *cjPassDo
-	CjPermission         *cjPermissionDo
-	CjProject            *cjProjectDo
-	CjProjectEmployee    *cjProjectEmployeeDo
-	CjScript             *cjScriptDo
+	CjEmployee             *cjEmployeeDo
+	CjEmployeePermission   *cjEmployeePermissionDo
+	CjMachineCPUTime       *cjMachineCPUTimeDo
+	CjMachineVirtualMemory *cjMachineVirtualMemoryDo
+	CjOperation            *cjOperationDo
+	CjPass                 *cjPassDo
+	CjPermission           *cjPermissionDo
+	CjProject              *cjProjectDo
+	CjProjectEmployee      *cjProjectEmployeeDo
+	CjScript               *cjScriptDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		CjEmployee:           q.CjEmployee.WithContext(ctx),
-		CjEmployeePermission: q.CjEmployeePermission.WithContext(ctx),
-		CjOperation:          q.CjOperation.WithContext(ctx),
-		CjPass:               q.CjPass.WithContext(ctx),
-		CjPermission:         q.CjPermission.WithContext(ctx),
-		CjProject:            q.CjProject.WithContext(ctx),
-		CjProjectEmployee:    q.CjProjectEmployee.WithContext(ctx),
-		CjScript:             q.CjScript.WithContext(ctx),
+		CjEmployee:             q.CjEmployee.WithContext(ctx),
+		CjEmployeePermission:   q.CjEmployeePermission.WithContext(ctx),
+		CjMachineCPUTime:       q.CjMachineCPUTime.WithContext(ctx),
+		CjMachineVirtualMemory: q.CjMachineVirtualMemory.WithContext(ctx),
+		CjOperation:            q.CjOperation.WithContext(ctx),
+		CjPass:                 q.CjPass.WithContext(ctx),
+		CjPermission:           q.CjPermission.WithContext(ctx),
+		CjProject:              q.CjProject.WithContext(ctx),
+		CjProjectEmployee:      q.CjProjectEmployee.WithContext(ctx),
+		CjScript:               q.CjScript.WithContext(ctx),
 	}
 }
 
