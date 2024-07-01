@@ -83,12 +83,11 @@ router.beforeEach(async (to) => {
   app.leftBar.defaultActive = to.fullPath;
 
   // 标签
+  app.tabBar.activeName = to.fullPath;
   if (to.meta?.tabMode == "single") {
     const tab = app.tabBar.items.find((tab) => tab.fullPath == to.fullPath);
     console.log("tab", to.meta, tab);
-    if (tab) {
-      app.tabBar.activeName = tab.fullPath;
-    } else {
+    if (!tab) {
       app.tabBar.items.push({
         fullPath: to.fullPath,
         title: to.meta?.title as string,

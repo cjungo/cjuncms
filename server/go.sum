@@ -25,6 +25,8 @@ github.com/cjungo/cjungo v0.0.0-20240629024114-e93fffb5c188 h1:zNULvrt5m+anllaDY
 github.com/cjungo/cjungo v0.0.0-20240629024114-e93fffb5c188/go.mod h1:FTQT3Rr+FIT3HUmupkwOXOqrTD4JP209HdFomVBoaow=
 github.com/cjungo/cjungo v0.0.0-20240629072041-00fc0c72e99d h1:SVAgWIANEawjGhkgcy6vrS7PIj6a0N2hzT+ctNDdKEw=
 github.com/cjungo/cjungo v0.0.0-20240629072041-00fc0c72e99d/go.mod h1:FTQT3Rr+FIT3HUmupkwOXOqrTD4JP209HdFomVBoaow=
+github.com/cjungo/cjungo v0.0.0-20240701034216-396aad75fa12 h1:2rKOPIpmqLCn9GsnJ/6NbhixN7XSbj48ahg0ZlYaw18=
+github.com/cjungo/cjungo v0.0.0-20240701034216-396aad75fa12/go.mod h1:mOaeeSxiyYrxm+Qx+IX2i3FNFguIugGiqrNs7+ibz8I=
 github.com/coreos/etcd v3.3.27+incompatible h1:QIudLb9KeBsE5zyYxd1mjzRSkzLg9Wf9QlRwFgd6oTA=
 github.com/coreos/etcd v3.3.27+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/go-semver v0.3.1 h1:yi21YpKnrx1gt5R+la8n5WgS0kCrsPp33dmEyHReZr4=
@@ -128,6 +130,8 @@ github.com/jackc/pgtype v1.12.0 h1:Dlq8Qvcch7kiehm8wPGIW0W3KsCCHJnRacKW0UM8n5w=
 github.com/jackc/pgtype v1.12.0/go.mod h1:LUMuVrfsFfdKGLw+AFFVv6KtHOFMwRgDDzBt76IqCA4=
 github.com/jackc/pgx/v4 v4.17.2 h1:0Ut0rpeKwvIVbMQ1KbMBU4h6wxehBI535LK6Flheh8E=
 github.com/jackc/pgx/v4 v4.17.2/go.mod h1:lcxIZN44yMIrWI78a5CpucdD14hX0SBDbNRvjDBItsw=
+github.com/jessevdk/go-flags v1.6.1 h1:Cvu5U8UGrLay1rZfv/zP7iLpSHGUZ/Ou68T0iX1bBK4=
+github.com/jessevdk/go-flags v1.6.1/go.mod h1:Mk8T1hIAWpOiJiHa9rJASDK2UGWji0EuPGBnNLMooyc=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
 github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkryuEj+Srlc=
 github.com/jinzhu/now v1.1.2/go.mod h1:d3SSVoowX0Lcu0IBviAWJpolVfI5UJVZZ7cO71lE/z8=

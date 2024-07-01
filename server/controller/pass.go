@@ -6,6 +6,8 @@ import (
 	"github.com/cjungo/cjuncms/model"
 	"github.com/cjungo/cjungo"
 	"github.com/cjungo/cjungo/db"
+	"github.com/cjungo/cjungo/ext"
+	"gorm.io/gorm"
 )
 
 type PassController struct {
@@ -42,6 +44,61 @@ func (controller *PassController) Query(ctx cjungo.HttpContext) error {
 	}
 
 	return ctx.Resp(rows)
+}
+
+type PassAddParam struct {
+	Type    uint32 `json:"type"`    // 0.密码；1.密钥
+	Host    string `json:"host"`    // 主机
+	Port    uint32 `json:"port"`    // 端口
+	Content string `json:"content"` // 内容
+}
+
+func (controller *PassController) Add(ctx cjungo.HttpContext) error {
+	param := PassAddParam{}
+	if err := ctx.Bind(&param); err != nil {
+		return ctx.RespBad(err)
+	}
+	var pass model.CjPass
+	ext.MoveField(&param, &pass)
+
+	if err := controller.mysql.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(&pass).Error; err != nil {
+			return err
+		}
+		return nil
+	}); err != nil {
+		return ctx.RespBad(err)
+	}
+
+	return ctx.RespOk()
+}
+
+type PassEditParam struct {
+	ID      uint32 `json:"id"`      // ID
+	Type    uint32 `json:"type"`    // 0.密码；1.密钥
+	Host    string `json:"host"`    // 主机
+	Port    uint32 `json:"port"`    // 端口
+	Content string `json:"content"` // 内容
+}
+
+func (controller *PassController) Edit(ctx cjungo.HttpContext) error {
+	param := PassEditParam{}
+	if err := ctx.Bind(&param); err != nil {
+		return ctx.RespBad(err)
+	}
+
+	var pass model.CjPass
+	ext.MoveField(&param, &pass)
+	if err := controller.mysql.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Save(&pass).Error; err != nil {
+			return err
+		}
+		return nil
+	}); err != nil {
+		return ctx.RespBad(err)
+	}
+
+	return ctx.Resp(&pass)
 }
 
 type PassDropParam struct {

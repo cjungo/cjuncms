@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	if err := cjungo.RunCommand(
+	if err := cjungo.RunCommand[any](
 		func(logger *zerolog.Logger, mysql *db.MySql) {
 			count := 1000
 			ms := make([]model.CjProject, count)

@@ -96,6 +96,7 @@ onBeforeMount(async () => {
   flex-direction: column;
   flex-grow: 1;
   padding: 1em;
+  overflow: hidden;
 }
 
 .employee-info-box {

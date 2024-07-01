@@ -21,8 +21,15 @@ func init() {
 		{ID: 12000, ParentID: 0, Tag: "project", Title: "项目管理", Level: 0},
 		{ID: 12001, ParentID: 12000, Tag: "project_find", Title: "项目查看", Level: 1},
 		{ID: 12002, ParentID: 12000, Tag: "project_edit", Title: "项目修改", Level: 1},
-		{ID: 12003, ParentID: 12000, Tag: "project_script", Title: "执行脚本", Level: 1},
 		//
+		{ID: 13000, ParentID: 0, Tag: "pass", Title: "密钥管理", Level: 0},
+		{ID: 13001, ParentID: 13000, Tag: "pass_find", Title: "密钥查看", Level: 1},
+		{ID: 13002, ParentID: 13000, Tag: "pass_edit", Title: "密钥修改", Level: 1},
+		//
+		{ID: 14000, ParentID: 0, Tag: "shell", Title: "脚本管理", Level: 0},
+		{ID: 14001, ParentID: 14000, Tag: "shell_find", Title: "脚本查看", Level: 1},
+		{ID: 14002, ParentID: 14000, Tag: "shell_edit", Title: "脚本修改", Level: 1},
+		{ID: 14003, ParentID: 14000, Tag: "shell_run", Title: "脚本运行", Level: 1},
 	}
 }
 

@@ -36,7 +36,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     SysIcon: typeof import('./src/components/SysIcon.vue')['default']
     TabBar: typeof import('./src/components/TabBar.vue')['default']
-    Topbar: typeof import('./src/components/Topbar.vue')['default']
     TopBar: typeof import('./src/components/TopBar.vue')['default']
     UserBar: typeof import('./src/components/UserBar.vue')['default']
   }

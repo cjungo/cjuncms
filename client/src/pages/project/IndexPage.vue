@@ -7,6 +7,7 @@
           <VxeTable :width="width" :height="height" :data="rows">
             <VxeColumn type="seq" title="#" width="60" />
             <VxeColumn field="id" title="ID" />
+            <VxeColumn field="name" title="项目名" />
             <VxeColumn>
               <ElButtonGroup>
                 <ElButton

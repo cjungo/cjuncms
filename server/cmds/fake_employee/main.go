@@ -16,7 +16,7 @@ import (
 )
 
 func main() {
-	if err := cjungo.RunCommand(
+	if err := cjungo.RunCommand[any](
 		func(logger *zerolog.Logger, mysql *db.MySql) error {
 			count := 1000
 			baseDay, err := time.Parse("2006-02-01", "2000-01-01")

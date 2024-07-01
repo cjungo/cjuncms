@@ -19,6 +19,8 @@ var controllerProviders = []any{
 	controller.NewSignController,
 	controller.NewEmployeeController,
 	controller.NewProjectController,
+	controller.NewPassController,
+	// controller.NewShellController,
 }
 
 func route(
@@ -30,6 +32,7 @@ func route(
 	machineController *controller.MachineController,
 	employeeController *controller.EmployeeController,
 	projectController *controller.ProjectController,
+	passController *controller.PassController,
 ) (http.Handler, error) {
 	here, err := os.Getwd()
 	if err != nil {
@@ -64,6 +67,10 @@ func route(
 	projectGroup.PUT("/add", projectController.Add, permitManager.Permit("project_edit"))
 	projectGroup.POST("/edit", projectController.Edit, permitManager.Permit("project_edit"))
 	projectGroup.DELETE("/drop", projectController.Drop, permitManager.Permit("project_edit"))
+	passGroup := apiGroup.Group("/pass")
+	passGroup.GET("/query", passController.Query, permitManager.Permit("project_find"))
+	passGroup.PUT("/add", passController.Add, permitManager.Permit("project_edit"))
+	
 
 	machineGroup := apiGroup.Group("/machine", permitManager.Permit("default"))
 	machineGroup.GET("/cpu/info", machineController.PeekCpuInfo)

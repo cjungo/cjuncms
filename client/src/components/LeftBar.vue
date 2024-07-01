@@ -48,7 +48,15 @@
 import { type Component, reactive, shallowRef } from "vue";
 import { isEmpty } from "lodash";
 import { useAppStore } from "../stores/AppStore";
-import { Cpu, Box, Setting, Star, Files, User } from "@element-plus/icons-vue";
+import {
+  Cpu,
+  Box,
+  Setting,
+  Star,
+  Files,
+  User,
+  Key,
+} from "@element-plus/icons-vue";
 import router from "../router";
 
 const iconSetting = shallowRef(Setting);
@@ -57,6 +65,7 @@ const iconBox = shallowRef(Box);
 const iconStar = shallowRef(Star);
 const iconFiles = shallowRef(Files);
 const iconUser = shallowRef(User);
+const iconKey = shallowRef(Key);
 
 export type LeftBarItem = {
   title: string;
@@ -88,6 +97,11 @@ const items = reactive<Array<LeftBarItem>>([
         title: "项目列表",
         icon: iconFiles,
         path: "/project/index",
+      },
+      {
+        title: "密钥列表",
+        icon: iconKey,
+        path: "/project/pass",
       },
       {
         title: "命令行",
