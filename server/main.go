@@ -53,7 +53,7 @@ func main() {
 		}
 
 		// 提供数据库
-		if err := container.Provide(misc.ProvideMysql()); err != nil {
+		if err := container.Provide(misc.ProvideMysqlForWeb()); err != nil {
 			return err
 		}
 

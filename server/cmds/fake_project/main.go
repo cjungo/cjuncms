@@ -24,7 +24,7 @@ func main() {
 
 		},
 		db.LoadMySqlConfFormEnv,
-		misc.ProvideMysql(),
+		misc.ProvideMysqlForWeb(),
 	); err != nil {
 		log.Fatalln(err)
 	}

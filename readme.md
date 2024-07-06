@@ -16,6 +16,9 @@ go build
 ```
 
 ```bash
+# 执行 数据库 初始化 命令
+go run ./cmds/db_init
+
 # 执行 fake 命令
 go run ./cmds/fake_employee
 go run ./cmds/fake_project

@@ -3,7 +3,7 @@ module github.com/cjungo/cjuncms
 go 1.22.2
 
 require (
-	github.com/cjungo/cjungo v0.0.0-20240701034216-396aad75fa12
+	github.com/cjungo/cjungo v0.0.0-20240706063333-9679c7cd58c5
 	github.com/deckarep/golang-set/v2 v2.6.0
 	github.com/elliotchance/pie/v2 v2.8.0
 	github.com/rs/zerolog v1.32.0
