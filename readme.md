@@ -3,11 +3,20 @@
 发音“菌CMS”，C 是不发音的。类似 django 的 d 不发音一样。
 
 ```bash
+# 执行 初始化前端依赖
+npm ci
+
 # 启动前端（开发）
 npm run dev
+
+# 编译前端
+npm run build
 ```
 
 ```bash
+# 执行 数据库 初始化 命令
+go run ./cmds/db_init
+
 # 启动服务（开发）
 go run .
 
@@ -16,9 +25,6 @@ go build
 ```
 
 ```bash
-# 执行 数据库 初始化 命令
-go run ./cmds/db_init
-
 # 执行 fake 命令
 go run ./cmds/fake_employee
 go run ./cmds/fake_project

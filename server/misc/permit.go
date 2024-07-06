@@ -2,8 +2,10 @@ package misc
 
 import (
 	"github.com/cjungo/cjuncms/model"
+	"github.com/cjungo/cjungo"
 	"github.com/cjungo/cjungo/ext"
-	mapset "github.com/deckarep/golang-set/v2"
+	"github.com/cjungo/cjungo/mid"
+	mapSet "github.com/deckarep/golang-set/v2"
 	"github.com/elliotchance/pie/v2"
 	"gorm.io/gorm"
 )
@@ -70,16 +72,16 @@ func EnsureAdmin(tx *gorm.DB) error {
 }
 
 func EnsureEmployeePermissions(tx *gorm.DB, employee *model.CjEmployee) error {
-	epids := []int32{}
+	eIds := []int32{}
 	if err := tx.Table("cj_employee_permission").
 		Select("permission_id").
 		Where("employee_id=?", employee.ID).
-		Find(&epids).Error; err != nil {
+		Find(&eIds).Error; err != nil {
 		return err
 	}
-	epidset := mapset.NewSet(epids...)
+	eIdSet := mapSet.NewSet(eIds...)
 	needs := pie.Filter(Permissions, func(p model.CjPermission) bool {
-		return !epidset.ContainsOne(int32(p.ID))
+		return !eIdSet.ContainsOne(int32(p.ID))
 	})
 	added := make([]model.CjEmployeePermission, len(needs))
 	for i, p := range needs {
@@ -90,4 +92,19 @@ func EnsureEmployeePermissions(tx *gorm.DB, employee *model.CjEmployee) error {
 		return err
 	}
 	return nil
+}
+
+func ProvidePermitManager() mid.PermitManagerProvide[string, EmployeeToken] {
+	return mid.NewPermitManager(func(ctx cjungo.HttpContext) (mid.PermitProof[string, EmployeeToken], error) {
+		claims := &JwtClaims{}
+		if _, err := ext.ParseJwtToken(ctx, claims); err != nil {
+			return nil, &cjungo.ApiError{
+				Code:     API_ERR_TOKEN_INVALID,
+				Message:  "TOKEN 无效",
+				HttpCode: 400,
+				Reason:   err,
+			}
+		}
+		return claims, nil
+	})
 }
