@@ -27,18 +27,18 @@ func newCjMachineCPUTime(db *gorm.DB, opts ...gen.DOOption) cjMachineCPUTime {
 
 	tableName := _cjMachineCPUTime.cjMachineCPUTimeDo.TableName()
 	_cjMachineCPUTime.ALL = field.NewAsterisk(tableName)
-	_cjMachineCPUTime.ID = field.NewInt32(tableName, "id")
+	_cjMachineCPUTime.ID = field.NewUint32(tableName, "id")
 	_cjMachineCPUTime.CPU = field.NewString(tableName, "cpu")
-	_cjMachineCPUTime.User = field.NewFloat32(tableName, "user")
-	_cjMachineCPUTime.System = field.NewFloat32(tableName, "system")
-	_cjMachineCPUTime.Idle = field.NewFloat32(tableName, "idle")
-	_cjMachineCPUTime.Nice = field.NewFloat32(tableName, "nice")
-	_cjMachineCPUTime.Iowait = field.NewFloat32(tableName, "iowait")
-	_cjMachineCPUTime.Irq = field.NewFloat32(tableName, "irq")
-	_cjMachineCPUTime.Softirq = field.NewFloat32(tableName, "softirq")
-	_cjMachineCPUTime.Steal = field.NewFloat32(tableName, "steal")
-	_cjMachineCPUTime.Guest = field.NewFloat32(tableName, "guest")
-	_cjMachineCPUTime.GuestNice = field.NewFloat32(tableName, "guest_nice")
+	_cjMachineCPUTime.User = field.NewFloat64(tableName, "user")
+	_cjMachineCPUTime.System = field.NewFloat64(tableName, "system")
+	_cjMachineCPUTime.Idle = field.NewFloat64(tableName, "idle")
+	_cjMachineCPUTime.Nice = field.NewFloat64(tableName, "nice")
+	_cjMachineCPUTime.Iowait = field.NewFloat64(tableName, "iowait")
+	_cjMachineCPUTime.Irq = field.NewFloat64(tableName, "irq")
+	_cjMachineCPUTime.Softirq = field.NewFloat64(tableName, "softirq")
+	_cjMachineCPUTime.Steal = field.NewFloat64(tableName, "steal")
+	_cjMachineCPUTime.Guest = field.NewFloat64(tableName, "guest")
+	_cjMachineCPUTime.GuestNice = field.NewFloat64(tableName, "guest_nice")
 	_cjMachineCPUTime.CreateAt = field.NewTime(tableName, "create_at")
 
 	_cjMachineCPUTime.fillFieldMap()
@@ -51,18 +51,18 @@ type cjMachineCPUTime struct {
 	cjMachineCPUTimeDo cjMachineCPUTimeDo
 
 	ALL       field.Asterisk
-	ID        field.Int32
+	ID        field.Uint32
 	CPU       field.String
-	User      field.Float32 // 用户时间
-	System    field.Float32 // 系统时间
-	Idle      field.Float32 // 空闲时间
-	Nice      field.Float32
-	Iowait    field.Float32 // IO等待
-	Irq       field.Float32 // 硬中断
-	Softirq   field.Float32 // 软中断
-	Steal     field.Float32
-	Guest     field.Float32
-	GuestNice field.Float32
+	User      field.Float64 // 用户时间
+	System    field.Float64 // 系统时间
+	Idle      field.Float64 // 空闲时间
+	Nice      field.Float64
+	Iowait    field.Float64 // IO等待
+	Irq       field.Float64 // 硬中断
+	Softirq   field.Float64 // 软中断
+	Steal     field.Float64
+	Guest     field.Float64
+	GuestNice field.Float64
 	CreateAt  field.Time // 记录时间
 
 	fieldMap map[string]field.Expr
@@ -80,18 +80,18 @@ func (c cjMachineCPUTime) As(alias string) *cjMachineCPUTime {
 
 func (c *cjMachineCPUTime) updateTableName(table string) *cjMachineCPUTime {
 	c.ALL = field.NewAsterisk(table)
-	c.ID = field.NewInt32(table, "id")
+	c.ID = field.NewUint32(table, "id")
 	c.CPU = field.NewString(table, "cpu")
-	c.User = field.NewFloat32(table, "user")
-	c.System = field.NewFloat32(table, "system")
-	c.Idle = field.NewFloat32(table, "idle")
-	c.Nice = field.NewFloat32(table, "nice")
-	c.Iowait = field.NewFloat32(table, "iowait")
-	c.Irq = field.NewFloat32(table, "irq")
-	c.Softirq = field.NewFloat32(table, "softirq")
-	c.Steal = field.NewFloat32(table, "steal")
-	c.Guest = field.NewFloat32(table, "guest")
-	c.GuestNice = field.NewFloat32(table, "guest_nice")
+	c.User = field.NewFloat64(table, "user")
+	c.System = field.NewFloat64(table, "system")
+	c.Idle = field.NewFloat64(table, "idle")
+	c.Nice = field.NewFloat64(table, "nice")
+	c.Iowait = field.NewFloat64(table, "iowait")
+	c.Irq = field.NewFloat64(table, "irq")
+	c.Softirq = field.NewFloat64(table, "softirq")
+	c.Steal = field.NewFloat64(table, "steal")
+	c.Guest = field.NewFloat64(table, "guest")
+	c.GuestNice = field.NewFloat64(table, "guest_nice")
 	c.CreateAt = field.NewTime(table, "create_at")
 
 	c.fillFieldMap()

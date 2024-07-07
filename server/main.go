@@ -25,6 +25,7 @@ func main() {
 			misc.ProvideMysqlForWeb(),        // 提供数据库
 			misc.NewJwtClaimsManager,         // Jwt 管理器
 			misc.ProvidePermitManager(),      // 提供权限管理器
+			misc.ProvideMachineWatcher,       // 机器守望者
 			route,                            // 提供路由
 		); err != nil {
 			return err
@@ -35,6 +36,9 @@ func main() {
 	}); err != nil {
 		log.Fatalln(err)
 	} else {
+		// app.BeforeRun = func(dc cjungo.DiContainer) error {
+		// 	return dc.Invoke(misc.MachineTick)
+		// }
 		if err := app.Run(); err != nil {
 			log.Fatalln(err)
 		}

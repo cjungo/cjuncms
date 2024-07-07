@@ -27,45 +27,45 @@ func newCjMachineVirtualMemory(db *gorm.DB, opts ...gen.DOOption) cjMachineVirtu
 
 	tableName := _cjMachineVirtualMemory.cjMachineVirtualMemoryDo.TableName()
 	_cjMachineVirtualMemory.ALL = field.NewAsterisk(tableName)
-	_cjMachineVirtualMemory.ID = field.NewInt32(tableName, "id")
-	_cjMachineVirtualMemory.Total = field.NewFloat32(tableName, "total")
-	_cjMachineVirtualMemory.Available = field.NewFloat32(tableName, "available")
-	_cjMachineVirtualMemory.Used = field.NewFloat32(tableName, "used")
-	_cjMachineVirtualMemory.UsedPercent = field.NewFloat32(tableName, "used_percent")
-	_cjMachineVirtualMemory.Free = field.NewFloat32(tableName, "free")
-	_cjMachineVirtualMemory.Active = field.NewFloat32(tableName, "active")
-	_cjMachineVirtualMemory.Inactive = field.NewFloat32(tableName, "inactive")
-	_cjMachineVirtualMemory.Wired = field.NewFloat32(tableName, "wired")
-	_cjMachineVirtualMemory.Laundry = field.NewFloat32(tableName, "laundry")
-	_cjMachineVirtualMemory.Buffers = field.NewFloat32(tableName, "buffers")
-	_cjMachineVirtualMemory.Cached = field.NewFloat32(tableName, "cached")
-	_cjMachineVirtualMemory.WriteBack = field.NewFloat32(tableName, "write_back")
-	_cjMachineVirtualMemory.Dirty = field.NewFloat32(tableName, "dirty")
-	_cjMachineVirtualMemory.WriteBackTmp = field.NewFloat32(tableName, "write_back_tmp")
-	_cjMachineVirtualMemory.Shared = field.NewFloat32(tableName, "shared")
-	_cjMachineVirtualMemory.Slab = field.NewFloat32(tableName, "slab")
-	_cjMachineVirtualMemory.Sreclaimable = field.NewFloat32(tableName, "sreclaimable")
-	_cjMachineVirtualMemory.Sunreclaim = field.NewFloat32(tableName, "sunreclaim")
-	_cjMachineVirtualMemory.PageTables = field.NewFloat32(tableName, "page_tables")
-	_cjMachineVirtualMemory.SwapCached = field.NewFloat32(tableName, "swap_cached")
-	_cjMachineVirtualMemory.CommitLimit = field.NewFloat32(tableName, "commit_limit")
-	_cjMachineVirtualMemory.CommittedAs = field.NewFloat32(tableName, "committed_as")
-	_cjMachineVirtualMemory.HighTotal = field.NewFloat32(tableName, "high_total")
-	_cjMachineVirtualMemory.HighFree = field.NewFloat32(tableName, "high_free")
-	_cjMachineVirtualMemory.LowTotal = field.NewFloat32(tableName, "low_total")
-	_cjMachineVirtualMemory.LowFree = field.NewFloat32(tableName, "low_free")
-	_cjMachineVirtualMemory.SwapTotal = field.NewFloat32(tableName, "swap_total")
-	_cjMachineVirtualMemory.SwapFree = field.NewFloat32(tableName, "swap_free")
-	_cjMachineVirtualMemory.Mapped = field.NewFloat32(tableName, "mapped")
-	_cjMachineVirtualMemory.VmallocTotal = field.NewFloat32(tableName, "vmalloc_total")
-	_cjMachineVirtualMemory.VmallocUsed = field.NewFloat32(tableName, "vmalloc_used")
-	_cjMachineVirtualMemory.VmallocChunk = field.NewFloat32(tableName, "vmalloc_chunk")
-	_cjMachineVirtualMemory.HugePagesTotal = field.NewFloat32(tableName, "huge_pages_total")
-	_cjMachineVirtualMemory.HugePagesFree = field.NewFloat32(tableName, "huge_pages_free")
-	_cjMachineVirtualMemory.HugePagesRsvd = field.NewFloat32(tableName, "huge_pages_rsvd")
-	_cjMachineVirtualMemory.HugePagesSurp = field.NewFloat32(tableName, "huge_pages_surp")
-	_cjMachineVirtualMemory.HugePageSize = field.NewFloat32(tableName, "huge_page_size")
-	_cjMachineVirtualMemory.AnonHugePages = field.NewFloat32(tableName, "anon_huge_pages")
+	_cjMachineVirtualMemory.ID = field.NewUint32(tableName, "id")
+	_cjMachineVirtualMemory.Total = field.NewUint64(tableName, "total")
+	_cjMachineVirtualMemory.Available = field.NewUint64(tableName, "available")
+	_cjMachineVirtualMemory.Used = field.NewUint64(tableName, "used")
+	_cjMachineVirtualMemory.UsedPercent = field.NewFloat64(tableName, "used_percent")
+	_cjMachineVirtualMemory.Free = field.NewUint64(tableName, "free")
+	_cjMachineVirtualMemory.Active = field.NewUint64(tableName, "active")
+	_cjMachineVirtualMemory.Inactive = field.NewUint64(tableName, "inactive")
+	_cjMachineVirtualMemory.Wired = field.NewUint64(tableName, "wired")
+	_cjMachineVirtualMemory.Laundry = field.NewUint64(tableName, "laundry")
+	_cjMachineVirtualMemory.Buffers = field.NewUint64(tableName, "buffers")
+	_cjMachineVirtualMemory.Cached = field.NewUint64(tableName, "cached")
+	_cjMachineVirtualMemory.WriteBack = field.NewUint64(tableName, "write_back")
+	_cjMachineVirtualMemory.Dirty = field.NewUint64(tableName, "dirty")
+	_cjMachineVirtualMemory.WriteBackTmp = field.NewUint64(tableName, "write_back_tmp")
+	_cjMachineVirtualMemory.Shared = field.NewUint64(tableName, "shared")
+	_cjMachineVirtualMemory.Slab = field.NewUint64(tableName, "slab")
+	_cjMachineVirtualMemory.Sreclaimable = field.NewUint64(tableName, "sreclaimable")
+	_cjMachineVirtualMemory.Sunreclaim = field.NewUint64(tableName, "sunreclaim")
+	_cjMachineVirtualMemory.PageTables = field.NewUint64(tableName, "page_tables")
+	_cjMachineVirtualMemory.SwapCached = field.NewUint64(tableName, "swap_cached")
+	_cjMachineVirtualMemory.CommitLimit = field.NewUint64(tableName, "commit_limit")
+	_cjMachineVirtualMemory.CommittedAs = field.NewUint64(tableName, "committed_as")
+	_cjMachineVirtualMemory.HighTotal = field.NewUint64(tableName, "high_total")
+	_cjMachineVirtualMemory.HighFree = field.NewUint64(tableName, "high_free")
+	_cjMachineVirtualMemory.LowTotal = field.NewUint64(tableName, "low_total")
+	_cjMachineVirtualMemory.LowFree = field.NewUint64(tableName, "low_free")
+	_cjMachineVirtualMemory.SwapTotal = field.NewUint64(tableName, "swap_total")
+	_cjMachineVirtualMemory.SwapFree = field.NewUint64(tableName, "swap_free")
+	_cjMachineVirtualMemory.Mapped = field.NewUint64(tableName, "mapped")
+	_cjMachineVirtualMemory.VmallocTotal = field.NewUint64(tableName, "vmalloc_total")
+	_cjMachineVirtualMemory.VmallocUsed = field.NewUint64(tableName, "vmalloc_used")
+	_cjMachineVirtualMemory.VmallocChunk = field.NewUint64(tableName, "vmalloc_chunk")
+	_cjMachineVirtualMemory.HugePagesTotal = field.NewUint64(tableName, "huge_pages_total")
+	_cjMachineVirtualMemory.HugePagesFree = field.NewUint64(tableName, "huge_pages_free")
+	_cjMachineVirtualMemory.HugePagesRsvd = field.NewUint64(tableName, "huge_pages_rsvd")
+	_cjMachineVirtualMemory.HugePagesSurp = field.NewUint64(tableName, "huge_pages_surp")
+	_cjMachineVirtualMemory.HugePageSize = field.NewUint64(tableName, "huge_page_size")
+	_cjMachineVirtualMemory.AnonHugePages = field.NewUint64(tableName, "anon_huge_pages")
 	_cjMachineVirtualMemory.CreateAt = field.NewTime(tableName, "create_at")
 
 	_cjMachineVirtualMemory.fillFieldMap()
@@ -78,45 +78,45 @@ type cjMachineVirtualMemory struct {
 	cjMachineVirtualMemoryDo cjMachineVirtualMemoryDo
 
 	ALL            field.Asterisk
-	ID             field.Int32
-	Total          field.Float32 // 全部
-	Available      field.Float32
-	Used           field.Float32 // 已用
-	UsedPercent    field.Float32
-	Free           field.Float32 // 空闲
-	Active         field.Float32
-	Inactive       field.Float32
-	Wired          field.Float32
-	Laundry        field.Float32
-	Buffers        field.Float32
-	Cached         field.Float32
-	WriteBack      field.Float32
-	Dirty          field.Float32
-	WriteBackTmp   field.Float32
-	Shared         field.Float32
-	Slab           field.Float32
-	Sreclaimable   field.Float32
-	Sunreclaim     field.Float32
-	PageTables     field.Float32
-	SwapCached     field.Float32
-	CommitLimit    field.Float32
-	CommittedAs    field.Float32
-	HighTotal      field.Float32
-	HighFree       field.Float32
-	LowTotal       field.Float32
-	LowFree        field.Float32
-	SwapTotal      field.Float32
-	SwapFree       field.Float32
-	Mapped         field.Float32
-	VmallocTotal   field.Float32
-	VmallocUsed    field.Float32
-	VmallocChunk   field.Float32
-	HugePagesTotal field.Float32
-	HugePagesFree  field.Float32
-	HugePagesRsvd  field.Float32
-	HugePagesSurp  field.Float32
-	HugePageSize   field.Float32
-	AnonHugePages  field.Float32
+	ID             field.Uint32
+	Total          field.Uint64 // 全部
+	Available      field.Uint64
+	Used           field.Uint64 // 已用
+	UsedPercent    field.Float64
+	Free           field.Uint64 // 空闲
+	Active         field.Uint64
+	Inactive       field.Uint64
+	Wired          field.Uint64
+	Laundry        field.Uint64
+	Buffers        field.Uint64
+	Cached         field.Uint64
+	WriteBack      field.Uint64
+	Dirty          field.Uint64
+	WriteBackTmp   field.Uint64
+	Shared         field.Uint64
+	Slab           field.Uint64
+	Sreclaimable   field.Uint64
+	Sunreclaim     field.Uint64
+	PageTables     field.Uint64
+	SwapCached     field.Uint64
+	CommitLimit    field.Uint64
+	CommittedAs    field.Uint64
+	HighTotal      field.Uint64
+	HighFree       field.Uint64
+	LowTotal       field.Uint64
+	LowFree        field.Uint64
+	SwapTotal      field.Uint64
+	SwapFree       field.Uint64
+	Mapped         field.Uint64
+	VmallocTotal   field.Uint64
+	VmallocUsed    field.Uint64
+	VmallocChunk   field.Uint64
+	HugePagesTotal field.Uint64
+	HugePagesFree  field.Uint64
+	HugePagesRsvd  field.Uint64
+	HugePagesSurp  field.Uint64
+	HugePageSize   field.Uint64
+	AnonHugePages  field.Uint64
 	CreateAt       field.Time // 记录时间
 
 	fieldMap map[string]field.Expr
@@ -134,45 +134,45 @@ func (c cjMachineVirtualMemory) As(alias string) *cjMachineVirtualMemory {
 
 func (c *cjMachineVirtualMemory) updateTableName(table string) *cjMachineVirtualMemory {
 	c.ALL = field.NewAsterisk(table)
-	c.ID = field.NewInt32(table, "id")
-	c.Total = field.NewFloat32(table, "total")
-	c.Available = field.NewFloat32(table, "available")
-	c.Used = field.NewFloat32(table, "used")
-	c.UsedPercent = field.NewFloat32(table, "used_percent")
-	c.Free = field.NewFloat32(table, "free")
-	c.Active = field.NewFloat32(table, "active")
-	c.Inactive = field.NewFloat32(table, "inactive")
-	c.Wired = field.NewFloat32(table, "wired")
-	c.Laundry = field.NewFloat32(table, "laundry")
-	c.Buffers = field.NewFloat32(table, "buffers")
-	c.Cached = field.NewFloat32(table, "cached")
-	c.WriteBack = field.NewFloat32(table, "write_back")
-	c.Dirty = field.NewFloat32(table, "dirty")
-	c.WriteBackTmp = field.NewFloat32(table, "write_back_tmp")
-	c.Shared = field.NewFloat32(table, "shared")
-	c.Slab = field.NewFloat32(table, "slab")
-	c.Sreclaimable = field.NewFloat32(table, "sreclaimable")
-	c.Sunreclaim = field.NewFloat32(table, "sunreclaim")
-	c.PageTables = field.NewFloat32(table, "page_tables")
-	c.SwapCached = field.NewFloat32(table, "swap_cached")
-	c.CommitLimit = field.NewFloat32(table, "commit_limit")
-	c.CommittedAs = field.NewFloat32(table, "committed_as")
-	c.HighTotal = field.NewFloat32(table, "high_total")
-	c.HighFree = field.NewFloat32(table, "high_free")
-	c.LowTotal = field.NewFloat32(table, "low_total")
-	c.LowFree = field.NewFloat32(table, "low_free")
-	c.SwapTotal = field.NewFloat32(table, "swap_total")
-	c.SwapFree = field.NewFloat32(table, "swap_free")
-	c.Mapped = field.NewFloat32(table, "mapped")
-	c.VmallocTotal = field.NewFloat32(table, "vmalloc_total")
-	c.VmallocUsed = field.NewFloat32(table, "vmalloc_used")
-	c.VmallocChunk = field.NewFloat32(table, "vmalloc_chunk")
-	c.HugePagesTotal = field.NewFloat32(table, "huge_pages_total")
-	c.HugePagesFree = field.NewFloat32(table, "huge_pages_free")
-	c.HugePagesRsvd = field.NewFloat32(table, "huge_pages_rsvd")
-	c.HugePagesSurp = field.NewFloat32(table, "huge_pages_surp")
-	c.HugePageSize = field.NewFloat32(table, "huge_page_size")
-	c.AnonHugePages = field.NewFloat32(table, "anon_huge_pages")
+	c.ID = field.NewUint32(table, "id")
+	c.Total = field.NewUint64(table, "total")
+	c.Available = field.NewUint64(table, "available")
+	c.Used = field.NewUint64(table, "used")
+	c.UsedPercent = field.NewFloat64(table, "used_percent")
+	c.Free = field.NewUint64(table, "free")
+	c.Active = field.NewUint64(table, "active")
+	c.Inactive = field.NewUint64(table, "inactive")
+	c.Wired = field.NewUint64(table, "wired")
+	c.Laundry = field.NewUint64(table, "laundry")
+	c.Buffers = field.NewUint64(table, "buffers")
+	c.Cached = field.NewUint64(table, "cached")
+	c.WriteBack = field.NewUint64(table, "write_back")
+	c.Dirty = field.NewUint64(table, "dirty")
+	c.WriteBackTmp = field.NewUint64(table, "write_back_tmp")
+	c.Shared = field.NewUint64(table, "shared")
+	c.Slab = field.NewUint64(table, "slab")
+	c.Sreclaimable = field.NewUint64(table, "sreclaimable")
+	c.Sunreclaim = field.NewUint64(table, "sunreclaim")
+	c.PageTables = field.NewUint64(table, "page_tables")
+	c.SwapCached = field.NewUint64(table, "swap_cached")
+	c.CommitLimit = field.NewUint64(table, "commit_limit")
+	c.CommittedAs = field.NewUint64(table, "committed_as")
+	c.HighTotal = field.NewUint64(table, "high_total")
+	c.HighFree = field.NewUint64(table, "high_free")
+	c.LowTotal = field.NewUint64(table, "low_total")
+	c.LowFree = field.NewUint64(table, "low_free")
+	c.SwapTotal = field.NewUint64(table, "swap_total")
+	c.SwapFree = field.NewUint64(table, "swap_free")
+	c.Mapped = field.NewUint64(table, "mapped")
+	c.VmallocTotal = field.NewUint64(table, "vmalloc_total")
+	c.VmallocUsed = field.NewUint64(table, "vmalloc_used")
+	c.VmallocChunk = field.NewUint64(table, "vmalloc_chunk")
+	c.HugePagesTotal = field.NewUint64(table, "huge_pages_total")
+	c.HugePagesFree = field.NewUint64(table, "huge_pages_free")
+	c.HugePagesRsvd = field.NewUint64(table, "huge_pages_rsvd")
+	c.HugePagesSurp = field.NewUint64(table, "huge_pages_surp")
+	c.HugePageSize = field.NewUint64(table, "huge_page_size")
+	c.AnonHugePages = field.NewUint64(table, "anon_huge_pages")
 	c.CreateAt = field.NewTime(table, "create_at")
 
 	c.fillFieldMap()

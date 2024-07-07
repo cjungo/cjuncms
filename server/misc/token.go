@@ -51,7 +51,7 @@ func (manager *JwtClaimsManager) Renewal(ctx cjungo.HttpContext) (string, error)
 	if !ok {
 		return "", fmt.Errorf("proof 不是 JwtClaims 类型")
 	}
-	claims.RegisteredClaims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(24 * time.Hour))
+	claims.RegisteredClaims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(2 * 24 * time.Hour))
 	token, err := ext.MakeJwtToken(claims)
 	if err != nil {
 		return "", err

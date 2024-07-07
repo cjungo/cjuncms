@@ -3,11 +3,12 @@ module github.com/cjungo/cjuncms
 go 1.22.2
 
 require (
-	github.com/cjungo/cjungo v0.0.0-20240706063333-9679c7cd58c5
+	github.com/cjungo/cjungo v0.0.0-20240707035757-8d6694e39ed8
 	github.com/deckarep/golang-set/v2 v2.6.0
 	github.com/elliotchance/pie/v2 v2.8.0
 	github.com/go-faker/faker/v4 v4.4.2
 	github.com/rs/zerolog v1.32.0
+	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/shirou/gopsutil/v4 v4.24.5
 	github.com/swaggo/swag v1.16.3
 	gorm.io/gen v0.3.26

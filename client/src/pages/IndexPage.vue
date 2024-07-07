@@ -48,7 +48,19 @@ const machineCpuInfo = ref<MachineCpuInfo>({
   flags: [],
   microcode: "",
 });
-const machineCpuTimes = ref<MachineCpuTime[]>([]);
+const machineCpuTimes = ref<MachineCpuTime>({
+  cpu: "",
+  user: 0,
+  system: 0,
+  idle: 0,
+  nice: 0,
+  iowait: 0,
+  irq: 0,
+  softirq: 0,
+  steal: 0,
+  guest: 0,
+  guestNice: 0,
+});
 const machineVirtualMemory = ref<MachineVirtualMemory>({
   total: 0,
   available: 0,
@@ -93,7 +105,7 @@ const machineVirtualMemory = ref<MachineVirtualMemory>({
 // provide(THEME_KEY, "dark");
 
 const option = computed(() => {
-  const cpu = machineCpuTimes.value[0] ?? {
+  const cpu = machineCpuTimes.value ?? {
     system: 0,
     user: 0,
     idle: 0,

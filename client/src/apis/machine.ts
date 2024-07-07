@@ -75,7 +75,7 @@ export const getMachineCpuInfo = apiGet<any, MachineCpuInfo>(
   "/api/machine/cpu/info"
 );
 
-export const getMachineCpuTimes = apiGet<any, [MachineCpuTime]>(
+export const getMachineCpuTimes = apiGet<any, MachineCpuTime>(
   "/api/machine/cpu/times"
 );
 

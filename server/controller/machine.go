@@ -1,38 +1,30 @@
 package controller
 
 import (
+	"github.com/cjungo/cjuncms/misc"
 	"github.com/cjungo/cjungo"
-	"github.com/shirou/gopsutil/v4/cpu"
-	"github.com/shirou/gopsutil/v4/mem"
 )
 
 type MachineController struct {
+	watcher *misc.MachineWatcher
 }
 
-func NewMachineController() *MachineController {
-	return &MachineController{}
+func NewMachineController(
+	watcher *misc.MachineWatcher,
+) *MachineController {
+	return &MachineController{
+		watcher: watcher,
+	}
 }
 
 func (controller *MachineController) PeekCpuInfo(ctx cjungo.HttpContext) error {
-	result, err := cpu.Info()
-	if err != nil {
-		return ctx.RespBad(err)
-	}
-	return ctx.Resp(result)
+	return ctx.Resp(controller.watcher.CpuInfo())
 }
 
 func (controller *MachineController) PeekCpuTimes(ctx cjungo.HttpContext) error {
-	result, err := cpu.Times(false)
-	if err != nil {
-		return ctx.RespBad(err)
-	}
-	return ctx.Resp(result)
+	return ctx.Resp(controller.watcher.CpuTimes())
 }
 
 func (controller *MachineController) PeekVirtualMemory(ctx cjungo.HttpContext) error {
-	result, err := mem.VirtualMemory()
-	if err != nil {
-		return ctx.RespBad(err)
-	}
-	return ctx.Resp(result)
+	return ctx.Resp(controller.watcher.VirtualMemory())
 }

@@ -38,9 +38,10 @@ func route(
 	if err != nil {
 		return nil, err
 	}
+
+	// 静态目录
 	publicDir := filepath.Join(here, "public")
 	logger.Info().Str("dir", publicDir).Str("action", "静态目录").Msg("[HTTP]")
-
 	router.Static("/", publicDir)
 
 	// 验证码
@@ -70,7 +71,6 @@ func route(
 	passGroup := apiGroup.Group("/pass")
 	passGroup.GET("/query", passController.Query, permitManager.Permit("project_find"))
 	passGroup.PUT("/add", passController.Add, permitManager.Permit("project_edit"))
-	
 
 	machineGroup := apiGroup.Group("/machine", permitManager.Permit("default"))
 	machineGroup.GET("/cpu/info", machineController.PeekCpuInfo)
