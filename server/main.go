@@ -36,9 +36,9 @@ func main() {
 	}); err != nil {
 		log.Fatalln(err)
 	} else {
-		// app.BeforeRun = func(dc cjungo.DiContainer) error {
-		// 	return dc.Invoke(misc.MachineTick)
-		// }
+		app.BeforeRun = func(dc cjungo.DiContainer) error {
+			return dc.Invoke(misc.MachineTick)
+		}
 		if err := app.Run(); err != nil {
 			log.Fatalln(err)
 		}

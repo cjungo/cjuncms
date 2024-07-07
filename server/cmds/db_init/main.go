@@ -17,6 +17,8 @@ func main() {
 				&model.CjEmployeePermission{},
 				&model.CjEmployee{},
 				&model.CjMachineCPUTime{},
+				&model.CjMachineDiskUsage{},
+				&model.CjMachineProcess{},
 				&model.CjMachineVirtualMemory{},
 				&model.CjOperation{},
 				&model.CjPass{},

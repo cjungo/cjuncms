@@ -21,6 +21,8 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		CjEmployee:             newCjEmployee(db, opts...),
 		CjEmployeePermission:   newCjEmployeePermission(db, opts...),
 		CjMachineCPUTime:       newCjMachineCPUTime(db, opts...),
+		CjMachineDiskUsage:     newCjMachineDiskUsage(db, opts...),
+		CjMachineProcess:       newCjMachineProcess(db, opts...),
 		CjMachineVirtualMemory: newCjMachineVirtualMemory(db, opts...),
 		CjOperation:            newCjOperation(db, opts...),
 		CjPass:                 newCjPass(db, opts...),
@@ -37,6 +39,8 @@ type Query struct {
 	CjEmployee             cjEmployee
 	CjEmployeePermission   cjEmployeePermission
 	CjMachineCPUTime       cjMachineCPUTime
+	CjMachineDiskUsage     cjMachineDiskUsage
+	CjMachineProcess       cjMachineProcess
 	CjMachineVirtualMemory cjMachineVirtualMemory
 	CjOperation            cjOperation
 	CjPass                 cjPass
@@ -54,6 +58,8 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		CjEmployee:             q.CjEmployee.clone(db),
 		CjEmployeePermission:   q.CjEmployeePermission.clone(db),
 		CjMachineCPUTime:       q.CjMachineCPUTime.clone(db),
+		CjMachineDiskUsage:     q.CjMachineDiskUsage.clone(db),
+		CjMachineProcess:       q.CjMachineProcess.clone(db),
 		CjMachineVirtualMemory: q.CjMachineVirtualMemory.clone(db),
 		CjOperation:            q.CjOperation.clone(db),
 		CjPass:                 q.CjPass.clone(db),
@@ -78,6 +84,8 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		CjEmployee:             q.CjEmployee.replaceDB(db),
 		CjEmployeePermission:   q.CjEmployeePermission.replaceDB(db),
 		CjMachineCPUTime:       q.CjMachineCPUTime.replaceDB(db),
+		CjMachineDiskUsage:     q.CjMachineDiskUsage.replaceDB(db),
+		CjMachineProcess:       q.CjMachineProcess.replaceDB(db),
 		CjMachineVirtualMemory: q.CjMachineVirtualMemory.replaceDB(db),
 		CjOperation:            q.CjOperation.replaceDB(db),
 		CjPass:                 q.CjPass.replaceDB(db),
@@ -92,6 +100,8 @@ type queryCtx struct {
 	CjEmployee             *cjEmployeeDo
 	CjEmployeePermission   *cjEmployeePermissionDo
 	CjMachineCPUTime       *cjMachineCPUTimeDo
+	CjMachineDiskUsage     *cjMachineDiskUsageDo
+	CjMachineProcess       *cjMachineProcessDo
 	CjMachineVirtualMemory *cjMachineVirtualMemoryDo
 	CjOperation            *cjOperationDo
 	CjPass                 *cjPassDo
@@ -106,6 +116,8 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		CjEmployee:             q.CjEmployee.WithContext(ctx),
 		CjEmployeePermission:   q.CjEmployeePermission.WithContext(ctx),
 		CjMachineCPUTime:       q.CjMachineCPUTime.WithContext(ctx),
+		CjMachineDiskUsage:     q.CjMachineDiskUsage.WithContext(ctx),
+		CjMachineProcess:       q.CjMachineProcess.WithContext(ctx),
 		CjMachineVirtualMemory: q.CjMachineVirtualMemory.WithContext(ctx),
 		CjOperation:            q.CjOperation.WithContext(ctx),
 		CjPass:                 q.CjPass.WithContext(ctx),
