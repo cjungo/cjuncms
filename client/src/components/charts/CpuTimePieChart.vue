@@ -1,12 +1,10 @@
 <template>
-  <VChart class="chart" :option="option" :autoresize="true" />
+  <TickableChart :option="option" @tick="tick" />
 </template>
 
 <script lang="ts" setup>
-import VChart from "vue-echarts";
-import { computed, onBeforeMount, ref } from "vue";
+import { computed, ref } from "vue";
 import { type CjMachineCPUTime, getMachineCpuTimes } from "../../apis/machine";
-import { onBeforeRouteLeave, onBeforeRouteUpdate } from "vue-router";
 
 const machineCpuTimes = ref<CjMachineCPUTime>({
   id: 0,
@@ -73,22 +71,4 @@ const tick = async () => {
   machineCpuTimes.value = cpuTimesResult.data;
   console.log("cpu times", cpuTimesResult);
 };
-const tickId = ref(0);
-
-onBeforeMount(async () => {
-  tickId.value = setInterval(tick, 2000) as any;
-});
-
-onBeforeRouteUpdate(async () => {
-  if (tickId.value == 0) {
-    tickId.value = setInterval(tick, 2000) as any;
-  }
-});
-
-onBeforeRouteLeave(async () => {
-  if (tickId.value != 0) {
-    clearInterval(tickId.value);
-    tickId.value = 0;
-  }
-});
 </script>

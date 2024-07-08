@@ -10,7 +10,7 @@ import App from "./App.vue";
 import router from "./router";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
-import { PieChart } from "echarts/charts";
+import { PieChart, GaugeChart } from "echarts/charts";
 import {
   TitleComponent,
   TooltipComponent,
@@ -19,6 +19,7 @@ import {
 use([
   CanvasRenderer,
   PieChart,
+  GaugeChart,
   TitleComponent,
   TooltipComponent,
   LegendComponent,

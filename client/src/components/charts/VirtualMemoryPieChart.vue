@@ -1,12 +1,13 @@
 <template>
-  <VChart class="chart" :option="option" :autoresize="true" />
+  <TickableChart :option="option" @tick="tick" />
 </template>
 
 <script lang="ts" setup>
-import VChart from "vue-echarts";
-import { ref, computed, onBeforeMount } from "vue";
-import { onBeforeRouteLeave, onBeforeRouteUpdate } from "vue-router";
-import { type CjMachineVirtualMemory, getMachineVirtualMemory } from "../../apis/machine";
+import { ref, computed } from "vue";
+import {
+  type CjMachineVirtualMemory,
+  getMachineVirtualMemory,
+} from "../../apis/machine";
 
 const machineVirtualMemory = ref<CjMachineVirtualMemory>({
   id: 0,
@@ -93,26 +94,4 @@ const tick = async () => {
   machineVirtualMemory.value = virtualMemoryResult.data;
   console.log("virtual memory", virtualMemoryResult);
 };
-const tickId = ref(0);
-
-onBeforeMount(async () => {
-  const virtualMemoryResult = await getMachineVirtualMemory();
-  machineVirtualMemory.value = virtualMemoryResult.data;
-  console.log("virtual memory", virtualMemoryResult);
-
-  tickId.value = setInterval(tick, 2000) as any;
-});
-
-onBeforeRouteUpdate(async () => {
-  if (tickId.value == 0) {
-    tickId.value = setInterval(tick, 2000) as any;
-  }
-});
-
-onBeforeRouteLeave(async () => {
-  if (tickId.value != 0) {
-    clearInterval(tickId.value);
-    tickId.value = 0;
-  }
-});
 </script>

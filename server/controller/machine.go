@@ -40,6 +40,10 @@ func (controller *MachineController) PeekDiskUsage(ctx cjungo.HttpContext) error
 	return ctx.Resp(controller.watcher.DiskUsage())
 }
 
+func (controller *MachineController) PeekProcesses(ctx cjungo.HttpContext) error {
+	return ctx.Resp(controller.watcher.Processes())
+}
+
 type ListCpuTimesParam struct {
 	StartAt time.Time `json:"startAt"`
 	EndAt   time.Time `json:"endAt"`

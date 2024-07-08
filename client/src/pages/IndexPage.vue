@@ -2,7 +2,7 @@
   <div class="index-page">
     <div class="machine-chart">
       <div class="machine-chart-box">
-        <CpuTimePieChart />
+         <CpuTimeStageSpeedGaugeChart/>
       </div>
       <div class="machine-chart-box">
         <VirtualMemoryPieChart />
@@ -13,11 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import CpuTimePieChart from "../components/charts/CpuTimePieChart.vue";
-
 import { getMachineCpuInfo, type MachineCpuInfo } from "../apis/machine";
 import { onBeforeMount, ref } from "vue";
-import DiskUsagePieChart from "../components/charts/DiskUsagePieChart.vue";
 
 const machineCpuInfo = ref<MachineCpuInfo>({
   cpu: 0,

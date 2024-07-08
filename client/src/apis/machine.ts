@@ -136,6 +136,10 @@ export const listMachineVirtualMemory = apiGet<
   CjMachineVirtualMemory[]
 >("/api/machine/virtual-memory/list");
 
+export const getMachineProcesses = apiGet<any, CjMachineProcess[]>(
+  "/api/machine/processes"
+);
+
 export type ListMachineProcessesParam = {
   startAt: string;
   endAt: string;
@@ -143,4 +147,4 @@ export type ListMachineProcessesParam = {
 export const listMachineProcesses = apiGet<
   ListMachineProcessesParam,
   CjMachineProcess[]
->("/api/machine/processes");
+>("/api/machine/processes/list");

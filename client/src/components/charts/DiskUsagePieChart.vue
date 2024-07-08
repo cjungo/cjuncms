@@ -1,19 +1,19 @@
 <template>
-  <VChart class="chart" :option="option" :autoresize="true" />
+  <TickableChart :option="option" @tick="tick" />
 </template>
 
 <script lang="ts" setup>
-import VChart from "vue-echarts";
-import { computed, onBeforeMount, ref } from "vue";
+import { computed, ref } from "vue";
 import { CjMachineDiskUsage, getMachineDiskUsage } from "../../apis/machine";
-import { onBeforeRouteLeave, onBeforeRouteUpdate } from "vue-router";
 
 const machineDiskUsage = ref<CjMachineDiskUsage[]>([]);
 
 const option = computed(() => {
-  const names = machineDiskUsage.value.map((i) => [`${i.path} 空闲`, `${i.path} 使用`]).flat();
+  const names = machineDiskUsage.value
+    .map((i) => [`${i.path} 空闲`, `${i.path} 使用`])
+    .flat();
   const pieCount = machineDiskUsage.value.length;
-  const pieSize = 100.0 / pieCount * 2;
+  const pieSize = (100.0 / pieCount) * 2;
   const series = machineDiskUsage.value.map((i, index) => {
     const x = (100 / pieCount) * (index + 0.5);
     // console.log('x', x, pieSize);
@@ -58,22 +58,4 @@ const tick = async () => {
   machineDiskUsage.value = diskUsageResult.data;
   console.log("disk usage", diskUsageResult);
 };
-const tickId = ref(0);
-
-onBeforeMount(async () => {
-  tickId.value = setInterval(tick, 2000) as any;
-});
-
-onBeforeRouteUpdate(async () => {
-  if (tickId.value == 0) {
-    tickId.value = setInterval(tick, 2000) as any;
-  }
-});
-
-onBeforeRouteLeave(async () => {
-  if (tickId.value != 0) {
-    clearInterval(tickId.value);
-    tickId.value = 0;
-  }
-});
 </script>

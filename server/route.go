@@ -79,7 +79,8 @@ func route(
 	machineGroup.GET("/virtual-memory", machineController.PeekVirtualMemory)
 	machineGroup.GET("/virtual-memory/list", machineController.ListVirtualMemory)
 	machineGroup.GET("/disk", machineController.PeekDiskUsage)
-	machineGroup.GET("/processes", machineController.ListProcesses)
+	machineGroup.GET("/processes", machineController.PeekProcesses)
+	machineGroup.GET("/processes/list", machineController.ListProcesses)
 
 	return router.GetHandler(), nil
 }
