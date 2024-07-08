@@ -30,14 +30,14 @@
 <script lang="ts" setup>
 import { onBeforeMount, ref } from "vue";
 import { Delete, Edit } from "@element-plus/icons-vue";
-import { queryPass, type Pass, type QueryPassParam } from "../../apis/pass";
+import { queryPass, type CjPass, type QueryPassParam } from "../../apis/pass";
 
 const param = ref<QueryPassParam>({
   plain: "",
   skip: 0,
   take: 100,
 });
-const rows = ref<Pass[]>([]);
+const rows = ref<CjPass[]>([]);
 
 const onClickEdit = (params: any) => {
   console.log("onClickEdit", params);

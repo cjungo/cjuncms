@@ -1,14 +1,14 @@
 import { apiDelete, apiGet, apiPost, apiPut } from "../utils/api";
 
-export type Employee = {
-  id: number;
-  jobnumber: string;
-  username: string;
-  nickname: string;
-  fullname: string;
-  birthday: string;
-  avatar_path?: string;
-  is_removed: number;
+export type CjEmployee = {
+  id: number; // ID
+  jobnumber: string; // 工号
+  username: string; // 用户名
+  nickname?: string; // 昵称
+  fullname?: string; // 全称
+  birthday?: string; // 生日
+  avatar_path?: string; // 头像路径
+  is_removed: number; // 是否删除
 };
 
 export type QueryEmployeeParam = {
@@ -17,16 +17,16 @@ export type QueryEmployeeParam = {
   plain: string;
 };
 
-export const queryEmployee = apiGet<QueryEmployeeParam, Employee[]>(
+export const queryEmployee = apiGet<QueryEmployeeParam, CjEmployee[]>(
   "/api/employee/query"
 );
 
-export type AddEmplyeeParam = Omit<Employee, "id">;
-export const addEmplyee = apiPut<AddEmplyeeParam, Employee>(
+export type AddEmplyeeParam = Omit<CjEmployee, "id">;
+export const addEmplyee = apiPut<AddEmplyeeParam, CjEmployee>(
   "/api/employee/add"
 );
 
-export type EditEmployeeParam = Employee;
+export type EditEmployeeParam = CjEmployee;
 export const editEmpoyee = apiPost<EditEmployeeParam, any>("api/employee/edit");
 
 export type DropEmployeeParam = {

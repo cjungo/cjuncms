@@ -1,8 +1,8 @@
 import { apiDelete, apiGet, apiPost, apiPut } from "../utils/api";
 
-export type Project = {
-  id: number;
-  name: string;
+export type CjProject = {
+  id: number; //
+  name: string; // 项目名
 };
 
 export type QueryProjectParam = {
@@ -10,18 +10,22 @@ export type QueryProjectParam = {
   take: number;
   plain: string;
 };
-export const queryProject = apiGet<QueryProjectParam, Project[]>(
+export const queryProject = apiGet<QueryProjectParam, CjProject[]>(
   "/api/project/query"
 );
 
-export type AddProjectParam = Omit<Project, "id">;
-export const addProject = apiPut<AddProjectParam, Project>("/api/project/add");
+export type AddProjectParam = Omit<CjProject, "id">;
+export const addProject = apiPut<AddProjectParam, CjProject>(
+  "/api/project/add"
+);
 
-export type EditProjectParam = Project;
+export type EditProjectParam = CjProject;
 export const editProject = apiPost<EditProjectParam, any>("/api/project/edit");
 
 export type DropProjectParam = {
   id?: number;
   ids?: number[];
 };
-export const dropProject = apiDelete<DropProjectParam, any>("/api/project/drop");
+export const dropProject = apiDelete<DropProjectParam, any>(
+  "/api/project/drop"
+);

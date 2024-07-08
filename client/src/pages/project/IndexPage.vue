@@ -32,9 +32,9 @@
 <script lang="ts" setup>
 import { onBeforeMount, ref } from "vue";
 import { Delete, Edit } from "@element-plus/icons-vue";
-import { queryProject, type Project } from "../../apis/project";
+import { queryProject, type CjProject } from "../../apis/project";
 
-const rows = ref<Project[]>([]);
+const rows = ref<CjProject[]>([]);
 
 const onClickEdit = (params: any) => {
   console.log("onClickEdit", params);

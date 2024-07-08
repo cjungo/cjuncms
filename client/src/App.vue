@@ -7,12 +7,15 @@
 <script setup lang="tsx">
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
-import { getCurrentInstance, onBeforeMount } from "vue";
+import { getCurrentInstance, onBeforeMount, provide } from "vue";
 import { delay } from "./utils/time";
 import { useAuthStore } from "./stores/AuthStore";
 import { isEmpty } from "lodash";
 import { renewal } from "./apis/login";
 import { tipSubscribe } from "./utils/tip";
+// import { THEME_KEY } from "vue-echarts";
+
+// provide(THEME_KEY, "dark");
 
 const EL_LOCALE = zhCn;
 const EL_SIZE = "small";

@@ -36,6 +36,10 @@ func (controller *MachineController) PeekVirtualMemory(ctx cjungo.HttpContext) e
 	return ctx.Resp(controller.watcher.VirtualMemory())
 }
 
+func (controller *MachineController) PeekDiskUsage(ctx cjungo.HttpContext) error {
+	return ctx.Resp(controller.watcher.DiskUsage())
+}
+
 type ListCpuTimesParam struct {
 	StartAt time.Time `json:"startAt"`
 	EndAt   time.Time `json:"endAt"`

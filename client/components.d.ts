@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     CJunCmsLogoutDialog: typeof import('./src/dialogs/CJunCmsLogoutDialog.vue')['default']
     CJunCmsPageLayout: typeof import('./src/layouts/CJunCmsPageLayout.vue')['default']
+    CpuTimePieChart: typeof import('./src/components/charts/CpuTimePieChart.vue')['default']
+    DiskUsagePieChart: typeof import('./src/components/charts/DiskUsagePieChart.vue')['default']
     ElAutoResizer: typeof import('element-plus/es')['ElAutoResizer']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -33,5 +35,6 @@ declare module 'vue' {
     TabBar: typeof import('./src/components/TabBar.vue')['default']
     TopBar: typeof import('./src/components/TopBar.vue')['default']
     UserBar: typeof import('./src/components/UserBar.vue')['default']
+    VirtualMemoryPieChart: typeof import('./src/components/charts/VirtualMemoryPieChart.vue')['default']
   }
 }

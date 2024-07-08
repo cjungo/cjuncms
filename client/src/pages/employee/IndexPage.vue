@@ -59,12 +59,12 @@
 
 <script lang="ts" setup>
 import { onBeforeMount, ref } from "vue";
-import { queryEmployee, type Employee } from "../../apis/employee";
+import { queryEmployee, type CjEmployee } from "../../apis/employee";
 import { ElAutoResizer } from "element-plus";
 import { Delete, Edit } from "@element-plus/icons-vue";
 
 const isReadonly = ref(true);
-const current = ref<Employee>({
+const current = ref<CjEmployee>({
   id: 0,
   jobnumber: "",
   username: "",
@@ -74,7 +74,7 @@ const current = ref<Employee>({
   avatar_path: "",
   is_removed: 0,
 });
-const rows = ref<Employee[]>([]);
+const rows = ref<CjEmployee[]>([]);
 
 const onClickEdit = (params: any) => {
   console.log("onClickEdit", params);

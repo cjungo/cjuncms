@@ -1,11 +1,16 @@
 import { apiGet } from "../utils/api";
 
-export type Pass = {};
+export type CjPass = {
+  id: number; // ID
+  type: number; // 0.密码；1.密钥
+  host: string; // 主机
+  port: number; // 端口
+  content: string; // 内容
+};
 
 export type QueryPassParam = {
   skip: number;
   take: number;
   plain: string;
 };
-export const queryPass = apiGet<QueryPassParam, Pass[]>("/api/pass/query");
-
+export const queryPass = apiGet<QueryPassParam, CjPass[]>("/api/pass/query");
