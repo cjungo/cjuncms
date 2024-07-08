@@ -13,11 +13,11 @@ const TableNameCjMachineProcess = "cj_machine_process"
 // CjMachineProcess 进程
 type CjMachineProcess struct {
 	ID         uint32    `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
-	Pid        uint32    `gorm:"column:pid;type:int unsigned;not null" json:"pid"`
-	Name       string    `gorm:"column:name;type:varchar(60);not null" json:"name"`
-	Username   string    `gorm:"column:username;type:varchar(60);not null" json:"username"`
+	Pid        int32     `gorm:"column:pid;type:int;not null;index:PID_INDEX,priority:1" json:"pid"`
+	Name       string    `gorm:"column:name;type:varchar(60);not null;index:NAME_INDEX,priority:1" json:"name"`
+	Username   string    `gorm:"column:username;type:varchar(60);not null;index:USERNAME_INDEX,priority:1" json:"username"`
 	Cmdline    string    `gorm:"column:cmdline;type:varchar(120);not null" json:"cmdline"`
-	Workdir    string    `gorm:"column:workdir;type:varchar(120);not null" json:"workdir"`
+	Workdir    string    `gorm:"column:workdir;type:varchar(120);not null;index:WORKDIR_INDEX,priority:1" json:"workdir"`
 	CPUPercent float64   `gorm:"column:cpu_percent;type:double;not null" json:"cpu_percent"`
 	MemPercent float32   `gorm:"column:mem_percent;type:float;not null" json:"mem_percent"`
 	CreateAt   time.Time `gorm:"column:create_at;type:datetime;not null;index:CREATE_AT_INDEX,priority:1;comment:记录时间" json:"create_at"` // 记录时间

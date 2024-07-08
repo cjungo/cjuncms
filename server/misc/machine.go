@@ -5,16 +5,18 @@ import (
 	"time"
 
 	"github.com/cjungo/cjuncms/model"
+	"github.com/cjungo/cjungo"
 	"github.com/cjungo/cjungo/db"
 	"github.com/cjungo/cjungo/ext"
 	"github.com/rs/zerolog"
 	"github.com/shirou/gopsutil/v4/cpu"
 	"github.com/shirou/gopsutil/v4/disk"
 	"github.com/shirou/gopsutil/v4/mem"
+	"github.com/shirou/gopsutil/v4/process"
 	"gorm.io/gorm"
 )
 
-type MachineStat[T cpu.InfoStat | cpu.TimesStat | mem.VirtualMemoryStat | []disk.UsageStat] struct {
+type MachineStat[T cpu.InfoStat | cpu.TimesStat | mem.VirtualMemoryStat | []disk.UsageStat | []model.CjMachineProcess] struct {
 	stat  *T
 	mutex sync.Mutex
 }
@@ -41,6 +43,7 @@ type MachineWatcher struct {
 	cpuTimes      MachineStat[cpu.TimesStat]
 	virtualMemory MachineStat[mem.VirtualMemoryStat]
 	diskUsage     MachineStat[[]disk.UsageStat]
+	processes     MachineStat[[]model.CjMachineProcess]
 }
 
 func ProvideMachineWatcher() *MachineWatcher {
@@ -61,6 +64,10 @@ func ProvideMachineWatcher() *MachineWatcher {
 			stat:  &[]disk.UsageStat{},
 			mutex: sync.Mutex{},
 		},
+		processes: MachineStat[[]model.CjMachineProcess]{
+			stat:  &[]model.CjMachineProcess{},
+			mutex: sync.Mutex{},
+		},
 	}
 }
 
@@ -78,6 +85,10 @@ func (machine *MachineWatcher) VirtualMemory() *mem.VirtualMemoryStat {
 
 func (machine *MachineWatcher) DiskUsage() *[]disk.UsageStat {
 	return machine.diskUsage.Read()
+}
+
+func (machine *MachineWatcher) Processes() *[]model.CjMachineProcess {
+	return machine.processes.Read()
 }
 
 func (machine *MachineWatcher) Stat() error {
@@ -130,65 +141,123 @@ func (machine *MachineWatcher) Stat() error {
 		return &result, nil
 	})
 
+	wg.Add(1)
+	go machine.processes.Write(func() (*[]model.CjMachineProcess, error) {
+		defer wg.Done()
+
+		processes, err := process.Processes()
+		if err != nil {
+			return nil, err
+		}
+
+		now := time.Now()
+		result := make([]model.CjMachineProcess, len(processes))
+		for i, p := range processes {
+			result[i].Pid = p.Pid
+			result[i].CreateAt = now
+			if name, err := p.Name(); err == nil {
+				result[i].Name = name
+			}
+			if username, err := p.Username(); err == nil {
+				result[i].Username = username
+			}
+			if cmdline, err := p.Cmdline(); err == nil {
+				result[i].Cmdline = cjungo.LimitStr(cmdline, 120)
+			}
+			if workdir, err := p.Cwd(); err == nil {
+				result[i].Workdir = cjungo.LimitStr(workdir, 120)
+			}
+			if cpuPercent, err := p.CPUPercent(); err == nil {
+				result[i].CPUPercent = cpuPercent
+			}
+			if memPercent, err := p.MemoryPercent(); err == nil {
+				result[i].MemPercent = memPercent
+			}
+		}
+
+		return &result, nil
+	})
+
 	wg.Wait()
 	return nil
 }
 
 func MachineTick(logger *zerolog.Logger, mysql *db.MySql, machine *MachineWatcher) {
+	// 每 4 秒采样到内存，时间尽量短（确保数据实时性）
 	go func() {
 		if err := ext.Tick(
 			4*time.Second,
 			func() error {
-				if err := machine.Stat(); err != nil {
-					return err
-				}
-				now := time.Now()
-
-				// CPU
-				// cpuInfo := machine.CpuInfo()
-				cpuTimes := machine.CpuTimes()
-				machineCpuTimes := &model.CjMachineCPUTime{
-					CreateAt: now,
-				}
-				ext.MoveField(cpuTimes, machineCpuTimes)
-
-				// 内存
-				virtualMemory := machine.VirtualMemory()
-				machineVirtualMemory := &model.CjMachineVirtualMemory{
-					CreateAt: now,
-				}
-				ext.MoveField(virtualMemory, machineVirtualMemory)
-
-				// 硬盘
-				diskUsage := machine.DiskUsage()
-				machineDiskUsage := make([]model.CjMachineDiskUsage, len(*diskUsage))
-				for i, d := range *diskUsage {
-					machineDiskUsage[i].CreateAt = now
-					ext.MoveField(&d, &machineDiskUsage[i])
-				}
-
-				logger.Info().
-					// Any("cpuInfo", cpuInfo).
-					Any("cpuTimes", cpuTimes).
-					Any("virtualMemory", virtualMemory).
-					Any("diskUsage", diskUsage).
-					Msg("[MACHINE]")
-
-				return mysql.Transaction(func(tx *gorm.DB) error {
-					if err := tx.Create(machineCpuTimes).Error; err != nil {
-						return err
-					}
-					if err := tx.Create(machineVirtualMemory).Error; err != nil {
-						return err
-					}
-					if err := tx.CreateInBatches(&machineDiskUsage, 100).Error; err != nil {
-						return err
-					}
-
-					return nil
-				})
+				return machine.Stat()
 			},
 		); err != nil {
+			logger.Error().Err(err).Msg("[MACHINE]")
+		}
+	}()
+
+	// 每分钟采样 CPU 内存 磁盘 数据落盘（时间尽量长，不然数据太多）
+	go func() {
+		if err := ext.Tick(1*time.Minute, func() error {
+			now := time.Now()
+
+			// CPU
+			// cpuInfo := machine.CpuInfo()
+			cpuTimes := machine.CpuTimes()
+			machineCpuTimes := &model.CjMachineCPUTime{
+				CreateAt: now,
+			}
+			ext.MoveField(cpuTimes, machineCpuTimes)
+
+			// 内存
+			virtualMemory := machine.VirtualMemory()
+			machineVirtualMemory := &model.CjMachineVirtualMemory{
+				CreateAt: now,
+			}
+			ext.MoveField(virtualMemory, machineVirtualMemory)
+
+			// 硬盘
+			diskUsage := machine.DiskUsage()
+			machineDiskUsage := make([]model.CjMachineDiskUsage, len(*diskUsage))
+			for i, d := range *diskUsage {
+				machineDiskUsage[i].CreateAt = now
+				ext.MoveField(&d, &machineDiskUsage[i])
+			}
+
+			// logger.Info().
+			// 	// Any("cpuInfo", cpuInfo).
+			// 	Any("cpuTimes", cpuTimes).
+			// 	Any("virtualMemory", virtualMemory).
+			// 	Any("diskUsage", diskUsage).
+			// 	Any("processes", processes).
+			// 	Msg("[MACHINE]")
+
+			return mysql.TransactionSilent(func(tx *gorm.DB) error {
+				if err := tx.Create(machineCpuTimes).Error; err != nil {
+					return err
+				}
+				if err := tx.Create(machineVirtualMemory).Error; err != nil {
+					return err
+				}
+				if err := tx.CreateInBatches(&machineDiskUsage, 100).Error; err != nil {
+					return err
+				}
+
+				return nil
+			})
+		}); err != nil {
+			logger.Error().Err(err).Msg("[MACHINE]")
+		}
+	}()
+
+	// 每 10 分钟采样 进程 数据落盘（时间尽量长，不然数据太多）
+	go func() {
+		if err := ext.Tick(10*time.Minute, func() error {
+			// 进程
+			processes := machine.Processes()
+			return mysql.TransactionSilent(func(tx *gorm.DB) error {
+				return tx.CreateInBatches(processes, 1000).Error
+			})
+		}); err != nil {
 			logger.Error().Err(err).Msg("[MACHINE]")
 		}
 	}()

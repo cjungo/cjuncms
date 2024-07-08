@@ -28,7 +28,7 @@ func newCjMachineProcess(db *gorm.DB, opts ...gen.DOOption) cjMachineProcess {
 	tableName := _cjMachineProcess.cjMachineProcessDo.TableName()
 	_cjMachineProcess.ALL = field.NewAsterisk(tableName)
 	_cjMachineProcess.ID = field.NewUint32(tableName, "id")
-	_cjMachineProcess.Pid = field.NewUint32(tableName, "pid")
+	_cjMachineProcess.Pid = field.NewInt32(tableName, "pid")
 	_cjMachineProcess.Name = field.NewString(tableName, "name")
 	_cjMachineProcess.Username = field.NewString(tableName, "username")
 	_cjMachineProcess.Cmdline = field.NewString(tableName, "cmdline")
@@ -48,7 +48,7 @@ type cjMachineProcess struct {
 
 	ALL        field.Asterisk
 	ID         field.Uint32
-	Pid        field.Uint32
+	Pid        field.Int32
 	Name       field.String
 	Username   field.String
 	Cmdline    field.String
@@ -73,7 +73,7 @@ func (c cjMachineProcess) As(alias string) *cjMachineProcess {
 func (c *cjMachineProcess) updateTableName(table string) *cjMachineProcess {
 	c.ALL = field.NewAsterisk(table)
 	c.ID = field.NewUint32(table, "id")
-	c.Pid = field.NewUint32(table, "pid")
+	c.Pid = field.NewInt32(table, "pid")
 	c.Name = field.NewString(table, "name")
 	c.Username = field.NewString(table, "username")
 	c.Cmdline = field.NewString(table, "cmdline")

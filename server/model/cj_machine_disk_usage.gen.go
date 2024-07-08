@@ -13,8 +13,8 @@ const TableNameCjMachineDiskUsage = "cj_machine_disk_usage"
 // CjMachineDiskUsage 硬盘使用
 type CjMachineDiskUsage struct {
 	ID                uint32    `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
-	Path              string    `gorm:"column:path;type:varchar(60);not null" json:"path"`
-	Fstype            string    `gorm:"column:fstype;type:varchar(60);not null" json:"fstype"`
+	Path              string    `gorm:"column:path;type:varchar(60);not null;index:PATH_INDEX,priority:1" json:"path"`
+	Fstype            string    `gorm:"column:fstype;type:varchar(60);not null;index:FSTYPE,priority:1" json:"fstype"`
 	Total             uint64    `gorm:"column:total;type:bigint unsigned;not null" json:"total"`
 	Free              uint64    `gorm:"column:free;type:bigint unsigned;not null" json:"free"`
 	Used              uint64    `gorm:"column:used;type:bigint unsigned;not null" json:"used"`

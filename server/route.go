@@ -75,7 +75,10 @@ func route(
 	machineGroup := apiGroup.Group("/machine", permitManager.Permit("default"))
 	machineGroup.GET("/cpu/info", machineController.PeekCpuInfo)
 	machineGroup.GET("/cpu/times", machineController.PeekCpuTimes)
+	machineGroup.GET("/cpu/times/list", machineController.ListCpuTimes)
 	machineGroup.GET("/virtual-memory", machineController.PeekVirtualMemory)
+	machineGroup.GET("/virtual-memory/list", machineController.ListVirtualMemory)
+	machineGroup.GET("/processes", machineController.ListProcesses)
 
 	return router.GetHandler(), nil
 }

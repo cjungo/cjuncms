@@ -3,7 +3,7 @@ module github.com/cjungo/cjuncms
 go 1.22.2
 
 require (
-	github.com/cjungo/cjungo v0.0.0-20240707061254-628cbd964938
+	github.com/cjungo/cjungo v0.0.0-20240707094824-f8a6fa971778
 	github.com/deckarep/golang-set/v2 v2.6.0
 	github.com/elliotchance/pie/v2 v2.8.0
 	github.com/go-faker/faker/v4 v4.4.2

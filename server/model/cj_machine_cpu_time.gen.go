@@ -13,7 +13,7 @@ const TableNameCjMachineCPUTime = "cj_machine_cpu_time"
 // CjMachineCPUTime CPU 状态
 type CjMachineCPUTime struct {
 	ID        uint32    `gorm:"column:id;type:int unsigned;primaryKey" json:"id"`
-	CPU       string    `gorm:"column:cpu;type:varchar(45);not null" json:"cpu"`
+	CPU       string    `gorm:"column:cpu;type:varchar(45);not null;index:CPU_INDEX,priority:1" json:"cpu"`
 	User      float64   `gorm:"column:user;type:double;not null;comment:用户时间" json:"user"`     // 用户时间
 	System    float64   `gorm:"column:system;type:double;not null;comment:系统时间" json:"system"` // 系统时间
 	Idle      float64   `gorm:"column:idle;type:double;not null;comment:空闲时间" json:"idle"`     // 空闲时间
