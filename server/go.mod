@@ -3,7 +3,7 @@ module github.com/cjungo/cjuncms
 go 1.22.2
 
 require (
-	github.com/cjungo/cjungo v0.0.0-20240707094824-f8a6fa971778
+	github.com/cjungo/cjungo v0.0.0-20240715064104-9e64dd8b4e04
 	github.com/deckarep/golang-set/v2 v2.6.0
 	github.com/elliotchance/pie/v2 v2.8.0
 	github.com/go-faker/faker/v4 v4.4.2
@@ -34,6 +34,7 @@ require (
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
+	github.com/h2non/filetype v1.1.3 // indirect
 	github.com/jessevdk/go-flags v1.6.1 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect

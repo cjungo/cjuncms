@@ -6,6 +6,7 @@ import (
 	"github.com/cjungo/cjuncms/misc"
 	"github.com/cjungo/cjungo"
 	"github.com/cjungo/cjungo/db"
+	"github.com/cjungo/cjungo/ext"
 
 	_ "github.com/cjungo/cjuncms/docs"
 )
@@ -22,6 +23,7 @@ func main() {
 			cjungo.LoadLoggerConfFromEnv,     // 加载日志配置
 			cjungo.LoadHttpServerConfFromEnv, // 加载服务器配置
 			db.LoadMySqlConfFormEnv,          // 加载数据库配置
+			ext.NewStorageManager,            // 存储管理
 			misc.ProvideMysqlForWeb(),        // 提供数据库
 			misc.NewJwtClaimsManager,         // Jwt 管理器
 			misc.ProvidePermitManager(),      // 提供权限管理器
