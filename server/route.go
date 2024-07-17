@@ -30,6 +30,7 @@ func route(
 	storageManager *ext.StorageManager,
 	permitManager *mid.PermitManager[string, misc.EmployeeToken],
 	captchaController *ext.CaptchaController,
+	messageController *ext.MessageController[string],
 	signController *controller.SignController,
 	machineController *controller.MachineController,
 	employeeController *controller.EmployeeController,
@@ -62,6 +63,9 @@ func route(
 		IndexMiddleware:  []echo.MiddlewareFunc{permitManager.Permit("default")},
 		QueryMiddleware:  []echo.MiddlewareFunc{permitManager.Permit("default")},
 	})
+
+	// 消息
+	router.GET("/msg", messageController.Dispatch, permitManager.Permit("default"))
 
 	// 验证码
 	captchaGroup := router.Group("/captcha")

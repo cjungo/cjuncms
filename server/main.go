@@ -27,8 +27,13 @@ func main() {
 			misc.ProvideMysqlForWeb(),        // 提供数据库
 			misc.NewJwtClaimsManager,         // Jwt 管理器
 			misc.ProvidePermitManager(),      // 提供权限管理器
-			misc.ProvideMachineWatcher,       // 机器守望者
-			route,                            // 提供路由
+			misc.ProvideMachineWatcher,       // 机器监控器
+			ext.ProvideMessageController(&ext.MessageControllerProviderConf[string]{ // 提供消息控制器
+				TokenAccess: func(ctx cjungo.HttpContext) (string, error) {
+					return ctx.GetReqID(), nil
+				},
+			}),
+			route, // 提供路由
 		); err != nil {
 			return err
 		}
