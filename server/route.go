@@ -30,7 +30,8 @@ func route(
 	storageManager *ext.StorageManager,
 	permitManager *mid.PermitManager[string, misc.EmployeeToken],
 	captchaController *ext.CaptchaController,
-	messageController *ext.MessageController[string],
+	messageController *misc.MessageController,
+	shellMessageController *misc.ShellMessageController,
 	signController *controller.SignController,
 	machineController *controller.MachineController,
 	employeeController *controller.EmployeeController,
@@ -104,6 +105,9 @@ func route(
 	machineGroup.GET("/disk", machineController.PeekDiskUsage)
 	machineGroup.GET("/processes", machineController.PeekProcesses)
 	machineGroup.GET("/processes/list", machineController.ListProcesses)
+
+	shellGroup := apiGroup.Group("/shell", permitManager.Permit("default"))
+	shellGroup.GET("/msg", shellMessageController.Dispatch)
 
 	return router.GetHandler(), nil
 }
