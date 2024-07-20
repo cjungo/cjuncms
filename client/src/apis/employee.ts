@@ -21,13 +21,13 @@ export const queryEmployee = apiGet<QueryEmployeeParam, CjEmployee[]>(
   "/api/employee/query"
 );
 
-export type AddEmplyeeParam = Omit<CjEmployee, "id">;
-export const addEmplyee = apiPut<AddEmplyeeParam, CjEmployee>(
+export type AddEmployeeParam = Omit<CjEmployee, "id">;
+export const addEmployee = apiPut<AddEmployeeParam, CjEmployee>(
   "/api/employee/add"
 );
 
 export type EditEmployeeParam = CjEmployee;
-export const editEmpoyee = apiPost<EditEmployeeParam, any>("api/employee/edit");
+export const editEmployee = apiPost<EditEmployeeParam, any>("api/employee/edit");
 
 export type DropEmployeeParam = {
   id?: number;

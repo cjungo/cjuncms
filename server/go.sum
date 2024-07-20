@@ -15,6 +15,10 @@ github.com/cjungo/cjungo v0.0.0-20240717054236-ed3d0ddc1afa h1:s7ipwBXEEX8fuNowW
 github.com/cjungo/cjungo v0.0.0-20240717054236-ed3d0ddc1afa/go.mod h1:QdizuriMAp0OsWbAbWvQ4Mo411q8QRseednMro7oIwQ=
 github.com/cjungo/cjungo v0.0.0-20240717083518-bb3fe6f07fdb h1:jeXni5iLgGcY33N69wXdotJdVC2bTm8Ez9xLQgaM2n4=
 github.com/cjungo/cjungo v0.0.0-20240717083518-bb3fe6f07fdb/go.mod h1:QdizuriMAp0OsWbAbWvQ4Mo411q8QRseednMro7oIwQ=
+github.com/cjungo/cjungo v0.0.0-20240720074309-45b5654e2245 h1:2hmhtMcoqvl+ZS/e4Zgv0+YbBQ+/Rq/auBs1PUZSES0=
+github.com/cjungo/cjungo v0.0.0-20240720074309-45b5654e2245/go.mod h1:QdizuriMAp0OsWbAbWvQ4Mo411q8QRseednMro7oIwQ=
+github.com/cjungo/cjungo v0.0.0-20240720080546-848604ef9d6b h1:mVjeApn7TdIqJcXGZ9bQFFIwsEVrnIo/OBGhRkLFgSI=
+github.com/cjungo/cjungo v0.0.0-20240720080546-848604ef9d6b/go.mod h1:QdizuriMAp0OsWbAbWvQ4Mo411q8QRseednMro7oIwQ=
 github.com/coreos/etcd v3.3.27+incompatible h1:QIudLb9KeBsE5zyYxd1mjzRSkzLg9Wf9QlRwFgd6oTA=
 github.com/coreos/etcd v3.3.27+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/go-semver v0.3.1 h1:yi21YpKnrx1gt5R+la8n5WgS0kCrsPp33dmEyHReZr4=

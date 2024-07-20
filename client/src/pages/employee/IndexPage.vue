@@ -5,22 +5,22 @@
         <ElRow>
           <ElCol :span="6">
             <ElFormItem label="ID">
-              <ElInput :value="current.id" readonly />
+              <ElInput :value="current?.id" readonly />
             </ElFormItem>
           </ElCol>
           <ElCol :span="6">
             <ElFormItem label="用户名">
-              <ElInput v-model="current.username" :readonly="isReadonly" />
+              <ElInput v-model="current?.username" :readonly="isReadonly" />
             </ElFormItem>
           </ElCol>
           <ElCol :span="6">
             <ElFormItem label="工号">
-              <ElInput v-model="current.jobnumber" :readonly="isReadonly" />
+              <ElInput v-model="current?.jobnumber" :readonly="isReadonly" />
             </ElFormItem>
           </ElCol>
           <ElCol :span="6">
             <ElFormItem label="昵称">
-              <ElInput v-model="current.nickname" :readonly="isReadonly" />
+              <ElInput v-model="current?.nickname" :readonly="isReadonly" />
             </ElFormItem>
           </ElCol>
         </ElRow>
@@ -60,20 +60,10 @@
 <script lang="ts" setup>
 import { onBeforeMount, ref } from "vue";
 import { queryEmployee, type CjEmployee } from "../../apis/employee";
-import { ElAutoResizer } from "element-plus";
 import { Delete, Edit } from "@element-plus/icons-vue";
 
 const isReadonly = ref(true);
-const current = ref<CjEmployee>({
-  id: 0,
-  jobnumber: "",
-  username: "",
-  nickname: "",
-  fullname: "",
-  birthday: "",
-  avatar_path: "",
-  is_removed: 0,
-});
+const current = ref<CjEmployee>();
 const rows = ref<CjEmployee[]>([]);
 
 const onClickEdit = (params: any) => {

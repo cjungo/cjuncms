@@ -1,6 +1,21 @@
 <template>
   <div class="project-index-page">
-    <div class="project-info-box"></div>
+    <div class="project-info-box">
+      <ElForm>
+        <ElRow>
+          <ElCol :span="6">
+            <ElFormItem label="ID">
+              <ElInput :value="current?.id" readonly />
+            </ElFormItem>
+          </ElCol>
+          <ElCol :span="6">
+            <ElFormItem label="项目名">
+              <ElInput :value="current?.name" readonly />
+            </ElFormItem>
+          </ElCol>
+        </ElRow>
+      </ElForm>
+    </div>
     <div class="project-list-box">
       <ElAutoResizer>
         <template #default="{ width, height }">
@@ -34,6 +49,7 @@ import { onBeforeMount, ref } from "vue";
 import { Delete, Edit } from "@element-plus/icons-vue";
 import { queryProject, type CjProject } from "../../apis/project";
 
+const current = ref<CjProject>();
 const rows = ref<CjProject[]>([]);
 
 const onClickEdit = (params: any) => {
@@ -44,9 +60,9 @@ const onClickDelete = (params: any) => {
   console.log("onClickDelete", params);
 };
 
-onBeforeMount(async() => {
-    const result = await queryProject();
-    rows.value = result.data;
+onBeforeMount(async () => {
+  const result = await queryProject();
+  rows.value = result.data;
 });
 </script>
 

@@ -38,10 +38,11 @@ func (controller *ProjectController) Query(ctx cjungo.HttpContext) error {
 		query = query.Where("shortname LIKE ? OR fullname LIKE ? OR number LIKE ?", plain, plain, plain)
 	}
 
+	take := cjungo.Max(param.Take, 40)
 	rows := []model.CjProject{}
 	if err := query.
 		Offset(param.Skip).
-		Limit(param.Take).
+		Limit(take).
 		Find(&rows).Error; err != nil {
 		return ctx.RespBad(err)
 	}
