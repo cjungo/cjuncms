@@ -16,21 +16,7 @@
 import { getMachineCpuInfo, type MachineCpuInfo } from "../apis/machine";
 import { onBeforeMount, ref } from "vue";
 
-const machineCpuInfo = ref<MachineCpuInfo>({
-  cpu: 0,
-  vendorId: "",
-  family: "",
-  model: "",
-  stepping: 0,
-  physicalId: "",
-  coreId: "",
-  cores: 0,
-  modelName: "",
-  mhz: 0,
-  cacheSize: 0,
-  flags: [],
-  microcode: "",
-});
+const machineCpuInfo = ref<MachineCpuInfo>();
 
 onBeforeMount(async () => {
   const cpuInfoResult = await getMachineCpuInfo();
@@ -59,7 +45,7 @@ export default {
   flex-direction: row;
 }
 .machine-chart-box {
-  width: 40vw;
-  height: 40vw;
+  width: 24vw;
+  height: 24vw;
 }
 </style>

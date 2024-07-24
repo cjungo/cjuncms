@@ -12,15 +12,16 @@ const TableNameCjEmployee = "cj_employee"
 
 // CjEmployee 员工
 type CjEmployee struct {
-	ID         uint32     `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true;comment:ID" json:"id"`                                // ID
-	Jobnumber  string     `gorm:"column:jobnumber;type:varchar(8);not null;uniqueIndex:JOBNUMBER_UNIQUE,priority:1;comment:工号" json:"jobnumber"` // 工号
-	Username   string     `gorm:"column:username;type:varchar(30);not null;uniqueIndex:USERNAME_UNIQUE,priority:1;comment:用户名" json:"username"`  // 用户名
-	Password   []byte     `gorm:"column:password;type:binary(32);not null;comment:密码" json:"password"`                                           // 密码
-	Nickname   *string    `gorm:"column:nickname;type:varchar(30);comment:昵称" json:"nickname"`                                                   // 昵称
-	Fullname   *string    `gorm:"column:fullname;type:varchar(200);comment:全称" json:"fullname"`                                                  // 全称
-	Birthday   *time.Time `gorm:"column:birthday;type:datetime;comment:生日" json:"birthday"`                                                      // 生日
-	AvatarPath *string    `gorm:"column:avatar_path;type:varchar(60);comment:头像路径" json:"avatar_path"`                                           // 头像路径
-	IsRemoved  uint32     `gorm:"column:is_removed;type:tinyint unsigned;not null;comment:是否删除" json:"is_removed"`                               // 是否删除
+	ID           uint32     `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true;comment:ID" json:"id"`                                // ID
+	DepartmentID uint32     `gorm:"column:department_id;type:int unsigned;not null;comment:部门ID" json:"department_id"`                             // 部门ID
+	Jobnumber    string     `gorm:"column:jobnumber;type:varchar(8);not null;uniqueIndex:JOBNUMBER_UNIQUE,priority:1;comment:工号" json:"jobnumber"` // 工号
+	Username     string     `gorm:"column:username;type:varchar(30);not null;uniqueIndex:USERNAME_UNIQUE,priority:1;comment:用户名" json:"username"`  // 用户名
+	Password     []byte     `gorm:"column:password;type:binary(32);not null;comment:密码" json:"password"`                                           // 密码
+	Nickname     *string    `gorm:"column:nickname;type:varchar(30);comment:昵称" json:"nickname"`                                                   // 昵称
+	Fullname     *string    `gorm:"column:fullname;type:varchar(200);comment:全称" json:"fullname"`                                                  // 全称
+	Birthday     *time.Time `gorm:"column:birthday;type:datetime;comment:生日" json:"birthday"`                                                      // 生日
+	AvatarPath   *string    `gorm:"column:avatar_path;type:varchar(60);comment:头像路径" json:"avatar_path"`                                           // 头像路径
+	IsRemoved    uint32     `gorm:"column:is_removed;type:tinyint unsigned;not null;comment:是否删除" json:"is_removed"`                               // 是否删除
 }
 
 // TableName CjEmployee's table name

@@ -28,6 +28,7 @@ func newCjEmployee(db *gorm.DB, opts ...gen.DOOption) cjEmployee {
 	tableName := _cjEmployee.cjEmployeeDo.TableName()
 	_cjEmployee.ALL = field.NewAsterisk(tableName)
 	_cjEmployee.ID = field.NewUint32(tableName, "id")
+	_cjEmployee.DepartmentID = field.NewUint32(tableName, "department_id")
 	_cjEmployee.Jobnumber = field.NewString(tableName, "jobnumber")
 	_cjEmployee.Username = field.NewString(tableName, "username")
 	_cjEmployee.Password = field.NewBytes(tableName, "password")
@@ -46,16 +47,17 @@ func newCjEmployee(db *gorm.DB, opts ...gen.DOOption) cjEmployee {
 type cjEmployee struct {
 	cjEmployeeDo cjEmployeeDo
 
-	ALL        field.Asterisk
-	ID         field.Uint32 // ID
-	Jobnumber  field.String // 工号
-	Username   field.String // 用户名
-	Password   field.Bytes  // 密码
-	Nickname   field.String // 昵称
-	Fullname   field.String // 全称
-	Birthday   field.Time   // 生日
-	AvatarPath field.String // 头像路径
-	IsRemoved  field.Uint32 // 是否删除
+	ALL          field.Asterisk
+	ID           field.Uint32 // ID
+	DepartmentID field.Uint32 // 部门ID
+	Jobnumber    field.String // 工号
+	Username     field.String // 用户名
+	Password     field.Bytes  // 密码
+	Nickname     field.String // 昵称
+	Fullname     field.String // 全称
+	Birthday     field.Time   // 生日
+	AvatarPath   field.String // 头像路径
+	IsRemoved    field.Uint32 // 是否删除
 
 	fieldMap map[string]field.Expr
 }
@@ -73,6 +75,7 @@ func (c cjEmployee) As(alias string) *cjEmployee {
 func (c *cjEmployee) updateTableName(table string) *cjEmployee {
 	c.ALL = field.NewAsterisk(table)
 	c.ID = field.NewUint32(table, "id")
+	c.DepartmentID = field.NewUint32(table, "department_id")
 	c.Jobnumber = field.NewString(table, "jobnumber")
 	c.Username = field.NewString(table, "username")
 	c.Password = field.NewBytes(table, "password")
@@ -107,8 +110,9 @@ func (c *cjEmployee) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (c *cjEmployee) fillFieldMap() {
-	c.fieldMap = make(map[string]field.Expr, 9)
+	c.fieldMap = make(map[string]field.Expr, 10)
 	c.fieldMap["id"] = c.ID
+	c.fieldMap["department_id"] = c.DepartmentID
 	c.fieldMap["jobnumber"] = c.Jobnumber
 	c.fieldMap["username"] = c.Username
 	c.fieldMap["password"] = c.Password

@@ -4,13 +4,17 @@
 
 package model
 
+import (
+	"time"
+)
+
 const TableNameCjProjectEmployee = "cj_project_employee"
 
 // CjProjectEmployee mapped from table <cj_project_employee>
 type CjProjectEmployee struct {
-	ID         uint32 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
-	ProjectID  uint32 `gorm:"column:project_id;type:int unsigned;not null;index:PROJECT_EMPLOYEE_UNIQUE,priority:1;comment:项目ID" json:"project_id"`   // 项目ID
-	EmployeeID uint32 `gorm:"column:employee_id;type:int unsigned;not null;index:PROJECT_EMPLOYEE_UNIQUE,priority:2;comment:员工ID" json:"employee_id"` // 员工ID
+	ProjectID  uint32    `gorm:"column:project_id;type:int unsigned;primaryKey;comment:项目ID" json:"project_id"`   // 项目ID
+	EmployeeID uint32    `gorm:"column:employee_id;type:int unsigned;primaryKey;comment:员工ID" json:"employee_id"` // 员工ID
+	CreateAt   time.Time `gorm:"column:create_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"create_at"`
 }
 
 // TableName CjProjectEmployee's table name

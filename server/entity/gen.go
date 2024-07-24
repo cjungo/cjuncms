@@ -18,6 +18,10 @@ import (
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
 		db:                     db,
+		CjDemand:               newCjDemand(db, opts...),
+		CjDemandEmployee:       newCjDemandEmployee(db, opts...),
+		CjDemandProject:        newCjDemandProject(db, opts...),
+		CjDepartment:           newCjDepartment(db, opts...),
 		CjEmployee:             newCjEmployee(db, opts...),
 		CjEmployeePermission:   newCjEmployeePermission(db, opts...),
 		CjMachineCPUTime:       newCjMachineCPUTime(db, opts...),
@@ -36,6 +40,10 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 type Query struct {
 	db *gorm.DB
 
+	CjDemand               cjDemand
+	CjDemandEmployee       cjDemandEmployee
+	CjDemandProject        cjDemandProject
+	CjDepartment           cjDepartment
 	CjEmployee             cjEmployee
 	CjEmployeePermission   cjEmployeePermission
 	CjMachineCPUTime       cjMachineCPUTime
@@ -55,6 +63,10 @@ func (q *Query) Available() bool { return q.db != nil }
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
 		db:                     db,
+		CjDemand:               q.CjDemand.clone(db),
+		CjDemandEmployee:       q.CjDemandEmployee.clone(db),
+		CjDemandProject:        q.CjDemandProject.clone(db),
+		CjDepartment:           q.CjDepartment.clone(db),
 		CjEmployee:             q.CjEmployee.clone(db),
 		CjEmployeePermission:   q.CjEmployeePermission.clone(db),
 		CjMachineCPUTime:       q.CjMachineCPUTime.clone(db),
@@ -81,6 +93,10 @@ func (q *Query) WriteDB() *Query {
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
 		db:                     db,
+		CjDemand:               q.CjDemand.replaceDB(db),
+		CjDemandEmployee:       q.CjDemandEmployee.replaceDB(db),
+		CjDemandProject:        q.CjDemandProject.replaceDB(db),
+		CjDepartment:           q.CjDepartment.replaceDB(db),
 		CjEmployee:             q.CjEmployee.replaceDB(db),
 		CjEmployeePermission:   q.CjEmployeePermission.replaceDB(db),
 		CjMachineCPUTime:       q.CjMachineCPUTime.replaceDB(db),
@@ -97,6 +113,10 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 }
 
 type queryCtx struct {
+	CjDemand               *cjDemandDo
+	CjDemandEmployee       *cjDemandEmployeeDo
+	CjDemandProject        *cjDemandProjectDo
+	CjDepartment           *cjDepartmentDo
 	CjEmployee             *cjEmployeeDo
 	CjEmployeePermission   *cjEmployeePermissionDo
 	CjMachineCPUTime       *cjMachineCPUTimeDo
@@ -113,6 +133,10 @@ type queryCtx struct {
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
+		CjDemand:               q.CjDemand.WithContext(ctx),
+		CjDemandEmployee:       q.CjDemandEmployee.WithContext(ctx),
+		CjDemandProject:        q.CjDemandProject.WithContext(ctx),
+		CjDepartment:           q.CjDepartment.WithContext(ctx),
 		CjEmployee:             q.CjEmployee.WithContext(ctx),
 		CjEmployeePermission:   q.CjEmployeePermission.WithContext(ctx),
 		CjMachineCPUTime:       q.CjMachineCPUTime.WithContext(ctx),

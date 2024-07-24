@@ -27,9 +27,9 @@ func newCjProjectEmployee(db *gorm.DB, opts ...gen.DOOption) cjProjectEmployee {
 
 	tableName := _cjProjectEmployee.cjProjectEmployeeDo.TableName()
 	_cjProjectEmployee.ALL = field.NewAsterisk(tableName)
-	_cjProjectEmployee.ID = field.NewUint32(tableName, "id")
 	_cjProjectEmployee.ProjectID = field.NewUint32(tableName, "project_id")
 	_cjProjectEmployee.EmployeeID = field.NewUint32(tableName, "employee_id")
+	_cjProjectEmployee.CreateAt = field.NewTime(tableName, "create_at")
 
 	_cjProjectEmployee.fillFieldMap()
 
@@ -40,9 +40,9 @@ type cjProjectEmployee struct {
 	cjProjectEmployeeDo cjProjectEmployeeDo
 
 	ALL        field.Asterisk
-	ID         field.Uint32
 	ProjectID  field.Uint32 // 项目ID
 	EmployeeID field.Uint32 // 员工ID
+	CreateAt   field.Time
 
 	fieldMap map[string]field.Expr
 }
@@ -59,9 +59,9 @@ func (c cjProjectEmployee) As(alias string) *cjProjectEmployee {
 
 func (c *cjProjectEmployee) updateTableName(table string) *cjProjectEmployee {
 	c.ALL = field.NewAsterisk(table)
-	c.ID = field.NewUint32(table, "id")
 	c.ProjectID = field.NewUint32(table, "project_id")
 	c.EmployeeID = field.NewUint32(table, "employee_id")
+	c.CreateAt = field.NewTime(table, "create_at")
 
 	c.fillFieldMap()
 
@@ -91,9 +91,9 @@ func (c *cjProjectEmployee) GetFieldByName(fieldName string) (field.OrderExpr, b
 
 func (c *cjProjectEmployee) fillFieldMap() {
 	c.fieldMap = make(map[string]field.Expr, 3)
-	c.fieldMap["id"] = c.ID
 	c.fieldMap["project_id"] = c.ProjectID
 	c.fieldMap["employee_id"] = c.EmployeeID
+	c.fieldMap["create_at"] = c.CreateAt
 }
 
 func (c cjProjectEmployee) clone(db *gorm.DB) cjProjectEmployee {
