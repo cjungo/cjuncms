@@ -22,6 +22,8 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		CjDemandEmployee:       newCjDemandEmployee(db, opts...),
 		CjDemandProject:        newCjDemandProject(db, opts...),
 		CjDepartment:           newCjDepartment(db, opts...),
+		CjDepartmentEmployee:   newCjDepartmentEmployee(db, opts...),
+		CjDepartmentPosition:   newCjDepartmentPosition(db, opts...),
 		CjEmployee:             newCjEmployee(db, opts...),
 		CjEmployeePermission:   newCjEmployeePermission(db, opts...),
 		CjMachineCPUTime:       newCjMachineCPUTime(db, opts...),
@@ -44,6 +46,8 @@ type Query struct {
 	CjDemandEmployee       cjDemandEmployee
 	CjDemandProject        cjDemandProject
 	CjDepartment           cjDepartment
+	CjDepartmentEmployee   cjDepartmentEmployee
+	CjDepartmentPosition   cjDepartmentPosition
 	CjEmployee             cjEmployee
 	CjEmployeePermission   cjEmployeePermission
 	CjMachineCPUTime       cjMachineCPUTime
@@ -67,6 +71,8 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		CjDemandEmployee:       q.CjDemandEmployee.clone(db),
 		CjDemandProject:        q.CjDemandProject.clone(db),
 		CjDepartment:           q.CjDepartment.clone(db),
+		CjDepartmentEmployee:   q.CjDepartmentEmployee.clone(db),
+		CjDepartmentPosition:   q.CjDepartmentPosition.clone(db),
 		CjEmployee:             q.CjEmployee.clone(db),
 		CjEmployeePermission:   q.CjEmployeePermission.clone(db),
 		CjMachineCPUTime:       q.CjMachineCPUTime.clone(db),
@@ -97,6 +103,8 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		CjDemandEmployee:       q.CjDemandEmployee.replaceDB(db),
 		CjDemandProject:        q.CjDemandProject.replaceDB(db),
 		CjDepartment:           q.CjDepartment.replaceDB(db),
+		CjDepartmentEmployee:   q.CjDepartmentEmployee.replaceDB(db),
+		CjDepartmentPosition:   q.CjDepartmentPosition.replaceDB(db),
 		CjEmployee:             q.CjEmployee.replaceDB(db),
 		CjEmployeePermission:   q.CjEmployeePermission.replaceDB(db),
 		CjMachineCPUTime:       q.CjMachineCPUTime.replaceDB(db),
@@ -117,6 +125,8 @@ type queryCtx struct {
 	CjDemandEmployee       *cjDemandEmployeeDo
 	CjDemandProject        *cjDemandProjectDo
 	CjDepartment           *cjDepartmentDo
+	CjDepartmentEmployee   *cjDepartmentEmployeeDo
+	CjDepartmentPosition   *cjDepartmentPositionDo
 	CjEmployee             *cjEmployeeDo
 	CjEmployeePermission   *cjEmployeePermissionDo
 	CjMachineCPUTime       *cjMachineCPUTimeDo
@@ -137,6 +147,8 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		CjDemandEmployee:       q.CjDemandEmployee.WithContext(ctx),
 		CjDemandProject:        q.CjDemandProject.WithContext(ctx),
 		CjDepartment:           q.CjDepartment.WithContext(ctx),
+		CjDepartmentEmployee:   q.CjDepartmentEmployee.WithContext(ctx),
+		CjDepartmentPosition:   q.CjDepartmentPosition.WithContext(ctx),
 		CjEmployee:             q.CjEmployee.WithContext(ctx),
 		CjEmployeePermission:   q.CjEmployeePermission.WithContext(ctx),
 		CjMachineCPUTime:       q.CjMachineCPUTime.WithContext(ctx),
