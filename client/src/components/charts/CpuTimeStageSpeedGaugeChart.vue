@@ -5,6 +5,7 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 import { CjMachineCPUTime, getMachineCpuTimes } from "../../apis/machine";
+import { type TickParam } from "./TickableChart.vue";
 
 const machineCpuTimes = ref<CjMachineCPUTime>({
   id: 0,
@@ -22,17 +23,24 @@ const machineCpuTimes = ref<CjMachineCPUTime>({
   create_at: "",
 });
 
+const tickParam = ref<TickParam>();
 const option = computed(() => {
+  const w = tickParam.value?.width ?? 0;
+
   const used = machineCpuTimes.value.user + machineCpuTimes.value.system;
   const total = machineCpuTimes.value.idle + used;
   const percent = (used / total) * 100;
   return {
+    title: {
+      text: "CPU",
+      left: "center",
+    },
     series: [
       {
         type: "gauge",
         axisLine: {
           lineStyle: {
-            width: 30,
+            width: w * 0.06,
             color: [
               [0.3, "#67e0e3"],
               [0.7, "#37a2da"],
@@ -41,35 +49,42 @@ const option = computed(() => {
           },
         },
         pointer: {
+          // length: 100,
           itemStyle: {
             color: "auto",
           },
         },
         axisTick: {
-          distance: -30,
-          length: 8,
+          distance: -(w * 0.06),
+          length: w * 0.02,
           lineStyle: {
             color: "#fff",
-            width: 2,
+            width: w * 0.005,
           },
         },
         splitLine: {
-          distance: -30,
-          length: 30,
+          distance: -(w * 0.1),
+          length: w * 0.1,
           lineStyle: {
             color: "#fff",
-            width: 4,
+            width: w * 0.005,
           },
         },
+        // 数字刻度
         axisLabel: {
           color: "inherit",
-          distance: 40,
-          fontSize: 20,
+          distance: w * 0.1,
+          fontSize: w * 0.05,
         },
+
+        // 数值
         detail: {
           valueAnimation: true,
-          formatter: "{value} %",
+          formatter: "{value}%",
           color: "inherit",
+          fontSize: w * 0.09,
+          // padding: [100, 0, 0, 0],
+          offsetCenter: [0, w * 0.3],
         },
         data: [
           {
@@ -81,9 +96,10 @@ const option = computed(() => {
   };
 });
 
-const tick = async () => {
+const tick = async (param: TickParam) => {
   const cpuTimesResult = await getMachineCpuTimes();
   machineCpuTimes.value = cpuTimesResult.data;
-  console.log("cpu times", cpuTimesResult);
+  console.log("cpu times", cpuTimesResult, param);
+  tickParam.value = param;
 };
 </script>

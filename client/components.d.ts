@@ -38,5 +38,6 @@ declare module 'vue' {
     TopBar: typeof import('./src/components/TopBar.vue')['default']
     UserBar: typeof import('./src/components/UserBar.vue')['default']
     VirtualMemoryPieChart: typeof import('./src/components/charts/VirtualMemoryPieChart.vue')['default']
+    VirtualMemorySpeedGaugeChart: typeof import('./src/components/charts/VirtualMemorySpeedGaugeChart.vue')['default']
   }
 }

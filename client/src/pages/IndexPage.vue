@@ -5,7 +5,7 @@
          <CpuTimeStageSpeedGaugeChart/>
       </div>
       <div class="machine-chart-box">
-        <VirtualMemoryPieChart />
+        <VirtualMemorySpeedGaugeChart />
       </div>
     </div>
     <DiskUsagePieChart/>
@@ -39,13 +39,17 @@ export default {
   width: 100%;
   flex-grow: 1;
   overflow: auto;
+  background-color: #ddd;
 }
 .machine-chart {
   display: flex;
   flex-direction: row;
+  padding: 0 .5vw;
 }
 .machine-chart-box {
   width: 24vw;
   height: 24vw;
+  margin: 1vw .5vw;
+  background-color: #fff;
 }
 </style>
