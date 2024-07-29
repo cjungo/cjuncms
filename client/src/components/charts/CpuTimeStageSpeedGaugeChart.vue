@@ -34,6 +34,9 @@ const option = computed(() => {
     title: {
       text: "CPU",
       left: "center",
+      textStyle: {
+        fontSize: w * 0.08,
+      },
     },
     series: [
       {

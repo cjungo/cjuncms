@@ -47,6 +47,7 @@ const onResize = () => {
   console.log("onResize", vChart?.value?.getWidth(), vChart?.value?.getHeight());
   width.value = vChart?.value?.getWidth() ?? 0;
   height.value = vChart?.value?.getHeight() ?? 0;
+  tick();
 };
 
 onMounted(() => {

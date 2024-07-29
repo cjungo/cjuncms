@@ -2,13 +2,15 @@
   <div class="index-page">
     <div class="machine-chart">
       <div class="machine-chart-box">
-         <CpuTimeStageSpeedGaugeChart/>
+        <CpuTimeStageSpeedGaugeChart />
       </div>
       <div class="machine-chart-box">
         <VirtualMemorySpeedGaugeChart />
       </div>
     </div>
-    <DiskUsagePieChart/>
+    <div class="machine-chart-row">
+      <DiskUsagePieChart />
+    </div>
   </div>
 </template>
 
@@ -44,12 +46,18 @@ export default {
 .machine-chart {
   display: flex;
   flex-direction: row;
-  padding: 0 .5vw;
+  padding: 0 0.5vw;
 }
 .machine-chart-box {
-  width: 24vw;
-  height: 24vw;
-  margin: 1vw .5vw;
+  width: 14vw;
+  height: 14vw;
+  margin: 1vw 0.5vw;
   background-color: #fff;
+}
+.machine-chart-row {
+  display: flex;
+  flex-direction: row;
+  margin: 0 1vw 0.5vw 1vw;
+  min-height: 24vw;
 }
 </style>

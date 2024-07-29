@@ -69,6 +69,9 @@ const option = computed(() => {
     title: {
       text: "内存状态",
       left: "center",
+      textStyle: {
+        fontSize: w * 0.08,
+      },
     },
     series: [
       {
