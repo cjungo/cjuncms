@@ -6,11 +6,6 @@
       :ellipsis="false"
       :default-active="appStore.topBar.defaultActive"
     >
-      <ElMenuItem index="0">
-        <div class="top-bar-head">
-          <img alt="logo" src="/vite.svg" style="height: 50%" />
-        </div>
-      </ElMenuItem>
       <div style="flex-grow: 1"></div>
       <ElMenuItem v-for="(item, i) in items" :index="`${i + 1}`">
         {{ item.title }}
@@ -48,11 +43,5 @@ const items = reactive<[TopBarItem]>([
 }
 .top-bar-menu {
   width: 100%;
-}
-
-.top-bar-head {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>

@@ -1,8 +1,10 @@
 import { createApp } from "vue";
 import { createPersistedState } from "pinia-plugin-persistedstate";
 import { createPinia } from "pinia";
-import VxeUITable from 'vxe-table'
-import 'vxe-table/lib/style.css'
+import VxeUITable from "vxe-table";
+import VxeUI from "vxe-pc-ui";
+import "vxe-table/lib/style.css";
+import "vxe-pc-ui/lib/style.css";
 import "normalize.css";
 import "./style.css";
 import "element-plus/theme-chalk/src/message.scss";
@@ -25,7 +27,6 @@ use([
   LegendComponent,
 ]);
 
-
 const persist = createPersistedState({
   storage: localStorage,
   key: (i) => `__store__${i}`,
@@ -36,5 +37,6 @@ pinia.use(persist);
 const app = createApp(App);
 app.use(pinia);
 app.use(router);
+// app.use(VxeUI);
 app.use(VxeUITable);
 app.mount("#app");

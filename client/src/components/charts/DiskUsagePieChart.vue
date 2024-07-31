@@ -48,6 +48,7 @@ const option = computed(() => {
           name: `${i.path} 使用`,
         },
       ],
+      animation: false,
       emphasis: {
         itemStyle: {
           shadowBlur: 10,

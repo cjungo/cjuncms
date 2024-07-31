@@ -1,29 +1,34 @@
 <template>
-  <div class="project-index-page">
-    <div class="project-info-box">
-      <ElForm>
-        <ElRow>
-          <ElCol :span="6">
-            <ElFormItem label="ID">
-              <ElInput :value="current?.id" readonly />
-            </ElFormItem>
-          </ElCol>
-          <ElCol :span="6">
-            <ElFormItem label="项目名">
-              <ElInput :value="current?.name" readonly />
-            </ElFormItem>
-          </ElCol>
-        </ElRow>
-      </ElForm>
-    </div>
-    <div class="project-list-box">
+  <CJunCmsPageMainLayout>
+    <ElForm>
+      <ElRow>
+        <ElCol :span="6">
+          <ElFormItem label="ID">
+            <ElInput :value="current?.id" readonly />
+          </ElFormItem>
+        </ElCol>
+        <ElCol :span="6">
+          <ElFormItem label="项目名">
+            <ElInput :value="current?.name" readonly />
+          </ElFormItem>
+        </ElCol>
+      </ElRow>
+    </ElForm>
+    <template #list>
       <ElAutoResizer>
         <template #default="{ width, height }">
-          <VxeTable :width="width" :height="height" :data="rows">
-            <VxeColumn type="seq" title="#" width="60" />
-            <VxeColumn field="id" title="ID" />
+          <VxeTable
+            border
+            show-overflow
+            :column-config="{ resizable: true }"
+            :width="width"
+            :height="height"
+            :data="rows"
+          >
+            <VxeColumn fixed="left" type="seq" title="#" width="60" />
+            <VxeColumn fixed="left" field="id" title="ID" />
             <VxeColumn field="name" title="项目名" />
-            <VxeColumn>
+            <VxeColumn fixed="right">
               <ElButtonGroup>
                 <ElButton
                   @click="onClickEdit"
@@ -40,8 +45,8 @@
           </VxeTable>
         </template>
       </ElAutoResizer>
-    </div>
-  </div>
+    </template>
+  </CJunCmsPageMainLayout>
 </template>
 
 <script lang="ts" setup>
@@ -66,9 +71,4 @@ onBeforeMount(async () => {
 });
 </script>
 
-<style lang="scss" scoped>
-.project-index-page {
-  display: flex;
-  flex-direction: column;
-}
-</style>
+<style lang="scss" scoped></style>

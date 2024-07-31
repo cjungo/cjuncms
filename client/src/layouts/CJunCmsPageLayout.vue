@@ -1,8 +1,8 @@
 <template>
   <div class="cjuncms-page-layout">
-    <TopBar />
+    <LeftBar />
     <div class="cjuncms-page-content">
-      <LeftBar />
+      <TopBar />
       <div class="cjuncms-page-main">
         <TabBar/>
         <RouterView v-slot="{ Component }">
@@ -20,7 +20,7 @@
 <style lang="scss" scoped>
 .cjuncms-page-layout {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
   width: 100%;
   height: 100%;
@@ -31,7 +31,8 @@
 
 .cjuncms-page-content {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  overflow: hidden;
   flex-grow: 1;
 
   // background-color: blue;
@@ -39,7 +40,7 @@
 
 .cjuncms-page-main {
   display: flex;
-  overflow-x: hidden;
+  overflow: hidden;
   flex-direction: column;
   flex-grow: 1;
 }

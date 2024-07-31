@@ -1,5 +1,8 @@
 <template>
   <div class="left-bar">
+    <div class="left-bar-head">
+      <img alt="logo" src="/vite.svg" style="height: 50%" />
+    </div>
     <ElMenu
       class="left-bar-menu"
       :default-active="appStore.leftBar.defaultActive"
@@ -149,5 +152,15 @@ const onItemClick = (item: LeftBarItem) => {
 
 .left-bar-menu {
   height: 100%;
+}
+
+.left-bar-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  height: var(--el-menu-horizontal-height);
+  border-bottom: 1px solid var(--el-menu-border-color);
 }
 </style>

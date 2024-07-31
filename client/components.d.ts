@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     CJunCmsLogoutDialog: typeof import('./src/dialogs/CJunCmsLogoutDialog.vue')['default']
     CJunCmsPageLayout: typeof import('./src/layouts/CJunCmsPageLayout.vue')['default']
+    CjunCmsPageMainLayout: typeof import('./src/layouts/CjunCmsPageMainLayout.vue')['default']
+    CJunCmsPageMainLayout: typeof import('./src/layouts/CJunCmsPageMainLayout.vue')['default']
     CpuTimePieChart: typeof import('./src/components/charts/CpuTimePieChart.vue')['default']
     CpuTimeStageSpeedGaugeChart: typeof import('./src/components/charts/CpuTimeStageSpeedGaugeChart.vue')['default']
     DiskUsagePieChart: typeof import('./src/components/charts/DiskUsagePieChart.vue')['default']
