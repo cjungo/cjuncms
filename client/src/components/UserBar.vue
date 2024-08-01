@@ -1,6 +1,8 @@
 <template>
   <div ref="rootElement" class="user-bar" v-click-outside="onClickOutside">
-    <div v-if="auth.user?.nickname" class="user-bar-name">{{ auth.user.nickname }}</div>
+    <div v-if="auth.user?.nickname" class="user-bar-name">
+      {{ auth.user.nickname }}
+    </div>
     <ElAvatar :size="50" :src="avatarUrl" />
     <ElPopover
       ref="popoverRef"
@@ -9,6 +11,13 @@
       persistent
       :virtual-ref="rootElement"
     >
+      <div class="user-bar-popover-menu-item" @click="onClickProfile">
+        <ElIcon>
+          <IEpStar />
+        </ElIcon>
+        <span>我的</span>
+      </div>
+      <div class="user-bar-popover-menu-separator"></div>
       <div class="user-bar-popover-menu-item" @click="onClickSignOut">
         <ElIcon>
           <IEpSwitchButton />
@@ -39,9 +48,13 @@ const onClickOutside = () => {
   unref(popoverRef).popperRef?.delayHide?.();
 };
 
+const onClickProfile = () => {
+  router.push("/setting/profile");
+};
+
 const onClickSignOut = () => {
   auth.token = "";
-  router.push("/login");
+  router.replace("/login");
 };
 </script>
 
@@ -64,5 +77,19 @@ const onClickSignOut = () => {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  font-size: 1.4vw;
+
+  &:hover {
+    color: #47f;
+  }
+
+  // & > span {
+  //   flex-grow: 1;
+  // }
+}
+
+.user-bar-popover-menu-separator {
+  margin: .5ex 0;
+  border-bottom: 1px solid #ddd;
 }
 </style>

@@ -1,4 +1,5 @@
 import { apiGet, apiPost } from "../utils/api";
+import { CjEmployee } from "./employee";
 
 export type User = {
   id: number;
@@ -21,5 +22,9 @@ export type Sign = {
   user: User;
 };
 
+export type Profile = CjEmployee & {};
+
 export const login = apiPost<LoginParam, Sign>("/sign/in");
+export const logout = apiPost<any, any>("/sign/out");
 export const renewal = apiGet<any, string>("/sign/renewal");
+export const getProfile = apiGet<any, Profile>("/sign/profile");

@@ -75,8 +75,9 @@ func route(
 	// 登录
 	signGroup := router.Group("/sign")
 	signGroup.POST("/in", signController.SignIn)
-	signGroup.GET("/out", signController.SignOut)
+	signGroup.POST("/out", signController.SignOut)
 	signGroup.GET("/renewal", signController.SignRenewal, permitManager.Permit("default"))
+	signGroup.GET("/profile", signController.Profile, permitManager.Permit("default"))
 
 	// 接口 ==================================================
 	apiGroup := router.Group("/api", permitManager.Permit("default"))

@@ -6,6 +6,7 @@ import (
 
 	"github.com/cjungo/cjuncms/model"
 	"github.com/cjungo/cjungo"
+	"github.com/cjungo/cjungo/db"
 	"github.com/cjungo/cjungo/ext"
 	"github.com/cjungo/cjungo/mid"
 	"github.com/golang-jwt/jwt/v5"
@@ -31,13 +32,16 @@ func (claims *JwtClaims) GetStore() EmployeeToken {
 }
 
 type JwtClaimsManager struct {
+	mysql         *db.MySql
 	permitManager *mid.PermitManager[string, EmployeeToken]
 }
 
 func NewJwtClaimsManager(
+	mysql *db.MySql,
 	permitManager *mid.PermitManager[string, EmployeeToken],
 ) *JwtClaimsManager {
 	return &JwtClaimsManager{
+		mysql:         mysql,
 		permitManager: permitManager,
 	}
 }
@@ -57,6 +61,24 @@ func (manager *JwtClaimsManager) Renewal(ctx cjungo.HttpContext) (string, error)
 		return "", err
 	}
 	return token, nil
+}
+
+type EmployeeProfile struct {
+	model.CjEmployee
+}
+
+func (manager *JwtClaimsManager) Profile(ctx cjungo.HttpContext) (*EmployeeProfile, error) {
+	proof, ok := manager.permitManager.GetProof(ctx)
+	if !ok {
+		return nil, fmt.Errorf("proof 无效")
+	}
+
+	profile := EmployeeProfile{}
+	if err := manager.mysql.Find(&profile.CjEmployee, proof.GetStore().EmployeeId).Error; err != nil {
+		return nil, err
+	}
+
+	return &profile, nil
 }
 
 type OperateType uint32

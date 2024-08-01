@@ -144,3 +144,11 @@ func (controller *SignController) SignRenewal(ctx cjungo.HttpContext) error {
 func (controller *SignController) SignOut(ctx cjungo.HttpContext) error {
 	return ctx.RespOk()
 }
+
+func (controller *SignController) Profile(ctx cjungo.HttpContext) error {
+	profile, err := controller.manager.Profile(ctx)
+	if err != nil {
+		return err
+	}
+	return ctx.Resp(profile)
+}

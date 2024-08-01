@@ -66,7 +66,6 @@
 import { onBeforeMount, ref } from "vue";
 import { queryEmployee, type CjEmployee } from "../../apis/employee";
 import { Delete, Edit } from "@element-plus/icons-vue";
-import CjunCmsPageMainLayout from "../../layouts/CjunCmsPageMainLayout.vue";
 
 const isReadonly = ref(true);
 const current = ref<CjEmployee>({
