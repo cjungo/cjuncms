@@ -11,8 +11,9 @@ import "element-plus/theme-chalk/src/message.scss";
 import App from "./App.vue";
 import router from "./router";
 import { use } from "echarts/core";
+import { VisualMapComponent, GridComponent } from 'echarts/components';
 import { CanvasRenderer } from "echarts/renderers";
-import { PieChart, GaugeChart } from "echarts/charts";
+import { PieChart, GaugeChart, LineChart } from "echarts/charts";
 import {
   TitleComponent,
   TooltipComponent,
@@ -25,6 +26,9 @@ use([
   TitleComponent,
   TooltipComponent,
   LegendComponent,
+  VisualMapComponent,
+  GridComponent,
+  LineChart,
 ]);
 
 const persist = createPersistedState({

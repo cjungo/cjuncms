@@ -11,6 +11,9 @@
     <div class="machine-chart-row">
       <DiskUsagePieChart />
     </div>
+    <div class="machine-chart-row">
+      <CpuTimeLineChart/>
+    </div>
   </div>
 </template>
 
@@ -57,7 +60,7 @@ export default {
 .machine-chart-row {
   display: flex;
   flex-direction: row;
-  margin: 0 1vw 0.5vw 1vw;
+  margin: 0 1vw 1vw 1vw;
   min-height: 24vw;
 }
 </style>

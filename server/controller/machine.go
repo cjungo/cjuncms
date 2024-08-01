@@ -7,20 +7,24 @@ import (
 	"github.com/cjungo/cjuncms/model"
 	"github.com/cjungo/cjungo"
 	"github.com/cjungo/cjungo/db"
+	"github.com/rs/zerolog"
 )
 
 type MachineController struct {
 	mysql   *db.MySql
 	watcher *misc.MachineWatcher
+	logger  *zerolog.Logger
 }
 
 func NewMachineController(
 	mysql *db.MySql,
 	watcher *misc.MachineWatcher,
+	logger *zerolog.Logger,
 ) *MachineController {
 	return &MachineController{
 		mysql:   mysql,
 		watcher: watcher,
+		logger:  logger,
 	}
 }
 
@@ -54,6 +58,10 @@ func (controller *MachineController) ListCpuTimes(ctx cjungo.HttpContext) error 
 	if err := ctx.Bind(&param); err != nil {
 		return ctx.RespBad(err)
 	}
+	controller.logger.Info().
+		Time("startAt", param.StartAt).
+		Time("endAt", param.EndAt).
+		Msg("[MACHINE]")
 
 	rows := []model.CjMachineCPUTime{}
 	if err := controller.mysql.

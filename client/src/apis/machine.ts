@@ -1,4 +1,4 @@
-import { apiGet } from "../utils/api";
+import { apiGet, apiPost } from "../utils/api";
 
 export type MachineCpuInfo = {
   cpu: number;
@@ -114,7 +114,7 @@ export type ListMachineCpuTimesParam = {
   startAt: string;
   endAt: string;
 };
-export const listMachineCpuTimes = apiGet<
+export const listMachineCpuTimes = apiPost<
   ListMachineCpuTimesParam,
   CjMachineCPUTime[]
 >("/api/machine/cpu/times/list");
