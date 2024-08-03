@@ -58,7 +58,7 @@ func route(
 		Str("action", "私有存储").
 		Msg("[HTTP]")
 	storageManager.Route(router, &ext.StorageConf{
-		PathPrefix:       "upload",
+		PathPrefix:       "/upload",
 		Dir:              uploadDir,
 		UploadMiddleware: []echo.MiddlewareFunc{permitManager.Permit("default")},
 		IndexMiddleware:  []echo.MiddlewareFunc{permitManager.Permit("default")},
@@ -77,7 +77,8 @@ func route(
 	signGroup.POST("/in", signController.SignIn)
 	signGroup.POST("/out", signController.SignOut)
 	signGroup.GET("/renewal", signController.SignRenewal, permitManager.Permit("default"))
-	signGroup.GET("/profile", signController.Profile, permitManager.Permit("default"))
+	signGroup.GET("/profile", signController.GetProfile, permitManager.Permit("default"))
+	signGroup.POST("/profile", signController.SetProfile, permitManager.Permit("default"))
 
 	// 接口 ==================================================
 	apiGroup := router.Group("/api", permitManager.Permit("default"))

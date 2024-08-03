@@ -145,10 +145,31 @@ func (controller *SignController) SignOut(ctx cjungo.HttpContext) error {
 	return ctx.RespOk()
 }
 
-func (controller *SignController) Profile(ctx cjungo.HttpContext) error {
+func (controller *SignController) GetProfile(ctx cjungo.HttpContext) error {
 	profile, err := controller.manager.Profile(ctx)
 	if err != nil {
 		return err
 	}
 	return ctx.Resp(profile)
+}
+
+func (controller *SignController) SetProfile(ctx cjungo.HttpContext) error {
+	profile := misc.EmployeeProfile{}
+	if err := ctx.Bind(&profile); err != nil {
+		return err
+	}
+	if self, err := controller.manager.Profile(ctx); err != nil {
+		profile.ID = self.ID
+	}
+
+	if err := controller.mysql.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Save(&profile.CjEmployee).Error; err != nil {
+			return err
+		}
+		return nil
+	}); err != nil {
+		return err
+	}
+
+	return ctx.RespOk()
 }

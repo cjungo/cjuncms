@@ -4,7 +4,7 @@
       <ElRow>
         <ElCol :span="6">
           <ElFormItem label="头像">
-            <ElAvatar shape="square" :size="100" />
+            <ImageInput @input="onSetAvatar" />
           </ElFormItem>
         </ElCol>
         <ElCol :span="18">
@@ -35,14 +35,17 @@
         </ElCol>
       </ElRow>
     </ElForm>
+    <ElButton @click="onSave">保存</ElButton>
   </CJunCmsPageMainLayout>
 </template>
 
 <script lang="ts" setup>
 import { onBeforeMount, ref } from "vue";
-import { getProfile, type Profile } from "../../apis/login";
+import { getProfile, setProfile, type Profile } from "../../apis/login";
 
 const isReadonly = ref(true);
+const avatarFile = ref<File>();
+
 const profile = ref<Profile>({
   id: 0,
   jobnumber: "",
@@ -53,6 +56,17 @@ const profile = ref<Profile>({
   avatar_path: "",
   is_removed: 0,
 });
+
+const onSetAvatar = (file: File) => {
+  avatarFile.value = file;
+};
+
+const onSave = async () => {
+  if (avatarFile.value) {
+    // TODO 上传
+  }
+  await setProfile(profile.value);
+};
 
 onBeforeMount(async () => {
   const response = await getProfile();

@@ -28,3 +28,4 @@ export const login = apiPost<LoginParam, Sign>("/sign/in");
 export const logout = apiPost<any, any>("/sign/out");
 export const renewal = apiGet<any, string>("/sign/renewal");
 export const getProfile = apiGet<any, Profile>("/sign/profile");
+export const setProfile = apiPost<Profile, any>("/sign/profile");
