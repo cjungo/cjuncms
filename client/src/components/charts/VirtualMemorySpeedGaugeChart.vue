@@ -90,13 +90,14 @@ const option = computed(() => {
         },
         splitLine: {
           length: w * 0.02,
+          distance: w * 0.007,
           lineStyle: {
             width: w * 0.005,
             color: "#999",
           },
         },
         axisLabel: {
-          distance: w * 0.08,
+          distance: w * 0.06,
           color: "#999",
           fontSize: w * 0.05,
         },
