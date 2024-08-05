@@ -104,6 +104,26 @@ func (controller *MachineController) PeekDiskUsage(ctx cjungo.HttpContext) error
 	return ctx.Resp(controller.watcher.DiskUsage())
 }
 
+func (controller *MachineController) WatchDiskUsage(
+	ctx cjungo.HttpContext,
+	tx chan cjungo.SseEvent,
+	rx chan error,
+) {
+	for {
+		select {
+		case <-ctx.Request().Context().Done():
+			return
+		case err := <-rx:
+			tx <- cjungo.SseEvent{Data: err}
+		default:
+			tx <- cjungo.SseEvent{
+				Data: controller.watcher.DiskUsage(),
+			}
+			time.Sleep(4 * time.Second)
+		}
+	}
+}
+
 func (controller *MachineController) PeekProcesses(ctx cjungo.HttpContext) error {
 	return ctx.Resp(controller.watcher.Processes())
 }
@@ -131,6 +151,35 @@ func (controller *MachineController) ListCpuTimes(ctx cjungo.HttpContext) error 
 	}
 
 	return ctx.Resp(rows)
+}
+
+func (controller *MachineController) WatchCpuTimesTimeline(
+	ctx cjungo.HttpContext,
+	tx chan cjungo.SseEvent,
+	rx chan error,
+) {
+	for {
+		select {
+		case <-ctx.Request().Context().Done():
+			return
+		case err := <-rx:
+			tx <- cjungo.SseEvent{Data: err}
+		default:
+			rows := []model.CjMachineCPUTime{}
+			endAt := time.Now()
+			startAt := endAt.Add(-24 * time.Hour)
+			if err := controller.mysql.
+				Where("create_at BETWEEN ? AND ?", startAt, endAt).
+				Find(&rows).Error; err != nil {
+				tx <- cjungo.SseEvent{Data: err}
+				return
+			}
+			tx <- cjungo.SseEvent{
+				Data: rows,
+			}
+			time.Sleep(4 * time.Second)
+		}
+	}
 }
 
 type ListVirtualMemoryParam struct {

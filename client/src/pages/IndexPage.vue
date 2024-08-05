@@ -9,10 +9,10 @@
       </div>
     </div>
     <div class="machine-chart-row">
-      <DiskUsagePieChart />
+      <DiskUsagePieSseChart />
     </div>
     <div class="machine-chart-row">
-      <CpuTimeLineChart />
+      <CpuTimeLineSseChart />
     </div>
   </div>
 </template>

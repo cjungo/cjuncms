@@ -112,6 +112,7 @@ export const getMachineCpuTimes = apiGet<any, CjMachineCPUTime>(
 );
 
 export const watchMachineCpuTimes = apiSse("/sse/machine/cpu/times");
+export const watchMachineCpuTimeline = apiSse("/sse/machine/cpu/timeline");
 
 export type ListMachineCpuTimesParam = {
   startAt: string;
@@ -125,6 +126,7 @@ export const listMachineCpuTimes = apiPost<
 export const getMachineDiskUsage = apiGet<any, CjMachineDiskUsage[]>(
   "/api/machine/disk"
 );
+export const watchMachineDiskUsage = apiSse("/sse/machine/disk");
 
 export const getMachineVirtualMemory = apiGet<any, CjMachineVirtualMemory>(
   "/api/machine/virtual-memory"

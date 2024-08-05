@@ -87,7 +87,9 @@ func route(
 	machineSseGroup := sseGroup.Group("/machine")
 	machineSseGroup.SSE("/cpu/info", machineController.WatchCpuInfo)
 	machineSseGroup.SSE("/cpu/times", machineController.WatchCpuTimes)
+	machineSseGroup.SSE("/cpu/timeline", machineController.WatchCpuTimesTimeline)
 	machineSseGroup.SSE("/virtual-memory", machineController.WatchVirtualMemory)
+	machineSseGroup.SSE("/disk", machineController.WatchDiskUsage)
 
 	// 接口 ==================================================
 	apiGroup := router.Group("/api", permitManager.Permit("default"))
