@@ -1,4 +1,12 @@
-import { apiPost } from "../utils/api";
+import { apiPost, type ApiResult } from "../utils/api";
 
-// TODO
-const upload = apiPost<any, any>("/upload");
+const uploadAvatarForm = apiPost<FormData, string>("/upload/avatar");
+
+export const uploadAvatar = async (
+  file: Blob,
+  name: string
+): Promise<ApiResult<string>> => {
+  const param = new FormData();
+  param.append("file", file, name);
+  return await uploadAvatarForm(param);
+};

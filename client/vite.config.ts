@@ -26,6 +26,10 @@ export default ({ mode }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/proxy/, ""),
         },
+        "/upload": {
+          target: target,
+          changeOrigin: true,
+        }
       },
     },
     plugins: [

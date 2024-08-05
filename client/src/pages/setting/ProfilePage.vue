@@ -4,7 +4,7 @@
       <ElRow>
         <ElCol :span="6">
           <ElFormItem label="头像">
-            <ImageInput @input="onSetAvatar" />
+            <ImageInput v-model="profile.avatar_path" @change="onSetAvatar" />
           </ElFormItem>
         </ElCol>
         <ElCol :span="18">
@@ -42,6 +42,8 @@
 <script lang="ts" setup>
 import { onBeforeMount, ref } from "vue";
 import { getProfile, setProfile, type Profile } from "../../apis/login";
+import { uploadAvatar } from "../../apis/storage";
+import { getSuffix } from "../../utils/file";
 
 const isReadonly = ref(true);
 const avatarFile = ref<File>();
@@ -63,7 +65,13 @@ const onSetAvatar = (file: File) => {
 
 const onSave = async () => {
   if (avatarFile.value) {
-    // TODO 上传
+    const now = new Date().getTime();
+    const suffix = getSuffix(avatarFile.value.name, true);
+    const avatarResponse = await uploadAvatar(
+      avatarFile.value,
+      `${profile.value.id}-${now}${suffix}`
+    );
+    profile.value.avatar_path = avatarResponse.data;
   }
   await setProfile(profile.value);
 };

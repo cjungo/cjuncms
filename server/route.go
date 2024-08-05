@@ -62,7 +62,8 @@ func route(
 		Dir:              uploadDir,
 		UploadMiddleware: []echo.MiddlewareFunc{permitManager.Permit("default")},
 		IndexMiddleware:  []echo.MiddlewareFunc{permitManager.Permit("default")},
-		QueryMiddleware:  []echo.MiddlewareFunc{permitManager.Permit("default")},
+		// TODO 访问权限
+		// QueryMiddleware:  []echo.MiddlewareFunc{permitManager.Permit("default")},
 	})
 
 	// 消息

@@ -1,7 +1,7 @@
 <template>
   <div class="image-input">
     <input @input="onInput" type="file" style="opacity: 0" />
-    <img v-if="displayUrlStore" :src="displayUrlStore" alt="image" />
+    <img v-if="displayUrl" :src="displayUrl" alt="image" />
     <div class="close-button" @click="onClose">
       <IEpCloseBold />
     </div>
@@ -11,16 +11,23 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 
-// const props = withDefaults(defineProps<{
-//     modelValue:
-// }>(), {
+const props = withDefaults(
+  defineProps<{
+    modelValue: string;
+  }>(),
+  {
+    modelValue: "",
+  }
+);
 
-// });
-
-const emits = defineEmits(["input"]);
+const emits = defineEmits(["change", "update:modelValue"]);
 
 const displayUrlStore = ref<string>();
 const currentFileStore = ref<File>();
+
+const displayUrl = computed(() => {
+  return displayUrlStore.value ?? props.modelValue;
+});
 
 const currentFile = computed({
   get: () => {
@@ -33,7 +40,8 @@ const currentFile = computed({
 
     displayUrlStore.value = v ? URL.createObjectURL(v) : undefined;
     currentFileStore.value = v;
-    emits("input", v);
+    emits("update:modelValue", displayUrlStore.value);
+    emits("change", v);
   },
 });
 
