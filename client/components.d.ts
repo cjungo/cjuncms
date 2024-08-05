@@ -14,6 +14,7 @@ declare module 'vue' {
     CpuTimeLineChart: typeof import('./src/components/charts/CpuTimeLineChart.vue')['default']
     CpuTimePieChart: typeof import('./src/components/charts/CpuTimePieChart.vue')['default']
     CpuTimeStageSpeedGaugeChart: typeof import('./src/components/charts/CpuTimeStageSpeedGaugeChart.vue')['default']
+    CpuTimeStageSpeedGaugeSseChart: typeof import('./src/components/charts/CpuTimeStageSpeedGaugeSseChart.vue')['default']
     DiskUsagePieChart: typeof import('./src/components/charts/DiskUsagePieChart.vue')['default']
     ElAutoResizer: typeof import('element-plus/es')['ElAutoResizer']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
@@ -39,6 +40,7 @@ declare module 'vue' {
     ImageInput: typeof import('./src/components/ImageInput.vue')['default']
     LeftBar: typeof import('./src/components/LeftBar.vue')['default']
     ProcessLineRaceChart: typeof import('./src/components/charts/ProcessLineRaceChart.vue')['default']
+    ResizableChart: typeof import('./src/components/charts/ResizableChart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TabBar: typeof import('./src/components/TabBar.vue')['default']
@@ -47,5 +49,6 @@ declare module 'vue' {
     UserBar: typeof import('./src/components/UserBar.vue')['default']
     VirtualMemoryPieChart: typeof import('./src/components/charts/VirtualMemoryPieChart.vue')['default']
     VirtualMemorySpeedGaugeChart: typeof import('./src/components/charts/VirtualMemorySpeedGaugeChart.vue')['default']
+    VirtualMemorySpeedGaugeSseChart: typeof import('./src/components/charts/VirtualMemorySpeedGaugeSseChart.vue')['default']
   }
 }

@@ -2,17 +2,17 @@
   <div class="index-page">
     <div class="machine-chart">
       <div class="machine-chart-box">
-        <CpuTimeStageSpeedGaugeChart />
+        <CpuTimeStageSpeedGaugeSseChart />
       </div>
       <div class="machine-chart-box">
-        <VirtualMemorySpeedGaugeChart />
+        <VirtualMemorySpeedGaugeSseChart />
       </div>
     </div>
     <div class="machine-chart-row">
       <DiskUsagePieChart />
     </div>
     <div class="machine-chart-row">
-      <CpuTimeLineChart/>
+      <CpuTimeLineChart />
     </div>
   </div>
 </template>

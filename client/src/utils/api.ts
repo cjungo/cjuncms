@@ -41,7 +41,7 @@ export class ApiClient {
       },
       async (error: any): Promise<any> => {
         const result = error.response.data;
-        console.log('result', result);
+        console.log("result", result);
         if (result.code == -4) {
           const auth = useAuthStore();
           auth.token = "";
@@ -113,5 +113,15 @@ export const apiPut = <P, R>(url: string) => {
 export const apiDelete = <P, R>(url: string) => {
   return async (param?: P): Promise<ApiResult<R>> => {
     return await api.delete<P, R>(url, param);
+  };
+};
+
+export const apiSse = (url: string, eventType: string = "message") => {
+  return (eventHandler: (e: MessageEvent<string>) => void) => {
+    const eventSource = new EventSource(url, {
+      withCredentials: true,
+    });
+    eventSource.addEventListener(eventType, eventHandler);
+    return eventSource;
   };
 };

@@ -32,12 +32,72 @@ func (controller *MachineController) PeekCpuInfo(ctx cjungo.HttpContext) error {
 	return ctx.Resp(controller.watcher.CpuInfo())
 }
 
+func (controller *MachineController) WatchCpuInfo(
+	ctx cjungo.HttpContext,
+	tx chan cjungo.SseEvent,
+	rx chan error,
+) {
+	for {
+		select {
+		case <-ctx.Request().Context().Done():
+			return
+		case err := <-rx:
+			tx <- cjungo.SseEvent{Data: err}
+		default:
+			tx <- cjungo.SseEvent{
+				Data: controller.watcher.CpuInfo(),
+			}
+			time.Sleep(4 * time.Second)
+		}
+	}
+}
+
 func (controller *MachineController) PeekCpuTimes(ctx cjungo.HttpContext) error {
 	return ctx.Resp(controller.watcher.CpuTimes())
 }
 
+func (controller *MachineController) WatchCpuTimes(
+	ctx cjungo.HttpContext,
+	tx chan cjungo.SseEvent,
+	rx chan error,
+) {
+	for {
+		select {
+		case <-ctx.Request().Context().Done():
+			return
+		case err := <-rx:
+			tx <- cjungo.SseEvent{Data: err}
+		default:
+			tx <- cjungo.SseEvent{
+				Data: controller.watcher.CpuTimes(),
+			}
+			time.Sleep(4 * time.Second)
+		}
+	}
+}
+
 func (controller *MachineController) PeekVirtualMemory(ctx cjungo.HttpContext) error {
 	return ctx.Resp(controller.watcher.VirtualMemory())
+}
+
+func (controller *MachineController) WatchVirtualMemory(
+	ctx cjungo.HttpContext,
+	tx chan cjungo.SseEvent,
+	rx chan error,
+) {
+	for {
+		select {
+		case <-ctx.Request().Context().Done():
+			return
+		case err := <-rx:
+			tx <- cjungo.SseEvent{Data: err}
+		default:
+			tx <- cjungo.SseEvent{
+				Data: controller.watcher.VirtualMemory(),
+			}
+			time.Sleep(4 * time.Second)
+		}
+	}
 }
 
 func (controller *MachineController) PeekDiskUsage(ctx cjungo.HttpContext) error {

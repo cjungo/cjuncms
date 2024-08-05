@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from "../utils/api";
+import { apiGet, apiPost, apiSse } from "../utils/api";
 
 export type MachineCpuInfo = {
   cpu: number;
@@ -105,10 +105,13 @@ export type CjMachineVirtualMemory = {
 export const getMachineCpuInfo = apiGet<any, MachineCpuInfo>(
   "/api/machine/cpu/info"
 );
+export const watchMachineCpuInfo = apiSse("/sse/machine/cpu/info");
 
 export const getMachineCpuTimes = apiGet<any, CjMachineCPUTime>(
   "/api/machine/cpu/times"
 );
+
+export const watchMachineCpuTimes = apiSse("/sse/machine/cpu/times");
 
 export type ListMachineCpuTimesParam = {
   startAt: string;
@@ -126,6 +129,8 @@ export const getMachineDiskUsage = apiGet<any, CjMachineDiskUsage[]>(
 export const getMachineVirtualMemory = apiGet<any, CjMachineVirtualMemory>(
   "/api/machine/virtual-memory"
 );
+
+export const watchMachineVirtualMemory = apiSse("/sse/machine/virtual-memory");
 
 export type ListMachineVirtualMemoryParam = {
   startAt: string;

@@ -6,13 +6,13 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import { resolve } from "path";
-import vueJsx from '@vitejs/plugin-vue-jsx'
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "VITE_");
   const target = env["VITE_SERVER_URL"];
-  
+
   return defineConfig({
     base: "/",
     build: {
@@ -29,7 +29,11 @@ export default ({ mode }) => {
         "/upload": {
           target: target,
           changeOrigin: true,
-        }
+        },
+        "/sse": {
+          target: target,
+          changeOrigin: true,
+        },
       },
     },
     plugins: [

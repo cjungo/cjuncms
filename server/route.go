@@ -81,6 +81,14 @@ func route(
 	signGroup.GET("/profile", signController.GetProfile, permitManager.Permit("default"))
 	signGroup.POST("/profile", signController.SetProfile, permitManager.Permit("default"))
 
+	// TODO 鉴权
+	// sse 接口
+	sseGroup := router.Group("/sse")
+	machineSseGroup := sseGroup.Group("/machine")
+	machineSseGroup.SSE("/cpu/info", machineController.WatchCpuInfo)
+	machineSseGroup.SSE("/cpu/times", machineController.WatchCpuTimes)
+	machineSseGroup.SSE("/virtual-memory", machineController.WatchVirtualMemory)
+
 	// 接口 ==================================================
 	apiGroup := router.Group("/api", permitManager.Permit("default"))
 
