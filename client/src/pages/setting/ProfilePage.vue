@@ -1,13 +1,13 @@
 <template>
   <CJunCmsPageMainLayout class="setting-profile-page">
-    <ElForm :labelWidth="100">
+    <ElForm labelWidth="5em" class="setting-profile-form">
       <ElRow>
-        <ElCol :span="6">
+        <ElCol :xs="6" :sm="6" :md="4" :lg="2" :xl="2">
           <ElFormItem label="头像">
             <ImageInput v-model="profile.avatar_path" @change="onSetAvatar" />
           </ElFormItem>
         </ElCol>
-        <ElCol :span="18">
+        <ElCol :xs="18" :sm="18" :md="18" :lg="12" :xl="12">
           <ElRow>
             <ElCol :span="8">
               <ElFormItem label="ID">
@@ -35,7 +35,15 @@
         </ElCol>
       </ElRow>
     </ElForm>
-    <ElButton @click="onSave">保存</ElButton>
+    <template #list>
+      <div class="setting-profile-operation-bar">
+        <ElButton v-if="isReadonly" @click="onClickEdit">编辑</ElButton>
+        <template v-else>
+          <ElButton @click="onClickCancel">取消</ElButton>
+          <ElButton @click="onClickSave">保存</ElButton>
+        </template>
+      </div>
+    </template>
   </CJunCmsPageMainLayout>
 </template>
 
@@ -44,6 +52,7 @@ import { onBeforeMount, ref } from "vue";
 import { getProfile, setProfile, type Profile } from "../../apis/login";
 import { uploadAvatar } from "../../apis/storage";
 import { getSuffix } from "../../utils/file";
+import { cloneDeep } from "lodash";
 
 const isReadonly = ref(true);
 const avatarFile = ref<File>();
@@ -58,12 +67,22 @@ const profile = ref<Profile>({
   avatar_path: "",
   is_removed: 0,
 });
+const profileStore = ref<Profile>(profile.value);
 
 const onSetAvatar = (file: File) => {
   avatarFile.value = file;
 };
 
-const onSave = async () => {
+const onClickEdit = () => {
+  isReadonly.value = false;
+};
+
+const onClickCancel = () => {
+  isReadonly.value = true;
+  profile.value = cloneDeep(profileStore.value);
+};
+
+const onClickSave = async () => {
   if (avatarFile.value) {
     const now = new Date().getTime();
     const suffix = getSuffix(avatarFile.value.name, true);
@@ -79,6 +98,7 @@ const onSave = async () => {
 onBeforeMount(async () => {
   const response = await getProfile();
   profile.value = response.data;
+  profileStore.value = cloneDeep(response.data);
 });
 </script>
 
@@ -86,5 +106,25 @@ onBeforeMount(async () => {
 .setting-profile-page {
   display: flex;
   flex-direction: column;
+
+  background-color: #f6f8f9;
+}
+
+.setting-profile-form {
+  padding: 1em;
+
+  background-color: #fff;
+  border: 1px solid #d8d9df;
+  border-radius: .5em;
+}
+
+.setting-profile-operation-bar {
+  display: flex;
+  flex-direction: row;
+  padding: 1em;
+  
+  background-color: #fff;
+  border: 1px solid #d8d9df;
+  border-radius: .5em;
 }
 </style>

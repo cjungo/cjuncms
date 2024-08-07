@@ -44,7 +44,7 @@ export default {
   width: 100%;
   flex-grow: 1;
   overflow: auto;
-  background-color: #ddd;
+  background-color: #f6f8f9;
 }
 .machine-chart {
   display: flex;

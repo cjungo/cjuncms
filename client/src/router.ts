@@ -5,6 +5,7 @@ import { useAuthStore } from "./stores/AuthStore";
 import * as IndexMeta from "./pages/IndexPage";
 import * as LoginMeta from "./pages/LoginPage";
 import CJunCmsPageLayout from "./layouts/CJunCmsPageLayout.vue";
+import { Component, shallowRef } from "vue";
 
 function routePages(): RouteRecordRaw[] {
   const result: RouteRecordRaw[] = [];
@@ -32,7 +33,31 @@ function routePages(): RouteRecordRaw[] {
   return result;
 }
 
+export type RouteMeta = {
+  icon?: Component;
+}
+
+export type RouteMetaMap = {
+  [key: string]: RouteMeta;
+}
+
+function getRouteMeta(record: RouteRecordRaw[]): RouteMetaMap {
+  let result: RouteMetaMap = {};
+  for (const item of record) {
+    result[item.path] = {...item.meta} as RouteMeta;
+    if (item.children) {
+      const child = getRouteMeta(item.children);
+      result = {...result, ...child};
+    }
+  }
+  return result;
+} 
+
 export const routes = routePages();
+export const metas = getRouteMeta(routes);
+
+console.log('metas', metas);
+
 
 const router = createRouter({
   history: createWebHistory(),

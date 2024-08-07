@@ -7,14 +7,27 @@
       @tab-click="onTabClick"
       @tab-remove="onTabRemove"
     >
-      <ElTabPane label="首页" name="/index" :closable="false"></ElTabPane>
+      <ElTabPane name="/index" :closable="false">
+        <template #label>
+          <IEpStar />
+          <span>首页</span>
+        </template>
+      </ElTabPane>
       <ElTabPane
         v-for="item in appStore.tabBar.items"
-        :label="item.title"
         :key="item.fullPath"
         :name="item.fullPath"
         :closable="item.closable"
-      ></ElTabPane>
+      >
+        <template #label>
+          <!-- <span>{{ metas[item.fullPath].icon }} </span> -->
+          <component
+            v-if="metas[item.fullPath]?.icon"
+            :is="metas[item.fullPath].icon"
+          />
+          <span>{{ item.title }}</span>
+        </template>
+      </ElTabPane>
     </ElTabs>
   </div>
 </template>
@@ -23,6 +36,7 @@
 import type { TabsPaneContext, TabPaneName } from "element-plus";
 import { useAppStore } from "../stores/AppStore";
 import router from "../router";
+import { metas } from "../router";
 
 const appStore = useAppStore();
 
@@ -46,6 +60,47 @@ const onTabRemove = (name: TabPaneName) => {
 
 <style lang="scss" scoped>
 .tab-bar {
-  margin: 0.5em 1em;
+  --active-color: #409eff;
+
+  margin: 0.5em 0 0 0;
+  padding: 0 1em;
+  border-bottom: 1px solid #d8d9df;
+
+  :deep(.el-tabs__header) {
+    border: none;
+  }
+
+  :deep(.el-tabs__nav) {
+    border: none;
+  }
+
+  :deep(.el-tabs__item) {
+    margin: 0.5em;
+    border: 1px solid #d8d9df;
+    border-radius: 0.5em;
+
+    & > svg {
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
+      margin-right: 0.5em;
+    }
+
+    &.is-active {
+      border: 1px solid var(--active-color);
+      border-bottom: 1px solid var(--active-color);
+
+      & i.el-icon {
+        border: 1px solid var(--active-color);
+      }
+    }
+
+    & i.el-icon {
+      flex-shrink: 0;
+      width: 14px !important;
+      height: 14px !important;
+      border: 1px solid #d8d9df;
+    }
+  }
 }
 </style>
