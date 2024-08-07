@@ -18,12 +18,14 @@
   overflow: hidden;
   flex-grow: 1;
   flex-direction: column;
+  background-color: #f6f8f9;
 }
 
 .cjuncms-page-main-info-box {
     overflow: hidden;
     flex-shrink: 0;
     padding: 1ex;
+    
 }
 
 .cjuncms-page-main-list-box {

@@ -1,6 +1,6 @@
 <template>
   <CJunCmsPageMainLayout>
-    <ElForm>
+    <ElForm class="project-index-form" labelWidth="5em">
       <ElRow>
         <ElCol :span="6">
           <ElFormItem label="ID">
@@ -71,4 +71,12 @@ onBeforeMount(async () => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.project-index-form {
+  padding: 1em;
+
+  background-color: #fff;
+  border: 1px solid #d8d9df;
+  border-radius: .5em;
+}
+</style>

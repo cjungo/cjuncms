@@ -106,8 +106,6 @@ onBeforeMount(async () => {
 .setting-profile-page {
   display: flex;
   flex-direction: column;
-
-  background-color: #f6f8f9;
 }
 
 .setting-profile-form {

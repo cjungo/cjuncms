@@ -1,6 +1,6 @@
 <template>
   <CJunCmsPageMainLayout>
-    <ElForm :model="current" label-width="6em">
+    <ElForm :model="current" label-width="6em" class="employee-index-form">
       <ElRow>
         <ElCol :span="6">
           <ElFormItem label="ID">
@@ -100,11 +100,11 @@ onBeforeMount(async () => {
   overflow: hidden;
 }
 
-.employee-info-box {
-  flex-grow: 0;
-}
+.employee-index-form {
+  padding: 1em;
 
-.employee-list-box {
-  flex-grow: 1;
+  background-color: #fff;
+  border: 1px solid #d8d9df;
+  border-radius: .5em;
 }
 </style>

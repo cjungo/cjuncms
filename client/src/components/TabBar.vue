@@ -70,6 +70,20 @@ const onTabRemove = (name: TabPaneName) => {
     border: none;
   }
 
+  :deep(.el-tabs__nav-wrap) {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+  }
+
+  :deep(.el-tabs__nav-prev), :deep(.el-tabs__nav-next) {
+    border: 1px solid #d8d9dd;   
+  }
+  :deep(.el-tabs__nav-scroll) {
+    margin: 0 .5em;
+  }
+
   :deep(.el-tabs__nav) {
     border: none;
   }
