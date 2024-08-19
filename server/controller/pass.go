@@ -23,6 +23,8 @@ func NewPassController(
 }
 
 type PassQueryParam struct {
+	Skip  int     `json:"skip" validate:"optional" example:"0"`
+	Take  int     `json:"take" validate:"optional" example:"100"`
 	Plain *string `json:"plain" validate:"optional" example:"cjun"`
 }
 
@@ -30,6 +32,9 @@ func (controller *PassController) Query(ctx cjungo.HttpContext) error {
 	param := PassQueryParam{}
 	if err := ctx.Bind(&param); err != nil {
 		return err
+	}
+	if param.Take == 0 {
+		param.Take = 100
 	}
 
 	query := controller.mysql.DB
@@ -39,7 +44,10 @@ func (controller *PassController) Query(ctx cjungo.HttpContext) error {
 	}
 
 	rows := []model.CjPass{}
-	if err := query.Find(&rows).Error; err != nil {
+	if err := query.
+		Offset(param.Skip).
+		Limit(param.Take).
+		Find(&rows).Error; err != nil {
 		return ctx.RespBad(err)
 	}
 

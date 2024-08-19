@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { type User } from "../apis/login";
 
 export const useAuthStore = defineStore(
   "auth",
   () => {
     const token = ref("");
-    const permissions: string[] = reactive([]);
-    const user = reactive<User>({ id: 0, username: "" });
+    const permissions = ref<string[]>([]);
+    const user = ref<User>({ id: 0, username: "" });
 
     return {
       token,

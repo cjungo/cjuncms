@@ -1,6 +1,6 @@
 <template>
-  <CJunCmsPageMainLayout>
-    <ElForm class="project-index-form" labelWidth="5em">
+  <CJunCmsPageMainLayout class="project-index-page">
+    <InfoForm :model="current">
       <ElRow>
         <ElCol :span="6">
           <ElFormItem label="ID">
@@ -13,38 +13,27 @@
           </ElFormItem>
         </ElCol>
       </ElRow>
-    </ElForm>
+    </InfoForm>
     <template #list>
-      <ElAutoResizer>
-        <template #default="{ width, height }">
-          <VxeTable
-            border
-            show-overflow
-            :column-config="{ resizable: true }"
-            :width="width"
-            :height="height"
-            :data="rows"
-          >
-            <VxeColumn fixed="left" type="seq" title="#" width="60" />
-            <VxeColumn fixed="left" field="id" title="ID" />
-            <VxeColumn field="name" title="项目名" />
-            <VxeColumn fixed="right">
-              <ElButtonGroup>
-                <ElButton
-                  @click="onClickEdit"
-                  type="primary"
-                  :icon="Edit"
-                ></ElButton>
-                <ElButton
-                  @click="onClickDelete"
-                  type="danger"
-                  :icon="Delete"
-                ></ElButton>
-              </ElButtonGroup>
-            </VxeColumn>
-          </VxeTable>
-        </template>
-      </ElAutoResizer>
+      <InfoTable :data="rows" @cell-click="onClickCell">
+        <VxeColumn fixed="left" type="seq" title="#" width="60" />
+        <VxeColumn fixed="left" field="id" title="ID" />
+        <VxeColumn field="name" title="项目名" />
+        <VxeColumn fixed="right">
+          <ElButtonGroup>
+            <ElButton
+              @click="onClickEdit"
+              type="primary"
+              :icon="Edit"
+            ></ElButton>
+            <ElButton
+              @click="onClickDelete"
+              type="danger"
+              :icon="Delete"
+            ></ElButton>
+          </ElButtonGroup>
+        </VxeColumn>
+      </InfoTable>
     </template>
   </CJunCmsPageMainLayout>
 </template>
@@ -53,9 +42,15 @@
 import { onBeforeMount, ref } from "vue";
 import { Delete, Edit } from "@element-plus/icons-vue";
 import { queryProject, type CjProject } from "../../apis/project";
+import { VxeTableEvents } from "vxe-table";
 
 const current = ref<CjProject>();
 const rows = ref<CjProject[]>([]);
+
+const onClickCell: VxeTableEvents.CellClick<CjProject> = ({ row, column }) => {
+  current.value = row;
+  console.log("onClickCell", row, column);
+};
 
 const onClickEdit = (params: any) => {
   console.log("onClickEdit", params);
@@ -68,15 +63,11 @@ const onClickDelete = (params: any) => {
 onBeforeMount(async () => {
   const result = await queryProject();
   rows.value = result.data;
+  current.value = result.data[0];
 });
 </script>
 
 <style lang="scss" scoped>
-.project-index-form {
-  padding: 1em;
-
-  background-color: #fff;
-  border: 1px solid #d8d9df;
-  border-radius: .5em;
+.project-index-page {
 }
 </style>

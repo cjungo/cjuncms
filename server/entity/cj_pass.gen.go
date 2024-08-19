@@ -29,6 +29,7 @@ func newCjPass(db *gorm.DB, opts ...gen.DOOption) cjPass {
 	_cjPass.ALL = field.NewAsterisk(tableName)
 	_cjPass.ID = field.NewUint32(tableName, "id")
 	_cjPass.Type = field.NewUint32(tableName, "type")
+	_cjPass.Title = field.NewString(tableName, "title")
 	_cjPass.Host = field.NewString(tableName, "host")
 	_cjPass.Port = field.NewUint32(tableName, "port")
 	_cjPass.Content = field.NewString(tableName, "content")
@@ -45,6 +46,7 @@ type cjPass struct {
 	ALL     field.Asterisk
 	ID      field.Uint32 // ID
 	Type    field.Uint32 // 0.密码；1.密钥
+	Title   field.String
 	Host    field.String // 主机
 	Port    field.Uint32 // 端口
 	Content field.String // 内容
@@ -66,6 +68,7 @@ func (c *cjPass) updateTableName(table string) *cjPass {
 	c.ALL = field.NewAsterisk(table)
 	c.ID = field.NewUint32(table, "id")
 	c.Type = field.NewUint32(table, "type")
+	c.Title = field.NewString(table, "title")
 	c.Host = field.NewString(table, "host")
 	c.Port = field.NewUint32(table, "port")
 	c.Content = field.NewString(table, "content")
@@ -93,9 +96,10 @@ func (c *cjPass) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (c *cjPass) fillFieldMap() {
-	c.fieldMap = make(map[string]field.Expr, 5)
+	c.fieldMap = make(map[string]field.Expr, 6)
 	c.fieldMap["id"] = c.ID
 	c.fieldMap["type"] = c.Type
+	c.fieldMap["title"] = c.Title
 	c.fieldMap["host"] = c.Host
 	c.fieldMap["port"] = c.Port
 	c.fieldMap["content"] = c.Content

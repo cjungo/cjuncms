@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { reactive } from "vue";
+import { ref } from "vue";
 
 export type DialogState = {
   visible: boolean;
@@ -28,20 +28,20 @@ export type TopBarState = {
 export const useAppStore = defineStore(
   "app",
   () => {
-    const dialog = reactive<{ [k: string]: DialogState }>({
+    const dialog = ref<{ [k: string]: DialogState }>({
       logout: {
         visible: false,
       },
     });
-    const tabBar = reactive<TabBarState>({
+    const tabBar = ref<TabBarState>({
       activeName: "home",
       items: [],
     });
-    const leftBar = reactive<LeftBarState>({
+    const leftBar = ref<LeftBarState>({
       defaultActive: "setting",
       isCollapse: false,
     });
-    const topBar = reactive<TopBarState>({
+    const topBar = ref<TopBarState>({
       defaultActive: "setting",
     });
 

@@ -77,15 +77,18 @@ const onClickSignOut = () => {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  font-size: 1.4vw;
+
+  @media screen and (min-width: 800px) {
+    font-size: 1.4vw;
+  }
+  @media screen and (min-width: 1200px) {
+    font-size: 1vw;
+  }
+  font-size: 1.8vw;
 
   &:hover {
     color: #47f;
   }
-
-  // & > span {
-  //   flex-grow: 1;
-  // }
 }
 
 .user-bar-popover-menu-separator {

@@ -1,30 +1,28 @@
 <template>
-  <div class="project-script-page">
-    <ElAutoResizer>
-      <template #default="{ width, height }">
-        <VxeTable :width="width" :height="height" :data="rows">
-          <VxeColumn type="seq" title="#" width="60" />
-          <VxeColumn field="id" title="ID" />
-          <VxeColumn field="title" title="标题" />
-          <VxeColumn field="content" title="内容" />
-          <VxeColumn>
-            <ElButtonGroup>
-              <ElButton
-                @click="onClickEdit"
-                type="primary"
-                :icon="Edit"
-              ></ElButton>
-              <ElButton
-                @click="onClickDelete"
-                type="danger"
-                :icon="Delete"
-              ></ElButton>
-            </ElButtonGroup>
-          </VxeColumn>
-        </VxeTable>
-      </template>
-    </ElAutoResizer>
-  </div>
+  <CJunCmsPageMainLayout class="project-script-page">
+    <template #list>
+      <InfoTable :data="rows">
+        <VxeColumn type="seq" title="#" width="60" />
+        <VxeColumn field="id" title="ID" />
+        <VxeColumn field="title" title="标题" />
+        <VxeColumn field="content" title="内容" />
+        <VxeColumn>
+          <ElButtonGroup>
+            <ElButton
+              @click="onClickEdit"
+              type="primary"
+              :icon="Edit"
+            ></ElButton>
+            <ElButton
+              @click="onClickDelete"
+              type="danger"
+              :icon="Delete"
+            ></ElButton>
+          </ElButtonGroup>
+        </VxeColumn>
+      </InfoTable>
+    </template>
+  </CJunCmsPageMainLayout>
 </template>
 
 <script lang="ts" setup>
@@ -50,7 +48,5 @@ onBeforeMount(async () => {
 
 <style lang="scss" scoped>
 .project-script-page {
-  display: flex;
-  flex-direction: column;
 }
 </style>

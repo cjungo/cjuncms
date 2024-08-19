@@ -10,9 +10,10 @@ const TableNameCjPass = "cj_pass"
 type CjPass struct {
 	ID      uint32 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true;comment:ID" json:"id"` // ID
 	Type    uint32 `gorm:"column:type;type:tinyint unsigned;not null;comment:0.密码；1.密钥" json:"type"`       // 0.密码；1.密钥
-	Host    string `gorm:"column:host;type:varchar(60);not null;comment:主机" json:"host"`                   // 主机
-	Port    uint32 `gorm:"column:port;type:int unsigned;not null;comment:端口" json:"port"`                  // 端口
-	Content string `gorm:"column:content;type:text;not null;comment:内容" json:"content"`                    // 内容
+	Title   string `gorm:"column:title;type:varchar(60);not null" json:"title"`
+	Host    string `gorm:"column:host;type:varchar(60);not null;comment:主机" json:"host"`  // 主机
+	Port    uint32 `gorm:"column:port;type:int unsigned;not null;comment:端口" json:"port"` // 端口
+	Content string `gorm:"column:content;type:text;not null;comment:内容" json:"content"`   // 内容
 }
 
 // TableName CjPass's table name

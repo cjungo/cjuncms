@@ -1,6 +1,6 @@
 <template>
-  <CJunCmsPageMainLayout>
-    <ElForm :model="current" label-width="6em" class="employee-index-form">
+  <CJunCmsPageMainLayout class="employee-index-page">
+    <InfoForm :model="current">
       <ElRow>
         <ElCol :span="6">
           <ElFormItem label="ID">
@@ -23,41 +23,30 @@
           </ElFormItem>
         </ElCol>
       </ElRow>
-    </ElForm>
+    </InfoForm>
     <template #list>
-      <ElAutoResizer>
-        <template #default="{ width, height }">
-          <VxeTable
-            border
-            show-overflow
-            :column-config="{ resizable: true }"
-            :width="width"
-            :height="height"
-            :data="rows"
-          >
-            <VxeColumn fixed="left" type="seq" title="#" width="60" />
-            <VxeColumn fixed="left" field="id" title="ID" />
-            <VxeColumn field="jobnumber" title="工号" />
-            <VxeColumn field="username" title="用户名" />
-            <VxeColumn field="fullname" title="全称" />
-            <VxeColumn field="nickname" title="昵称" />
-            <VxeColumn fixed="right">
-              <ElButtonGroup>
-                <ElButton
-                  @click="onClickEdit"
-                  type="primary"
-                  :icon="Edit"
-                ></ElButton>
-                <ElButton
-                  @click="onClickDelete"
-                  type="danger"
-                  :icon="Delete"
-                ></ElButton>
-              </ElButtonGroup>
-            </VxeColumn>
-          </VxeTable>
-        </template>
-      </ElAutoResizer>
+      <InfoTable :data="rows" @cell-click="onClickCell">
+        <VxeColumn fixed="left" type="seq" title="#" width="60" />
+        <VxeColumn fixed="left" field="id" title="ID" />
+        <VxeColumn field="jobnumber" title="工号" />
+        <VxeColumn field="username" title="用户名" />
+        <VxeColumn field="fullname" title="全称" />
+        <VxeColumn field="nickname" title="昵称" />
+        <VxeColumn fixed="right">
+          <ElButtonGroup>
+            <ElButton
+              @click="onClickEdit"
+              type="primary"
+              :icon="Edit"
+            ></ElButton>
+            <ElButton
+              @click="onClickDelete"
+              type="danger"
+              :icon="Delete"
+            ></ElButton>
+          </ElButtonGroup>
+        </VxeColumn>
+      </InfoTable>
     </template>
   </CJunCmsPageMainLayout>
 </template>
@@ -66,6 +55,7 @@
 import { onBeforeMount, ref } from "vue";
 import { queryEmployee, type CjEmployee } from "../../apis/employee";
 import { Delete, Edit } from "@element-plus/icons-vue";
+import { VxeTableEvents } from "vxe-table";
 
 const isReadonly = ref(true);
 const current = ref<CjEmployee>({
@@ -76,6 +66,11 @@ const current = ref<CjEmployee>({
   is_removed: 0,
 });
 const rows = ref<CjEmployee[]>([]);
+
+const onClickCell: VxeTableEvents.CellClick<CjEmployee> = ({ row, column }) => {
+  current.value = row;
+  console.log("onClickCell", row, column);
+};
 
 const onClickEdit = (params: any) => {
   console.log("onClickEdit", params);
@@ -88,23 +83,11 @@ const onClickDelete = (params: any) => {
 onBeforeMount(async () => {
   const result = await queryEmployee();
   rows.value = result.data;
+  current.value = result.data[0];
 });
 </script>
 
 <style lang="scss" scoped>
 .employee-index-page {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  padding: 1em;
-  overflow: hidden;
-}
-
-.employee-index-form {
-  padding: 1em;
-
-  background-color: #fff;
-  border: 1px solid #d8d9df;
-  border-radius: .5em;
 }
 </style>

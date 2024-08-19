@@ -40,6 +40,8 @@ declare module 'vue' {
     IEpStar: typeof import('~icons/ep/star')['default']
     IEpSwitchButton: typeof import('~icons/ep/switch-button')['default']
     ImageInput: typeof import('./src/components/ImageInput.vue')['default']
+    InfoForm: typeof import('./src/components/InfoForm.vue')['default']
+    InfoTable: typeof import('./src/components/InfoTable.vue')['default']
     LeftBar: typeof import('./src/components/LeftBar.vue')['default']
     ProcessLineRaceChart: typeof import('./src/components/charts/ProcessLineRaceChart.vue')['default']
     ResizableChart: typeof import('./src/components/charts/ResizableChart.vue')['default']
