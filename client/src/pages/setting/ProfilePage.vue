@@ -4,7 +4,11 @@
       <ElRow>
         <ElCol :xs="6" :sm="6" :md="4" :lg="2" :xl="2">
           <ElFormItem label="头像">
-            <ImageInput v-model="profile.avatar_path" @change="onSetAvatar" />
+            <ImageInput
+              v-model="profile.avatar_path"
+              :isReadonly="isReadonly"
+              @change="onSetAvatar"
+            />
           </ElFormItem>
         </ElCol>
         <ElCol :xs="18" :sm="18" :md="18" :lg="12" :xl="12">
@@ -53,9 +57,11 @@ import { getProfile, setProfile, type Profile } from "../../apis/login";
 import { uploadAvatar } from "../../apis/storage";
 import { getSuffix } from "../../utils/file";
 import { cloneDeep } from "lodash";
+import { useAuthStore } from "../../stores/AuthStore";
 
 const isReadonly = ref(true);
 const avatarFile = ref<File>();
+const auth = useAuthStore();
 
 const profile = ref<Profile>({
   id: 0,
@@ -93,6 +99,8 @@ const onClickSave = async () => {
     profile.value.avatar_path = avatarResponse.data;
   }
   await setProfile(profile.value);
+  auth.user = profile.value;
+  isReadonly.value = true;
 };
 
 onBeforeMount(async () => {
@@ -113,16 +121,16 @@ onBeforeMount(async () => {
 
   background-color: #fff;
   border: 1px solid #d8d9df;
-  border-radius: .5em;
+  border-radius: 0.5em;
 }
 
 .setting-profile-operation-bar {
   display: flex;
   flex-direction: row;
   padding: 1em;
-  
+
   background-color: #fff;
   border: 1px solid #d8d9df;
-  border-radius: .5em;
+  border-radius: 0.5em;
 }
 </style>

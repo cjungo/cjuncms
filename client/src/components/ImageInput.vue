@@ -1,8 +1,8 @@
 <template>
   <div class="image-input">
-    <input @input="onInput" type="file" style="opacity: 0" />
+    <input :disabled="isReadonly" @input="onInput" type="file" style="opacity: 0" />
     <img v-if="displayUrl" :src="displayUrl" alt="image" />
-    <div class="close-button" @click="onClose">
+    <div v-if="!isReadonly" class="close-button" @click="onClose">
       <IEpCloseBold />
     </div>
   </div>
@@ -14,9 +14,11 @@ import { computed, ref } from "vue";
 const props = withDefaults(
   defineProps<{
     modelValue: string;
+    isReadonly: boolean;
   }>(),
   {
     modelValue: "",
+    isReadonly: true,
   }
 );
 

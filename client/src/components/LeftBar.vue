@@ -7,6 +7,9 @@
       class="left-bar-menu"
       :default-active="appStore.leftBar.defaultActive"
       :collapse="appStore.leftBar.isCollapse"
+      text-color="#fff"
+      background-color="transparent"
+      active-text-color="#49f"
       @open="onMenuOpen"
       @close="onMenuClose"
     >
@@ -40,7 +43,7 @@
           </template>
           <ElMenuItem
             v-for="(subItem, j) in item.children"
-            :index="item.path || `${i}-${j}`"
+            :index="subItem.path"
             @click="onItemClick(subItem)"
           >
             <ElIcon>
@@ -148,6 +151,8 @@ const onItemClick = (item: LeftBarItem) => {
   // border-right: 1px solid #4444;
 
   --bg-color: #4444;
+
+  background: 100% 100% url(../assets/left-bar-bg.png);
 }
 
 .left-bar-menu {
@@ -162,5 +167,6 @@ const onItemClick = (item: LeftBarItem) => {
   box-sizing: border-box;
   height: var(--el-menu-horizontal-height);
   border-bottom: 1px solid var(--el-menu-border-color);
+  border-right: 1px solid var(--el-menu-border-color);
 }
 </style>

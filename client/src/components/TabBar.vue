@@ -20,7 +20,6 @@
         :closable="item.closable"
       >
         <template #label>
-          <!-- <span>{{ metas[item.fullPath].icon }} </span> -->
           <component
             v-if="metas[item.fullPath]?.icon"
             :is="metas[item.fullPath].icon"
