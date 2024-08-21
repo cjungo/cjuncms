@@ -1,4 +1,4 @@
-import { apiDelete, apiGet, apiPost, apiPut } from "../utils/api";
+import { apiDelete, apiPost } from "../utils/api";
 
 export type CjProject = {
   id: number; //
@@ -10,12 +10,12 @@ export type QueryProjectParam = {
   take: number;
   plain: string;
 };
-export const queryProject = apiGet<QueryProjectParam, CjProject[]>(
+export const queryProject = apiPost<QueryProjectParam, CjProject[]>(
   "/api/project/query"
 );
 
 export type AddProjectParam = Omit<CjProject, "id">;
-export const addProject = apiPut<AddProjectParam, CjProject>(
+export const addProject = apiPost<AddProjectParam, CjProject>(
   "/api/project/add"
 );
 

@@ -1,4 +1,4 @@
-import { apiGet } from "../utils/api";
+import { apiPost } from "../utils/api";
 
 export type CjPass = {
   id: number; // ID
@@ -14,4 +14,4 @@ export type QueryPassParam = {
   take: number;
   plain: string;
 };
-export const queryPass = apiGet<QueryPassParam, CjPass[]>("/api/pass/query");
+export const queryPass = apiPost<QueryPassParam, CjPass[]>("/api/pass/query");

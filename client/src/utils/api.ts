@@ -55,7 +55,7 @@ export class ApiClient {
 
   async get<P, R>(url: string, param?: P): Promise<ApiResult<R>> {
     const response = await this.client.get(url, {
-      data: param,
+      params: param,
     });
     if (response.status == 200 && response.data.code == 0) {
       return response.data as ApiResult<R>;

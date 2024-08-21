@@ -104,6 +104,11 @@ router.beforeEach(async (to) => {
     }
   }
 
+  // 
+  if (to.path == '/') {
+    return { path: "/index" };
+  }
+
   // 左边栏
   app.leftBar.defaultActive = to.fullPath;
 

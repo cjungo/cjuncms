@@ -57,4 +57,7 @@ declare module 'vue' {
     VirtualMemorySpeedGaugeChart: typeof import('./src/components/charts/VirtualMemorySpeedGaugeChart.vue')['default']
     VirtualMemorySpeedGaugeSseChart: typeof import('./src/components/charts/VirtualMemorySpeedGaugeSseChart.vue')['default']
   }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+  }
 }

@@ -1,4 +1,4 @@
-import { apiDelete, apiGet, apiPost, apiPut } from "../utils/api";
+import { apiDelete, apiPost } from "../utils/api";
 
 export type CjEmployee = {
   id: number; // ID
@@ -17,12 +17,12 @@ export type QueryEmployeeParam = {
   plain: string;
 };
 
-export const queryEmployee = apiGet<QueryEmployeeParam, CjEmployee[]>(
+export const queryEmployee = apiPost<QueryEmployeeParam, CjEmployee[]>(
   "/api/employee/query"
 );
 
 export type AddEmployeeParam = Omit<CjEmployee, "id">;
-export const addEmployee = apiPut<AddEmployeeParam, CjEmployee>(
+export const addEmployee = apiPost<AddEmployeeParam, CjEmployee>(
   "/api/employee/add"
 );
 

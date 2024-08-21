@@ -95,19 +95,19 @@ func route(
 	apiGroup := router.Group("/api", permitManager.Permit("default"))
 
 	employeeGroup := apiGroup.Group("/employee")
-	employeeGroup.GET("/query", employeeController.Query, permitManager.Permit("employee_find"))
-	employeeGroup.PUT("/add", employeeController.Add, permitManager.Permit("employee_edit"))
+	employeeGroup.POST("/query", employeeController.Query, permitManager.Permit("employee_find"))
+	employeeGroup.POST("/add", employeeController.Add, permitManager.Permit("employee_edit"))
 	employeeGroup.POST("/edit", employeeController.Edit, permitManager.Permit("employee_edit"))
 	employeeGroup.DELETE("/drop", employeeController.Drop, permitManager.Permit("employee_edit"))
 
 	projectGroup := apiGroup.Group("/project", permitManager.Permit("project"))
-	projectGroup.GET("/query", projectController.Query, permitManager.Permit("project_find"))
-	projectGroup.PUT("/add", projectController.Add, permitManager.Permit("project_edit"))
+	projectGroup.POST("/query", projectController.Query, permitManager.Permit("project_find"))
+	projectGroup.POST("/add", projectController.Add, permitManager.Permit("project_edit"))
 	projectGroup.POST("/edit", projectController.Edit, permitManager.Permit("project_edit"))
 	projectGroup.DELETE("/drop", projectController.Drop, permitManager.Permit("project_edit"))
 	passGroup := apiGroup.Group("/pass", permitManager.Permit("project", "pass"))
-	passGroup.GET("/query", passController.Query, permitManager.Permit("pass_find"))
-	passGroup.PUT("/add", passController.Add, permitManager.Permit("pass_edit"))
+	passGroup.POST("/query", passController.Query, permitManager.Permit("pass_find"))
+	passGroup.POST("/add", passController.Add, permitManager.Permit("pass_edit"))
 
 	machineGroup := apiGroup.Group("/machine", permitManager.Permit("default"))
 	machineGroup.GET("/cpu/info", machineController.PeekCpuInfo)
@@ -120,7 +120,7 @@ func route(
 	machineGroup.GET("/processes/list", machineController.ListProcesses)
 
 	shellGroup := apiGroup.Group("/shell", permitManager.Permit("default"))
-	shellGroup.GET("/msg", shellMessageController.Dispatch)
+	shellGroup.POST("/msg", shellMessageController.Dispatch)
 
 	return router.GetHandler(), nil
 }

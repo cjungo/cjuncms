@@ -1,4 +1,4 @@
-import { apiDelete, apiGet, apiPost, apiPut } from "../utils/api";
+import { apiDelete, apiPost } from "../utils/api";
 
 export type CjScript = {
   id: number; // ID
@@ -9,12 +9,12 @@ export type CjScript = {
 };
 
 export type QueryScriptParam = {};
-export const queryScript = apiGet<QueryScriptParam, CjScript[]>(
+export const queryScript = apiPost<QueryScriptParam, CjScript[]>(
   "/api/script/query"
 );
 
 export type AddScriptParam = CjScript;
-export const addScript = apiPut<AddScriptParam, CjScript>("/api/script/add");
+export const addScript = apiPost<AddScriptParam, CjScript>("/api/script/add");
 
 export type EditScriptParam = CjScript;
 export const editScript = apiPost<EditScriptParam, CjScript>(

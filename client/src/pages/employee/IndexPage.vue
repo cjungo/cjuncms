@@ -25,7 +25,7 @@
       </ElRow>
     </InfoForm>
     <template #list>
-      <InfoTable :data="rows" @cell-click="onClickCell">
+      <InfoTable v-loading="isLoading" :data="rows" @cell-click="onClickCell">
         <VxeColumn fixed="left" type="seq" title="#" width="60" />
         <VxeColumn fixed="left" field="id" title="ID" />
         <VxeColumn field="jobnumber" title="工号" />
@@ -53,11 +53,16 @@
 
 <script lang="ts" setup>
 import { onBeforeMount, ref } from "vue";
-import { queryEmployee, type CjEmployee } from "../../apis/employee";
+import {
+  queryEmployee,
+  type QueryEmployeeParam,
+  type CjEmployee,
+} from "../../apis/employee";
 import { Delete, Edit } from "@element-plus/icons-vue";
 import { VxeTableEvents } from "vxe-table";
 
 const isReadonly = ref(true);
+const isLoading = ref(false);
 const current = ref<CjEmployee>({
   id: 0,
   jobnumber: "",
@@ -66,6 +71,11 @@ const current = ref<CjEmployee>({
   is_removed: 0,
 });
 const rows = ref<CjEmployee[]>([]);
+const param = ref<QueryEmployeeParam>({
+  skip: 0,
+  take: 0,
+  plain: ""
+});
 
 const onClickCell: VxeTableEvents.CellClick<CjEmployee> = ({ row, column }) => {
   current.value = row;
@@ -80,10 +90,22 @@ const onClickDelete = (params: any) => {
   console.log("onClickDelete", params);
 };
 
+const onQuery = async () => {
+  if (isLoading.value) return;
+  try {
+    isLoading.value = true;
+    const result = await queryEmployee(param.value);
+    rows.value = result.data;
+    if (param.value?.skip == 0) {
+      current.value = result.data[0];
+    }
+  } finally {
+    isLoading.value = false;
+  }
+};
+
 onBeforeMount(async () => {
-  const result = await queryEmployee();
-  rows.value = result.data;
-  current.value = result.data[0];
+  await onQuery();
 });
 </script>
 
