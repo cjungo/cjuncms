@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/cjungo/cjuncms/misc"
@@ -125,6 +126,12 @@ func (controller *SignController) SignIn(ctx cjungo.HttpContext) error {
 
 		result.Permissions = permissions
 		result.Token = token
+		ctx.SetCookie(&http.Cookie{
+			Name:     "jwt",
+			Value:    token,
+			Path:     "/",
+			HttpOnly: true,
+		})
 		return nil
 	}); err != nil {
 		return ctx.RespBad(err)
@@ -138,6 +145,12 @@ func (controller *SignController) SignRenewal(ctx cjungo.HttpContext) error {
 	if err != nil {
 		return ctx.RespBad(err)
 	}
+	ctx.SetCookie(&http.Cookie{
+		Name:     "jwt",
+		Value:    token,
+		Path:     "/",
+		HttpOnly: true,
+	})
 	return ctx.Resp(token)
 }
 

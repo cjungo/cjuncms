@@ -85,11 +85,9 @@ func route(
 	signGroup.GET("/profile", signController.GetProfile, permitManager.Permit(misc.PERMIT_DEFAULT))
 	signGroup.POST("/profile", signController.SetProfile, permitManager.Permit(misc.PERMIT_DEFAULT))
 
-	// TODO 鉴权, EventSource 不能修改头部，只能通过 QueryString 或者 Cookie 传递 jwt
 	// sse 接口
 	sseGroup := router.Group("/sse")
-	// machineSseGroup := sseGroup.Group("/machine", permitManager.Permit(misc.PERMIT_DEFAULT))
-	machineSseGroup := sseGroup.Group("/machine")
+	machineSseGroup := sseGroup.Group("/machine", permitManager.Permit(misc.PERMIT_DEFAULT))
 	machineSseGroup.SSE("/cpu/info", machineController.WatchCpuInfo)
 	machineSseGroup.SSE("/cpu/times", machineController.WatchCpuTimes)
 	machineSseGroup.SSE("/cpu/timeline", machineController.WatchCpuTimesTimeline)
