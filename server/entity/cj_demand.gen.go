@@ -28,6 +28,7 @@ func newCjDemand(db *gorm.DB, opts ...gen.DOOption) cjDemand {
 	tableName := _cjDemand.cjDemandDo.TableName()
 	_cjDemand.ALL = field.NewAsterisk(tableName)
 	_cjDemand.ID = field.NewUint32(tableName, "id")
+	_cjDemand.Priority = field.NewUint32(tableName, "priority")
 	_cjDemand.Title = field.NewString(tableName, "title")
 	_cjDemand.Content = field.NewString(tableName, "content")
 	_cjDemand.CreateAt = field.NewTime(tableName, "create_at")
@@ -43,6 +44,7 @@ type cjDemand struct {
 
 	ALL      field.Asterisk
 	ID       field.Uint32
+	Priority field.Uint32 // 优先级
 	Title    field.String // 标题
 	Content  field.String // 内容
 	CreateAt field.Time
@@ -63,6 +65,7 @@ func (c cjDemand) As(alias string) *cjDemand {
 func (c *cjDemand) updateTableName(table string) *cjDemand {
 	c.ALL = field.NewAsterisk(table)
 	c.ID = field.NewUint32(table, "id")
+	c.Priority = field.NewUint32(table, "priority")
 	c.Title = field.NewString(table, "title")
 	c.Content = field.NewString(table, "content")
 	c.CreateAt = field.NewTime(table, "create_at")
@@ -90,8 +93,9 @@ func (c *cjDemand) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (c *cjDemand) fillFieldMap() {
-	c.fieldMap = make(map[string]field.Expr, 4)
+	c.fieldMap = make(map[string]field.Expr, 5)
 	c.fieldMap["id"] = c.ID
+	c.fieldMap["priority"] = c.Priority
 	c.fieldMap["title"] = c.Title
 	c.fieldMap["content"] = c.Content
 	c.fieldMap["create_at"] = c.CreateAt

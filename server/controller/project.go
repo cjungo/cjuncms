@@ -33,7 +33,7 @@ func (controller *ProjectController) Query(ctx cjungo.HttpContext) error {
 		return ctx.RespBad(err)
 	}
 	query := controller.mysql.DB
-	if param.Plain != nil {
+	if !cjungo.IsNilOrSpace(param.Plain) {
 		plain := fmt.Sprintf("%%%s%%", *param.Plain)
 		query = query.Where("shortname LIKE ? OR fullname LIKE ? OR number LIKE ?", plain, plain, plain)
 	}

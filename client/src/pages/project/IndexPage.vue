@@ -16,7 +16,6 @@
     </InfoForm>
     <template #list>
       <InfoTable :data="rows" @cell-click="onClickCell">
-        <VxeColumn fixed="left" type="seq" title="#" width="60" />
         <VxeColumn fixed="left" field="id" title="ID" />
         <VxeColumn field="name" title="项目名" />
         <VxeColumn fixed="right">
@@ -41,11 +40,16 @@
 <script lang="ts" setup>
 import { onBeforeMount, ref } from "vue";
 import { Delete, Edit } from "@element-plus/icons-vue";
-import { queryProject, type CjProject } from "../../apis/project";
+import { queryProject, QueryProjectParam, type CjProject } from "../../apis/project";
 import { VxeTableEvents } from "vxe-table";
 
 const current = ref<CjProject>();
 const rows = ref<CjProject[]>([]);
+const param = ref<QueryProjectParam>({
+  skip: 0,
+  take: 0,
+  plain: ""
+});
 
 const onClickCell: VxeTableEvents.CellClick<CjProject> = ({ row, column }) => {
   current.value = row;
@@ -61,7 +65,7 @@ const onClickDelete = (params: any) => {
 };
 
 onBeforeMount(async () => {
-  const result = await queryProject();
+  const result = await queryProject(param.value);
   rows.value = result.data;
   current.value = result.data[0];
 });

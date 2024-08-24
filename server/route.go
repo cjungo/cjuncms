@@ -21,6 +21,8 @@ var controllerProviders = []any{
 	controller.NewEmployeeController,
 	controller.NewProjectController,
 	controller.NewPassController,
+	controller.NewDemandController,
+	controller.NewDepartmentController,
 	// controller.NewShellController,
 }
 
@@ -37,6 +39,8 @@ func route(
 	employeeController *controller.EmployeeController,
 	projectController *controller.ProjectController,
 	passController *controller.PassController,
+	demandController *controller.DemandController,
+	departmentController *controller.DepartmentController,
 ) (http.Handler, error) {
 	here, err := os.Getwd()
 	if err != nil {
@@ -60,14 +64,14 @@ func route(
 	storageManager.Route(router, &ext.StorageConf{
 		PathPrefix:       "/upload",
 		Dir:              uploadDir,
-		UploadMiddleware: []echo.MiddlewareFunc{permitManager.Permit("default")},
-		IndexMiddleware:  []echo.MiddlewareFunc{permitManager.Permit("default")},
+		UploadMiddleware: []echo.MiddlewareFunc{permitManager.Permit(misc.PERMIT_DEFAULT)},
+		IndexMiddleware:  []echo.MiddlewareFunc{permitManager.Permit(misc.PERMIT_DEFAULT)},
 		// TODO 访问权限
-		// QueryMiddleware:  []echo.MiddlewareFunc{permitManager.Permit("default")},
+		// QueryMiddleware:  []echo.MiddlewareFunc{permitManager.Permit(misc.PERMIT_DEFAULT)},
 	})
 
 	// 消息
-	router.GET("/msg", messageController.Dispatch, permitManager.Permit("default"))
+	router.GET("/msg", messageController.Dispatch, permitManager.Permit(misc.PERMIT_DEFAULT))
 
 	// 验证码
 	captchaGroup := router.Group("/captcha")
@@ -77,14 +81,14 @@ func route(
 	signGroup := router.Group("/sign")
 	signGroup.POST("/in", signController.SignIn)
 	signGroup.POST("/out", signController.SignOut)
-	signGroup.GET("/renewal", signController.SignRenewal, permitManager.Permit("default"))
-	signGroup.GET("/profile", signController.GetProfile, permitManager.Permit("default"))
-	signGroup.POST("/profile", signController.SetProfile, permitManager.Permit("default"))
+	signGroup.GET("/renewal", signController.SignRenewal, permitManager.Permit(misc.PERMIT_DEFAULT))
+	signGroup.GET("/profile", signController.GetProfile, permitManager.Permit(misc.PERMIT_DEFAULT))
+	signGroup.POST("/profile", signController.SetProfile, permitManager.Permit(misc.PERMIT_DEFAULT))
 
 	// TODO 鉴权
 	// sse 接口
 	sseGroup := router.Group("/sse")
-	machineSseGroup := sseGroup.Group("/machine")
+	machineSseGroup := sseGroup.Group("/machine", permitManager.Permit(misc.PERMIT_DEFAULT))
 	machineSseGroup.SSE("/cpu/info", machineController.WatchCpuInfo)
 	machineSseGroup.SSE("/cpu/times", machineController.WatchCpuTimes)
 	machineSseGroup.SSE("/cpu/timeline", machineController.WatchCpuTimesTimeline)
@@ -92,24 +96,34 @@ func route(
 	machineSseGroup.SSE("/disk", machineController.WatchDiskUsage)
 
 	// 接口 ==================================================
-	apiGroup := router.Group("/api", permitManager.Permit("default"))
+	apiGroup := router.Group("/api", permitManager.Permit(misc.PERMIT_DEFAULT))
 
-	employeeGroup := apiGroup.Group("/employee")
-	employeeGroup.POST("/query", employeeController.Query, permitManager.Permit("employee_find"))
-	employeeGroup.POST("/add", employeeController.Add, permitManager.Permit("employee_edit"))
-	employeeGroup.POST("/edit", employeeController.Edit, permitManager.Permit("employee_edit"))
-	employeeGroup.DELETE("/drop", employeeController.Drop, permitManager.Permit("employee_edit"))
+	// 员工
+	employeeGroup := apiGroup.Group("/employee", permitManager.Permit(misc.PERMIT_EMPLOYEE))
+	employeeGroup.POST("/query", employeeController.Query)
+	employeeGroup.POST("/add", employeeController.Add, permitManager.Permit(misc.PERMIT_EMPLOYEE_EDIT))
+	employeeGroup.POST("/edit", employeeController.Edit, permitManager.Permit(misc.PERMIT_EMPLOYEE_EDIT))
+	employeeGroup.DELETE("/drop", employeeController.Drop, permitManager.Permit(misc.PERMIT_EMPLOYEE_EDIT))
 
-	projectGroup := apiGroup.Group("/project", permitManager.Permit("project"))
-	projectGroup.POST("/query", projectController.Query, permitManager.Permit("project_find"))
-	projectGroup.POST("/add", projectController.Add, permitManager.Permit("project_edit"))
-	projectGroup.POST("/edit", projectController.Edit, permitManager.Permit("project_edit"))
-	projectGroup.DELETE("/drop", projectController.Drop, permitManager.Permit("project_edit"))
-	passGroup := apiGroup.Group("/pass", permitManager.Permit("project", "pass"))
-	passGroup.POST("/query", passController.Query, permitManager.Permit("pass_find"))
-	passGroup.POST("/add", passController.Add, permitManager.Permit("pass_edit"))
+	// 部门
+	departmentGroup := apiGroup.Group("/department", permitManager.Permit(misc.PERMIT_EMPLOYEE))
+	departmentGroup.POST("/query", demandController.Query)
+	departmentGroup.POST("/add", departmentController.Add, permitManager.Permit(misc.PERMIT_EMPLOYEE_DEPARTMENT_EDIT))
+	departmentGroup.POST("/edit", departmentController.Edit, permitManager.Permit(misc.PERMIT_EMPLOYEE_DEPARTMENT_EDIT))
+	departmentGroup.POST("/drop", departmentController.Drop, permitManager.Permit(misc.PERMIT_EMPLOYEE_DEPARTMENT_EDIT))
 
-	machineGroup := apiGroup.Group("/machine", permitManager.Permit("default"))
+	// 项目
+	projectGroup := apiGroup.Group("/project", permitManager.Permit(misc.PERMIT_PROJECT))
+	projectGroup.POST("/query", projectController.Query)
+	projectGroup.POST("/add", projectController.Add, permitManager.Permit(misc.PERMIT_PROJECT_EDIT))
+	projectGroup.POST("/edit", projectController.Edit, permitManager.Permit(misc.PERMIT_PROJECT_EDIT))
+	projectGroup.DELETE("/drop", projectController.Drop, permitManager.Permit(misc.PERMIT_PROJECT_EDIT))
+	passGroup := apiGroup.Group("/pass", permitManager.Permit(misc.PERMIT_PROJECT, misc.PERMIT_PASS))
+	passGroup.POST("/query", passController.Query)
+	passGroup.POST("/add", passController.Add, permitManager.Permit(misc.PERMIT_PASS_EDIT))
+
+	// 机器
+	machineGroup := apiGroup.Group("/machine", permitManager.Permit(misc.PERMIT_DEFAULT))
 	machineGroup.GET("/cpu/info", machineController.PeekCpuInfo)
 	machineGroup.GET("/cpu/times", machineController.PeekCpuTimes)
 	machineGroup.POST("/cpu/times/list", machineController.ListCpuTimes)
@@ -119,7 +133,8 @@ func route(
 	machineGroup.GET("/processes", machineController.PeekProcesses)
 	machineGroup.GET("/processes/list", machineController.ListProcesses)
 
-	shellGroup := apiGroup.Group("/shell", permitManager.Permit("default"))
+	// 命令行
+	shellGroup := apiGroup.Group("/shell", permitManager.Permit(misc.PERMIT_DEFAULT))
 	shellGroup.POST("/msg", shellMessageController.Dispatch)
 
 	return router.GetHandler(), nil

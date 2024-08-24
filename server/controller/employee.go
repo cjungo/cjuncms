@@ -137,7 +137,7 @@ func (controller *EmployeeController) Query(ctx cjungo.HttpContext) error {
 	}
 
 	query := controller.mysql.Where("is_removed=?", 0)
-	if param.Plain != nil {
+	if !cjungo.IsNilOrSpace(param.Plain) {
 		query = query.Where(
 			"username=? OR nickname=? OR fullname=? OR jobnumber=?",
 			param.Plain,

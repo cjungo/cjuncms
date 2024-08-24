@@ -14,6 +14,12 @@ func main() {
 	if err := cjungo.RunCommand[any](
 		func(logger *zerolog.Logger, mysql *db.MySql, conf *db.MySqlConf) error {
 			return mysql.AutoMigrate(
+				&model.CjDemand{},
+				&model.CjDemandEmployee{},
+				&model.CjDemandProject{},
+				&model.CjDepartment{},
+				&model.CjDepartmentEmployee{},
+				&model.CjDepartmentPosition{},
 				&model.CjEmployeePermission{},
 				&model.CjEmployee{},
 				&model.CjMachineCPUTime{},

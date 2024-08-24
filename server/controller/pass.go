@@ -39,7 +39,7 @@ func (controller *PassController) Query(ctx cjungo.HttpContext) error {
 
 	query := controller.mysql.DB
 
-	if param.Plain != nil {
+	if !cjungo.IsNilOrSpace(param.Plain) {
 		query = query.Where("host LIKE ?", fmt.Sprintf("%%%s%%", *param.Plain))
 	}
 

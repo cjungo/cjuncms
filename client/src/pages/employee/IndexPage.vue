@@ -26,7 +26,6 @@
     </InfoForm>
     <template #list>
       <InfoTable v-loading="isLoading" :data="rows" @cell-click="onClickCell">
-        <VxeColumn fixed="left" type="seq" title="#" width="60" />
         <VxeColumn fixed="left" field="id" title="ID" />
         <VxeColumn field="jobnumber" title="工号" />
         <VxeColumn field="username" title="用户名" />
@@ -63,6 +62,7 @@ import { VxeTableEvents } from "vxe-table";
 
 const isReadonly = ref(true);
 const isLoading = ref(false);
+const isAll = ref(false);
 const current = ref<CjEmployee>({
   id: 0,
   jobnumber: "",
@@ -74,7 +74,7 @@ const rows = ref<CjEmployee[]>([]);
 const param = ref<QueryEmployeeParam>({
   skip: 0,
   take: 0,
-  plain: ""
+  plain: "",
 });
 
 const onClickCell: VxeTableEvents.CellClick<CjEmployee> = ({ row, column }) => {

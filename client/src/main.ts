@@ -41,6 +41,6 @@ pinia.use(persist);
 const app = createApp(App);
 app.use(pinia);
 app.use(router);
-// app.use(VxeUI);
+app.use(VxeUI);
 app.use(VxeUITable);
 app.mount("#app");
