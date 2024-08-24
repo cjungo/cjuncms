@@ -28,7 +28,9 @@ func newCjDepartment(db *gorm.DB, opts ...gen.DOOption) cjDepartment {
 	tableName := _cjDepartment.cjDepartmentDo.TableName()
 	_cjDepartment.ALL = field.NewAsterisk(tableName)
 	_cjDepartment.ID = field.NewUint32(tableName, "id")
+	_cjDepartment.ParentID = field.NewUint32(tableName, "parent_id")
 	_cjDepartment.Title = field.NewString(tableName, "title")
+	_cjDepartment.CreateAt = field.NewTime(tableName, "create_at")
 
 	_cjDepartment.fillFieldMap()
 
@@ -39,9 +41,11 @@ func newCjDepartment(db *gorm.DB, opts ...gen.DOOption) cjDepartment {
 type cjDepartment struct {
 	cjDepartmentDo cjDepartmentDo
 
-	ALL   field.Asterisk
-	ID    field.Uint32
-	Title field.String // 名词
+	ALL      field.Asterisk
+	ID       field.Uint32
+	ParentID field.Uint32
+	Title    field.String // 名称
+	CreateAt field.Time
 
 	fieldMap map[string]field.Expr
 }
@@ -59,7 +63,9 @@ func (c cjDepartment) As(alias string) *cjDepartment {
 func (c *cjDepartment) updateTableName(table string) *cjDepartment {
 	c.ALL = field.NewAsterisk(table)
 	c.ID = field.NewUint32(table, "id")
+	c.ParentID = field.NewUint32(table, "parent_id")
 	c.Title = field.NewString(table, "title")
+	c.CreateAt = field.NewTime(table, "create_at")
 
 	c.fillFieldMap()
 
@@ -88,9 +94,11 @@ func (c *cjDepartment) GetFieldByName(fieldName string) (field.OrderExpr, bool) 
 }
 
 func (c *cjDepartment) fillFieldMap() {
-	c.fieldMap = make(map[string]field.Expr, 2)
+	c.fieldMap = make(map[string]field.Expr, 4)
 	c.fieldMap["id"] = c.ID
+	c.fieldMap["parent_id"] = c.ParentID
 	c.fieldMap["title"] = c.Title
+	c.fieldMap["create_at"] = c.CreateAt
 }
 
 func (c cjDepartment) clone(db *gorm.DB) cjDepartment {

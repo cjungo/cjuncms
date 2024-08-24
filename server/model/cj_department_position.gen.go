@@ -13,9 +13,9 @@ const TableNameCjDepartmentPosition = "cj_department_position"
 // CjDepartmentPosition 职位
 type CjDepartmentPosition struct {
 	ID           uint32    `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
-	DepartmentID uint32    `gorm:"column:department_id;type:int unsigned;not null;comment:部门ID" json:"department_id"` // 部门ID
+	DepartmentID uint32    `gorm:"column:department_id;type:int unsigned;not null;index:DEPARTMENT_ID_INDEX,priority:1;comment:部门ID" json:"department_id"` // 部门ID
 	Title        string    `gorm:"column:title;type:varchar(60);not null" json:"title"`
-	CreateAt     time.Time `gorm:"column:create_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"create_at"`
+	CreateAt     time.Time `gorm:"column:create_at;type:datetime;not null;index:CREATE_AT_INDEX,priority:1;default:CURRENT_TIMESTAMP" json:"create_at"`
 }
 
 // TableName CjDepartmentPosition's table name

@@ -4,12 +4,18 @@
 
 package model
 
+import (
+	"time"
+)
+
 const TableNameCjDepartment = "cj_department"
 
 // CjDepartment 部门
 type CjDepartment struct {
-	ID    uint32 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
-	Title string `gorm:"column:title;type:varchar(60);not null;comment:名词" json:"title"` // 名词
+	ID       uint32    `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
+	ParentID uint32    `gorm:"column:parent_id;type:int unsigned;not null;index:PARENT_ID_INDEX,priority:1" json:"parent_id"`
+	Title    string    `gorm:"column:title;type:varchar(60);not null;comment:名称" json:"title"` // 名称
+	CreateAt time.Time `gorm:"column:create_at;type:datetime;not null;index:CREATE_AT_INDEX,priority:1;default:CURRENT_TIMESTAMP" json:"create_at"`
 }
 
 // TableName CjDepartment's table name

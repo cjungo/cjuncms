@@ -16,7 +16,7 @@ type CjDemand struct {
 	Priority uint32    `gorm:"column:priority;type:int unsigned;not null;comment:优先级" json:"priority"` // 优先级
 	Title    string    `gorm:"column:title;type:varchar(60);not null;comment:标题" json:"title"`         // 标题
 	Content  string    `gorm:"column:content;type:longtext;not null;comment:内容" json:"content"`        // 内容
-	CreateAt time.Time `gorm:"column:create_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"create_at"`
+	CreateAt time.Time `gorm:"column:create_at;type:datetime;not null;index:CREATE_AT_INDEX,priority:1;default:CURRENT_TIMESTAMP" json:"create_at"`
 }
 
 // TableName CjDemand's table name

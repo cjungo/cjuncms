@@ -13,8 +13,8 @@ const TableNameCjDemandEmployee = "cj_demand_employee"
 // CjDemandEmployee mapped from table <cj_demand_employee>
 type CjDemandEmployee struct {
 	DemandID   uint32    `gorm:"column:demand_id;type:int unsigned;primaryKey" json:"demand_id"`
-	EmployeeID uint32    `gorm:"column:employee_id;type:int unsigned;primaryKey" json:"employee_id"`
-	CreateAt   time.Time `gorm:"column:create_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"create_at"`
+	EmployeeID uint32    `gorm:"column:employee_id;type:int unsigned;primaryKey;index:EMPLOYEE_ID_INDEX,priority:1" json:"employee_id"`
+	CreateAt   time.Time `gorm:"column:create_at;type:datetime;not null;index:CREATE_AT_INDEX,priority:1;default:CURRENT_TIMESTAMP" json:"create_at"`
 }
 
 // TableName CjDemandEmployee's table name

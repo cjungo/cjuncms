@@ -13,9 +13,9 @@ const TableNameCjDemandProject = "cj_demand_project"
 // CjDemandProject mapped from table <cj_demand_project>
 type CjDemandProject struct {
 	DemandID  uint32    `gorm:"column:demand_id;type:int unsigned;primaryKey" json:"demand_id"`
-	ProjectID uint32    `gorm:"column:project_id;type:int unsigned;primaryKey" json:"project_id"`
-	Progress  int32     `gorm:"column:progress;type:int;not null;comment:进度" json:"progress"` // 进度
-	CreateAt  time.Time `gorm:"column:create_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"create_at"`
+	ProjectID uint32    `gorm:"column:project_id;type:int unsigned;primaryKey;index:PROJECT_ID_INDEX,priority:1" json:"project_id"`
+	Progress  int32     `gorm:"column:progress;type:int;not null;index:PROGRESS_INDEX,priority:1;comment:进度" json:"progress"` // 进度
+	CreateAt  time.Time `gorm:"column:create_at;type:datetime;not null;index:CREATE_AT_INDEX,priority:1;default:CURRENT_TIMESTAMP" json:"create_at"`
 }
 
 // TableName CjDemandProject's table name

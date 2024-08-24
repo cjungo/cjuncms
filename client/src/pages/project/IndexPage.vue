@@ -16,9 +16,9 @@
     </InfoForm>
     <template #list>
       <InfoTable :data="rows" @cell-click="onClickCell">
-        <VxeColumn fixed="left" field="id" title="ID" />
-        <VxeColumn field="name" title="项目名" />
-        <VxeColumn fixed="right">
+        <VxeColumn fixed="left" field="id" title="ID" width="60" />
+        <VxeColumn field="name" title="项目名" width="120"/>
+        <VxeColumn fixed="right" width="120">
           <ElButtonGroup>
             <ElButton
               @click="onClickEdit"
