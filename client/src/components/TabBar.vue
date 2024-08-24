@@ -9,7 +9,7 @@
     >
       <ElTabPane name="/index" :closable="false">
         <template #label>
-          <IEpStar />
+          <IEpHomeFilled />
           <span>首页</span>
         </template>
       </ElTabPane>

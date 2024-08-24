@@ -2,7 +2,7 @@
   <div class="image-input">
     <input :disabled="isReadonly" @input="onInput" type="file" style="opacity: 0" />
     <img v-if="displayUrl" :src="displayUrl" alt="image" />
-    <div v-if="!isReadonly" class="close-button" @click="onClose">
+    <div v-if="!isReadonly && displayUrl" class="close-button" @click="onClose">
       <IEpCloseBold />
     </div>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="top-bar">
     <div class="top-bar-left">
-      <SearchBar/>
+      <SearchBar />
     </div>
     <ElMenu
       class="top-bar-menu"
@@ -11,22 +11,27 @@
       :default-active="appStore.topBar.defaultActive"
     >
       <div style="flex-grow: 1"></div>
-      <ElMenuItem v-for="(item, i) in items" :index="`${i + 1}`">
-        <ElIcon v-if="item.icon" >
-          <component :is="item.icon"/>
+      <ElMenuItem
+        v-for="(item, i) in items"
+        :index="`${i + 1}`"
+        @click="onClickItem(item)"
+      >
+        <ElIcon v-if="item.icon">
+          <component :is="item.icon" />
         </ElIcon>
       </ElMenuItem>
       <ElMenuItem :index="`${items.length + 1}`">
-        <UserBar/>
+        <UserBar />
       </ElMenuItem>
     </ElMenu>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { type Component, reactive, shallowRef } from "vue";
+import { type Component, ref, shallowRef } from "vue";
 import { useAppStore } from "../stores/AppStore";
-import { Star } from '@element-plus/icons-vue';
+import { HomeFilled } from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
 
 type TopBarItem = {
   title: string;
@@ -34,18 +39,23 @@ type TopBarItem = {
   path?: string;
   permissions?: [string];
 };
-
-const star = shallowRef(Star);
-
+const home = shallowRef(HomeFilled);
 const appStore = useAppStore();
+const router = useRouter();
 
-const items = reactive<[TopBarItem]>([
+const items = ref<[TopBarItem]>([
   {
     title: "首页",
-    icon: star,
-    
+    icon: home,
+    path: "/index",
   },
 ]);
+
+const onClickItem = (item: TopBarItem) => {
+  if (item.path) {
+    router.push(item.path);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
