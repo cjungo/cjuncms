@@ -85,10 +85,11 @@ func route(
 	signGroup.GET("/profile", signController.GetProfile, permitManager.Permit(misc.PERMIT_DEFAULT))
 	signGroup.POST("/profile", signController.SetProfile, permitManager.Permit(misc.PERMIT_DEFAULT))
 
-	// TODO 鉴权
+	// TODO 鉴权, EventSource 不能修改头部，只能通过 QueryString 或者 Cookie 传递 jwt
 	// sse 接口
 	sseGroup := router.Group("/sse")
-	machineSseGroup := sseGroup.Group("/machine", permitManager.Permit(misc.PERMIT_DEFAULT))
+	// machineSseGroup := sseGroup.Group("/machine", permitManager.Permit(misc.PERMIT_DEFAULT))
+	machineSseGroup := sseGroup.Group("/machine")
 	machineSseGroup.SSE("/cpu/info", machineController.WatchCpuInfo)
 	machineSseGroup.SSE("/cpu/times", machineController.WatchCpuTimes)
 	machineSseGroup.SSE("/cpu/timeline", machineController.WatchCpuTimesTimeline)
@@ -107,7 +108,7 @@ func route(
 
 	// 部门
 	departmentGroup := apiGroup.Group("/department", permitManager.Permit(misc.PERMIT_EMPLOYEE))
-	departmentGroup.POST("/query", demandController.Query)
+	departmentGroup.POST("/query", departmentController.Query)
 	departmentGroup.POST("/add", departmentController.Add, permitManager.Permit(misc.PERMIT_EMPLOYEE_DEPARTMENT_EDIT))
 	departmentGroup.POST("/edit", departmentController.Edit, permitManager.Permit(misc.PERMIT_EMPLOYEE_DEPARTMENT_EDIT))
 	departmentGroup.POST("/drop", departmentController.Drop, permitManager.Permit(misc.PERMIT_EMPLOYEE_DEPARTMENT_EDIT))

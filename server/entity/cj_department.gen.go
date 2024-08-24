@@ -29,6 +29,7 @@ func newCjDepartment(db *gorm.DB, opts ...gen.DOOption) cjDepartment {
 	_cjDepartment.ALL = field.NewAsterisk(tableName)
 	_cjDepartment.ID = field.NewUint32(tableName, "id")
 	_cjDepartment.ParentID = field.NewUint32(tableName, "parent_id")
+	_cjDepartment.Level = field.NewUint32(tableName, "level")
 	_cjDepartment.Title = field.NewString(tableName, "title")
 	_cjDepartment.CreateAt = field.NewTime(tableName, "create_at")
 
@@ -44,6 +45,7 @@ type cjDepartment struct {
 	ALL      field.Asterisk
 	ID       field.Uint32
 	ParentID field.Uint32
+	Level    field.Uint32 // 级：排序确保父前子后
 	Title    field.String // 名称
 	CreateAt field.Time
 
@@ -64,6 +66,7 @@ func (c *cjDepartment) updateTableName(table string) *cjDepartment {
 	c.ALL = field.NewAsterisk(table)
 	c.ID = field.NewUint32(table, "id")
 	c.ParentID = field.NewUint32(table, "parent_id")
+	c.Level = field.NewUint32(table, "level")
 	c.Title = field.NewString(table, "title")
 	c.CreateAt = field.NewTime(table, "create_at")
 
@@ -94,9 +97,10 @@ func (c *cjDepartment) GetFieldByName(fieldName string) (field.OrderExpr, bool) 
 }
 
 func (c *cjDepartment) fillFieldMap() {
-	c.fieldMap = make(map[string]field.Expr, 4)
+	c.fieldMap = make(map[string]field.Expr, 5)
 	c.fieldMap["id"] = c.ID
 	c.fieldMap["parent_id"] = c.ParentID
+	c.fieldMap["level"] = c.Level
 	c.fieldMap["title"] = c.Title
 	c.fieldMap["create_at"] = c.CreateAt
 }

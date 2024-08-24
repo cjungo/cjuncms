@@ -25,7 +25,7 @@
     overflow: hidden;
     flex-shrink: 0;
     padding: 1ex;
-    
+    max-height: 100%;
 }
 
 .cjuncms-page-main-list-box {

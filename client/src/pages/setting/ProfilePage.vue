@@ -40,13 +40,13 @@
       </ElRow>
     </ElForm>
     <template #list>
-      <div class="setting-profile-operation-bar">
+      <OperationBar>
         <ElButton v-if="isReadonly" @click="onClickEdit">编辑</ElButton>
         <template v-else>
           <ElButton @click="onClickCancel">取消</ElButton>
           <ElButton @click="onClickSave">保存</ElButton>
         </template>
-      </div>
+      </OperationBar>
     </template>
   </CJunCmsPageMainLayout>
 </template>
@@ -117,16 +117,6 @@ onBeforeMount(async () => {
 }
 
 .setting-profile-form {
-  padding: 1em;
-
-  background-color: #fff;
-  border: 1px solid #d8d9df;
-  border-radius: 0.5em;
-}
-
-.setting-profile-operation-bar {
-  display: flex;
-  flex-direction: row;
   padding: 1em;
 
   background-color: #fff;

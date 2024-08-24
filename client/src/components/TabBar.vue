@@ -91,6 +91,7 @@ const onTabRemove = (name: TabPaneName) => {
     margin: 0.5em;
     border: 1px solid #d8d9df;
     border-radius: 0.5em;
+    user-select: none;
 
     & > svg {
       flex-shrink: 0;

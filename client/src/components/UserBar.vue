@@ -70,6 +70,7 @@ const onClickSignOut = () => {
 
 .user-bar-name {
   padding: 0 1em;
+  user-select: none;
 }
 
 .user-bar-popover-menu-item {
@@ -77,6 +78,8 @@ const onClickSignOut = () => {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  user-select: none;
+  cursor: pointer;
 
   @media screen and (min-width: 800px) {
     font-size: 1.4vw;

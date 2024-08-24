@@ -67,11 +67,7 @@ import { type Component, reactive, shallowRef } from "vue";
 import { isEmpty } from "lodash";
 import { metas } from "../router";
 import { useAppStore } from "../stores/AppStore";
-import {
-  Box,
-  Setting,
-  User,
-} from "@element-plus/icons-vue";
+import { Box, Setting, User } from "@element-plus/icons-vue";
 import router from "../router";
 
 const iconSetting = shallowRef(Setting);
@@ -96,6 +92,10 @@ const items = reactive<Array<LeftBarItem>>([
       {
         title: "员工列表",
         path: "/employee/index",
+      },
+      {
+        title: "部门管理",
+        path: "/employee/department",
       },
     ],
   },

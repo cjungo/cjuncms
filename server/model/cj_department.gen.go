@@ -14,7 +14,8 @@ const TableNameCjDepartment = "cj_department"
 type CjDepartment struct {
 	ID       uint32    `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
 	ParentID uint32    `gorm:"column:parent_id;type:int unsigned;not null;index:PARENT_ID_INDEX,priority:1" json:"parent_id"`
-	Title    string    `gorm:"column:title;type:varchar(60);not null;comment:名称" json:"title"` // 名称
+	Level    uint32    `gorm:"column:level;type:int unsigned;not null;index:LEVEL_INDEX,priority:1;comment:级：排序确保父前子后" json:"level"` // 级：排序确保父前子后
+	Title    string    `gorm:"column:title;type:varchar(60);not null;comment:名称" json:"title"`                                       // 名称
 	CreateAt time.Time `gorm:"column:create_at;type:datetime;not null;index:CREATE_AT_INDEX,priority:1;default:CURRENT_TIMESTAMP" json:"create_at"`
 }
 

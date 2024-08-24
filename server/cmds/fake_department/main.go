@@ -24,6 +24,7 @@ func main() {
 				lv1ID := uint32(1000000 + 100000*(i+1))
 				rows[i] = model.CjDepartment{
 					ID:       lv1ID,
+					Level:    1,
 					ParentID: 0,
 					Title:    fmt.Sprintf("[V1]部门 %d", i+1),
 					CreateAt: now,
@@ -33,6 +34,7 @@ func main() {
 					rows[lv1Count+i*lv2Count+j] = model.CjDepartment{
 						ID:       lv2ID,
 						ParentID: lv1ID,
+						Level:    2,
 						Title:    fmt.Sprintf("[V2]部门 %d", lv2ID),
 						CreateAt: now,
 					}
@@ -42,6 +44,7 @@ func main() {
 						rows[lv1Count+lv1Count*lv2Count+i*lv2Count*lv3Count+j*lv3Count+k] = model.CjDepartment{
 							ID:       lv3ID,
 							ParentID: lv2ID,
+							Level:    3,
 							Title:    fmt.Sprintf("[V3]部门 %d", lv3ID),
 							CreateAt: now,
 						}
