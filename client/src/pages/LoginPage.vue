@@ -23,20 +23,20 @@
         />
       </div>
       <div class="login-row">
-        <button type="submit">登录</button>
+        <button :disabled="!canSubmit" type="submit">登录</button>
       </div>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, reactive, ref } from "vue";
+import { computed, onBeforeMount, ref } from "vue";
 import { useRouter } from "vue-router";
 import { type LoginParam, login } from "../apis/login";
 import { getCaptchaMath } from "../apis/captcha";
 import { useAuthStore } from "../stores/AuthStore";
 
-const param = reactive<LoginParam>({
+const param = ref<LoginParam>({
   username: "admin",
   password: "admin",
   captchaId: "",
@@ -47,19 +47,28 @@ const captchaSrc = ref("");
 const auth = useAuthStore();
 const router = useRouter();
 
+const canSubmit = computed(() => {
+  return param.value.captchaAnswer.trim().length > 0;
+});
+
 const flushCaptcha = async () => {
   const captchaResult = await getCaptchaMath();
   captchaSrc.value = captchaResult.data.image;
-  param.captchaId = captchaResult.data.id;
+  param.value.captchaId = captchaResult.data.id;
 };
 
 const onSubmit = async () => {
-  const loginResult = await login(param);
-  console.log("login result", loginResult);
-  auth.token = loginResult.data.token;
-  auth.permissions = loginResult.data.permissions!;
-  auth.user = loginResult.data.user!;
-  router.push("/index");
+  try {
+    const loginResult = await login(param.value);
+    console.log("login result", loginResult);
+    auth.token = loginResult.data.token;
+    auth.permissions = loginResult.data.permissions!;
+    auth.user = loginResult.data.user!;
+    router.push("/index");
+  } catch {
+    param.value.captchaAnswer = "";
+    await flushCaptcha();
+  }
 };
 
 onBeforeMount(async () => {
@@ -138,6 +147,11 @@ onBeforeMount(async () => {
     color: white;
     background-color: #49f;
     user-select: none;
+    cursor: pointer;
+
+    &:disabled {
+      filter: grayscale(0.5);
+    }
   }
 
   & > label {
